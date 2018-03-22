@@ -9,6 +9,7 @@
 | Jaewoo Yang   | Student    |     |
 | JK            | Student    |     |
 | Cho young il  | Student    |     |
+| Jinsung An    | Student    |     |
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
