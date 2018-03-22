@@ -3,6 +3,8 @@
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
+| Jaewoo Yang   | Student    |     |
+| JK            | Student    |     |
 | Yunjea Nam    | Student    |     |
 
 # Galtron
