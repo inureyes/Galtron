@@ -4,7 +4,7 @@
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
 | Hoesung  Jung | Student^^7 | Nerd|
-|               |            |     |
+
 # Galtron
 A simple 2D shooter made with pygame, written in python...
 
