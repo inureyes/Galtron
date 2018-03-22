@@ -1,8 +1,9 @@
 # Learning OSS development through GitHub
 
 | Participant   | Role       | ETC |
-|---------------|------------|-----|
+|---------------+------------+-----+
 | Jeongkyu Shin | Instructor |     |
+| GookGon  Lee  | Student    |     |
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
