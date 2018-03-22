@@ -6,6 +6,7 @@
 | Jaewoo Yang   | Student    |     |
 | JK            | Student    |     |
 | JK2           | Student    |     |
+| Yushin Kim    | Student    |     |
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
@@ -18,4 +19,3 @@ To run the game:
 	-Enter python main.py
 
 By Matt Boan 2017
-  
