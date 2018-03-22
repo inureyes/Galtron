@@ -3,7 +3,16 @@
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
+<<<<<<< HEAD
 | Hansae Ju     | Student    |     |
+=======
+| Minseok  Kang | Student    |     |
+| Jaehun Kim.   | student.   |     |
+| Hansae Ju     | Student    |     |
+| Jaewoo Yang   | Student    |     |
+| JK            | Student    |     |
+| Cho young il  | Student    |     |
+>>>>>>> fb46d1b55c86a9d375d5ce96c2ed61d884bc8155
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
