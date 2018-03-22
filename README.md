@@ -1,10 +1,11 @@
 # Learning OSS development through GitHub
 
-| Participant   | Role       | ETC |
-|---------------|------------|-----|
-| Jeongkyu Shin | Instructor |     |
-| Jaewoo Yang   | Student    |     |
-| JK            | Student    |     |
+| Participant   | Role       | ETC  |
+| ------------- | ---------- | ---- |
+| Jeongkyu Shin | Instructor |      |
+| Jaewoo Yang   | Student    |      |
+| JK            | Student    |      |
+| Taewan Park   | Student    |      |
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
@@ -17,4 +18,4 @@ To run the game:
 	-Enter python main.py
 
 By Matt Boan 2017
-  
+
