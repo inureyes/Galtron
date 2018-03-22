@@ -3,8 +3,7 @@
 | Participant   | Role       | ETC |
 |---------------+------------+-----+
 | Jeongkyu Shin | Instructor |     |
-| GookGon  Lee  | Student    |     |   
-
+| Gookgon Lee   | Student    |     |
 # Galtron
 A simple 2D shooter made with pygame, written in python...
 
