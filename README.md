@@ -3,8 +3,10 @@
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
+| Minseok  Kang | Student    |     |
+| Jaehun Kim.   | student.   |     |
+| Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
-| JK            | Student    |     |
 | ChaeHyun Baek | Student    |     |
 
 # Galtron
