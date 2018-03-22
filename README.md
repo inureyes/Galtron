@@ -3,6 +3,7 @@
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
+| Jeshin Lee    | Student    |     |
 | Jaewoo Yang   | Student    |     |
 | JK            | Student    |     |
 
