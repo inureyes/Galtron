@@ -3,7 +3,10 @@
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
+| Jaewoo Yang   | Student    |     |
+| JK            | Student    |     |
 | YJ            | Student    |     |
+
 # Galtron
 A simple 2D shooter made with pygame, written in python...
 
