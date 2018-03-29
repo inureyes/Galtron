@@ -6,6 +6,7 @@ from alien import Alien
 
 pauseBtnState = 1
 back = False
+trajectory = 0
 
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
@@ -26,7 +27,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 			elif event.key == pg.K_DOWN:
 				if pauseBtnState < 3:
 					pauseBtnState += 1
-					sel.rect.y += 50	
+					sel.rect.y += 50
 
 			elif event.key == pg.K_RETURN:
 				if pauseBtnState == 1:
@@ -39,7 +40,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 					sel.rect.centery = playBtn.rect.centery
 					pauseBtnState = 1
 				elif pauseBtnState == 3:
-					sys.exit()	
+					sys.exit()
 
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
@@ -49,14 +50,21 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to kepresses"""
 	global back
+	global trajectory
 	if event.key == pg.K_RIGHT:
 		#Move the ship right
 		ship.movingRight = True
 	elif event.key == pg.K_LEFT:
 		#Move the ship left
 		ship.movingLeft = True
+	elif event.key == pg.K_TAB:
+		#Change the style of trajectory of bullet
+		if (trajectory < 5):
+			trajectory += 1
+		else:
+			trajectory = 0
 	elif event.key == pg.K_SPACE:
-		newBullet = Bullet(setting, screen, ship)
+		newBullet = Bullet(setting, screen, ship, trajectory)
 		bullets.add(newBullet)
 	#Check for pause key
 	elif event.key == pg.K_p:
@@ -201,10 +209,10 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 		screenRect = screen.get_rect()
 		if bullet.rect.top >= screenRect.bottom:
 			eBullets.remove(bullet)
-	for bullet in bullets.copy(): 
+	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
-	
+
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
 	"""Detect collisions between alien and bullets"""

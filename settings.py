@@ -28,7 +28,7 @@ class Settings():
 
 	def initDynamicSettings(self):
 		self.shipSpeed = 1.5
-		self.bulletSpeed = 3
+		self.bulletSpeed = 0.6
 		self.alienSpeed = 1
 		self.fleetDropSpeed = 5
 		self.fleetDir = 1
