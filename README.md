@@ -5,13 +5,17 @@
 | Jaewoo Yang   | Student    |     |
 | JK            | Student    |     |
 | Sungchan Kim  | Student    |     |
+| Hoesung  Jung | Student^^7 | Nerd|
+| Hyunjun Lee   | Student    |     |
 | Minseok  Kang | Student    |     |
 | Jaehun Kim.   | student.   |     |
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
+| TaeWoong Kong | Student    |     |
 | KeonWoong Noh | Student    |     |
 | ChaeHyun Baek | Student    |     |
 | JK            | Student    |     |
+| Hyobin Lee    | Student    |     |
 | Hayeong Lee   | Student    |     |
 | YoungHoon Kwon| Student    |     |
 | Haeun Choi    | Student    |     |
@@ -22,8 +26,10 @@
 | Yejun Kim     | Student    |     |
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
+| Minjun Kim    | Student    |     |
 | JaeHun Lee    | Student    |     |
 | Taewan Park   | Student    |     |
+
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
@@ -33,4 +39,3 @@ Props to Python Crash Course for the awesome tut. Although i did add a little ex
 To run the game:
 	-Needs python2.7 and pygame
 	-Open a terminal and cd to Galtron
-	-Enter python main.py
