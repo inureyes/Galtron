@@ -10,6 +10,7 @@
 | JK            | Student    |     |
 | Cho young il  | Student    |     |
 | Jinsung An    | Student    |     |
+| Minwoo Son	| Student    |     |
 | Kim Dain      | Student    |     |
 | JK2           | Student    |     |
 
