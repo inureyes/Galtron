@@ -3,9 +3,24 @@
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
+| Minseok  Kang | Student    |     |
+| Jaehun Kim.   | student.   |     |
+| Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
+| KeonWoong Noh | Student    |     |
+| ChaeHyun Baek | Student    |     |
 | JK            | Student    |     |
 | YoungHoon Kwon| Student    |     |
+| Haeun Choi    | Student    |     |
+| Moon ki hun   | Student    |     |
+| Seungchan Yu  | Student    |     |
+| JK2           | Student    |     |
+| Yushin Kim    | Student    |     |
+| Yejun Kim     | Student    |     |
+| Yunjea Nam    | Student    |     |
+| Cho young il  | Student    |     |
+| JaeHun Lee    | Student    |     |
+
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
@@ -18,4 +33,3 @@ To run the game:
 	-Enter python main.py
 
 By Matt Boan 2017
-  
