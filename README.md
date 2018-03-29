@@ -1,8 +1,13 @@
 # Learning OSS development through GitHub
 
 | Participant   | Role       | ETC |
-|---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
+| Jaewoo Yang   | Student    |     |
+| JK            | Student    |     |
+| MinSeong Kang | Student    |     |
+| Keongi Kim    | Student    |     |
+| Sungchan Kim  | Student    |     |
+| Kim tae O     | Student    |     |
 | Jeshin Lee    | Student    |     |
 | Hoesung  Jung | Student^^7 | Nerd|
 | Hyunjun Lee   | Student    |     |
@@ -10,10 +15,14 @@
 | Jaehun Kim.   | student.   |     |
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
+| Onyu Park     | Student    |     |
 | TaeWoong Kong | Student    |     |
 | KeonWoong Noh | Student    |     |
 | ChaeHyun Baek | Student    |     |
 | JK            | Student    |     |
+| JeWoong Moon  | Student    |     |
+| Yushin        | Student    |     |
+| GookGon Lee   | Student    |     |
 | Hyobin Lee    | Student    |     |
 | Hayeong Lee   | Student    |     |
 | YoungHoon Kwon| Student    |     |
@@ -29,6 +38,8 @@
 | JaeHun Lee    | Student    |     |
 | Taewan Park   | Student    |     |
 | HoJin Seo     | Student    |     |
+| Sungho Yun    | Student    |     |
+| Keunmo Koo	  | Genius     |     |
 
 
 # Galtron
@@ -42,3 +53,4 @@ To run the game:
 	-Enter python main.py
 
 By Matt Boan 2017
+
