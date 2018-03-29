@@ -5,6 +5,7 @@
 | Jaewoo Yang   | Student    |     |
 | JK            | Student    |     |
 | YK            | Student    |     |
+| Jeong-A Im     | Student    |     |
 | Kim Tae Yoon           | Student    |     |
 | Yulim Oh      | Student    |     |
 | Jihoon Yeom   | Student    |     |
@@ -24,6 +25,7 @@
 | KeonWoong Noh | Student    |     |
 | ChaeHyun Baek | Student    |     |
 | JK            | Student    |     |
+| SeongIn Moon  | Student    |     |
 | JeWoong Moon  | Student    |     |
 | Yushin        | Student    |     |
 | GookGon Lee   | Student    |     |
@@ -38,6 +40,7 @@
 | Yejun Kim     | Student    |     |
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
+| Yerim Hwang	| Student    |     |
 | Minjun Kim    | Student    |     |
 | JaeHun Lee    | Student    |     |
 | Taewan Park   | Student    |     |
