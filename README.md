@@ -1,10 +1,13 @@
 # Learning OSS development through GitHub
 
-
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
 | Hoesung  Jung | Student^^7 | Nerd|
+| Participant   | Role       | ETC |
+|---------------|------------|-----|
+| Jeongkyu Shin | Instructor |     |
+| Hyunjun Lee   | Student    |     |
 | Minseok  Kang | Student    |     |
 | Jaehun Kim.   | student.   |     |
 | Hansae Ju     | Student    |     |
@@ -12,6 +15,7 @@
 | KeonWoong Noh | Student    |     |
 | ChaeHyun Baek | Student    |     |
 | JK            | Student    |     |
+| Hyobin Lee    | Student    |     |
 | Hayeong Lee   | Student    |     |
 | YoungHoon Kwon| Student    |     |
 | Haeun Choi    | Student    |     |
