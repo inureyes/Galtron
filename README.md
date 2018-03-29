@@ -4,8 +4,25 @@
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> add-my-info-in-readme
+=======
+| Jeshin Lee    | Student    |     |
+| Hoesung  Jung | Student^^7 | Nerd|
+| Hyunjun Lee   | Student    |     |
+| Minseok  Kang | Student    |     |
+| Jaehun Kim.   | student.   |     |
+| Hansae Ju     | Student    |     |
+| Jaewoo Yang   | Student    |     |
+| TaeWoong Kong | Student    |     |
+| KeonWoong Noh | Student    |     |
+| ChaeHyun Baek | Student    |     |
+| JK            | Student    |     |
+| Hyobin Lee    | Student    |     |
+| Hayeong Lee   | Student    |     |
+| YoungHoon Kwon| Student    |     |
+>>>>>>> e99c03f09fc42075df3416d8ae03609b0d7bfca3
 | Haeun Choi    | Student    |     |
 | Moon ki hun   | Student    |     |
 | Seungchan Yu  | Student    |     |
@@ -14,6 +31,12 @@
 | Yejun Kim     | Student    |     |
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
+<<<<<<< HEAD
+=======
+| Minjun Kim    | Student    |     |
+| JaeHun Lee    | Student    |     |
+| Taewan Park   | Student    |     |
+>>>>>>> e99c03f09fc42075df3416d8ae03609b0d7bfca3
 
 >>>>>>> e99c03f09fc42075df3416d8ae03609b0d7bfca3
 
