@@ -28,6 +28,7 @@
 | Minjun Kim    | Student    |     |
 | JaeHun Lee    | Student    |     |
 | Taewan Park   | Student    |     |
+| HoJin Seo     | Student    |     |
 
 
 # Galtron
