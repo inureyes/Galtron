@@ -3,6 +3,7 @@ import pygame as pg
 from time import sleep
 from bullet import Bullet
 from alien import Alien
+import random
 
 pauseBtnState = 1
 back = False
@@ -26,7 +27,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 			elif event.key == pg.K_DOWN:
 				if pauseBtnState < 3:
 					pauseBtnState += 1
-					sel.rect.y += 50	
+					sel.rect.y += 50
 
 			elif event.key == pg.K_RETURN:
 				if pauseBtnState == 1:
@@ -39,7 +40,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 					sel.rect.centery = playBtn.rect.centery
 					pauseBtnState = 1
 				elif pauseBtnState == 3:
-					sys.exit()	
+					sys.exit()
 
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
@@ -55,7 +56,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 	elif event.key == pg.K_LEFT:
 		#Move the ship left
 		ship.movingLeft = True
-	elif event.key == pg.K_LCTRL:
+	elif event.key == pg.K_SPACE:
 		newBullet = Bullet(setting, screen, ship)
 		bullets.add(newBullet)
 	#Check for pause key
@@ -125,8 +126,9 @@ def createAlien(setting, screen, aliens, alienNumber, rowNumber):
 	alien = Alien(setting, screen)
 	alienWidth = alien.rect.width
 	alien.x = alienWidth + 2 * alienWidth * alienNumber
-	alien.rect.x = alien.x
-	alien.rect.y = alien.rect.height + 2 * alien.rect.height * rowNumber
+	""" random position of enemy will be created in game window"""
+	alien.rect.x = alien.x + random.randrange(1,200)
+	alien.rect.y = alien.rect.height +  2 * alien.rect.height * rowNumber - random.randrange(1,200)
 	aliens.add(alien)
 
 
@@ -201,10 +203,10 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 		screenRect = screen.get_rect()
 		if bullet.rect.top >= screenRect.bottom:
 			eBullets.remove(bullet)
-	for bullet in bullets.copy(): 
+	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
-	
+
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
 	"""Detect collisions between alien and bullets"""
