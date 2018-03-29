@@ -6,6 +6,7 @@
 | Jaewoo Yang   | Student    |     |
 | JK            | Student    |     |
 | Kim Dain      | Student    |     |
+| JK2           | Student    |     |
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
