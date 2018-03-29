@@ -3,6 +3,7 @@
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
+| Jeshin Lee    | Student    |     |
 | Hoesung  Jung | Student^^7 | Nerd|
 | Hyunjun Lee   | Student    |     |
 | Minseok  Kang | Student    |     |
@@ -13,7 +14,6 @@
 | KeonWoong Noh | Student    |     |
 | ChaeHyun Baek | Student    |     |
 | JK            | Student    |     |
-<<<<<<< HEAD
 | GookGon Lee   | Student    |     |
 | Hyobin Lee    | Student    |     |
 | Hayeong Lee   | Student    |     |
@@ -29,8 +29,7 @@
 | Minjun Kim    | Student    |     |
 | JaeHun Lee    | Student    |     |
 | Taewan Park   | Student    |     |
-
->>>>>>> 91949b8f84131f9ef49e1ff6a4b1560f35c64057
+| Sungho Yun    | Student    |     |
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
@@ -42,6 +41,5 @@ To run the game:
 	-Open a terminal and cd to Galtron
 	-Enter python main.py
 
-<<<<<<< HEAD
 By Matt Boan 2017
 
