@@ -5,29 +5,6 @@
 | Jeongkyu Shin | Instructor |     |
 <<<<<<< HEAD
 =======
-| Jeshin Lee    | Student    |     |
-| Hoesung  Jung | Student^^7 | Nerd|
-| Hyunjun Lee   | Student    |     |
->>>>>>> add-my-info-in-readme
-| Minseok  Kang | Student    |     |
-| Jaehun Kim.   | student.   |     |
-| Hansae Ju     | Student    |     |
-| Jaewoo Yang   | Student    |     |
-<<<<<<< HEAD
-=======
-| TaeWoong Kong | Student    |     |
->>>>>>> add-my-info-in-readme
-| KeonWoong Noh | Student    |     |
-| ChaeHyun Baek | Student    |     |
-| JK            | Student    |     |
-<<<<<<< HEAD
-| YoungHoon Kwon| Student    |     |
-<<<<<<< HEAD
-=======
-=======
-| Hyobin Lee    | Student    |     |
-| Hayeong Lee   | Student    |     |
-| YoungHoon Kwon| Student    |     |
 >>>>>>> add-my-info-in-readme
 | Haeun Choi    | Student    |     |
 | Moon ki hun   | Student    |     |
@@ -37,16 +14,8 @@
 | Yejun Kim     | Student    |     |
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
-<<<<<<< HEAD
-| JaeHun Lee    | Student    |     |
-
-=======
-| Minjun Kim    | Student    |     |
-| JaeHun Lee    | Student    |     |
-| Taewan Park   | Student    |     |
 
 >>>>>>> e99c03f09fc42075df3416d8ae03609b0d7bfca3
->>>>>>> add-my-info-in-readme
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
