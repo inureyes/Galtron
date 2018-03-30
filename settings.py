@@ -1,44 +1,52 @@
 import pygame as pg
 
+
 class Settings():
-	"""A class to store all settings for game"""
-	def __init__(self):
-		"""Initialize the class"""
-		self.windowCaption = 'Galtron'
-		self.screenWidth = 450
-		self.screenHeight = 550
-		self.bgColor = (20, 20, 20)
-		self.bg = pg.image.load("gfx/background.bmp")
+    """A class to store all settings for game"""
 
-		#Ships speed
-		self.shipLimit = 3
+    def __init__(self):
+        """Initialize the class"""
+        self.windowCaption = 'Galtron'
+        self.screenWidth = 450
+        self.screenHeight = 550
+        self.bgColor = (20, 20, 20)
+        self.bg = pg.image.load("gfx/background.bmp")
 
-		#Bullet settings
-		self.bulletWidth = 3
-		self.bulletHeight = 15
-		self.bulletColor = (60, 60, 60)
+        # Ships speed
+        self.shipLimit = 3
 
-		#Alien settings
+        # Bullet settings
+        self.bulletWidth = 3
+        self.bulletHeight = 15
+        self.bulletColor = (60, 60, 60)
 
-		#How quickly the game speeds up
-		self.speedUp = 1.1
-		self.scoreSpeedUp = 1.5
+        # Alien settings
 
-		self.initDynamicSettings()
+        # Time Stop Item Settings
+        self.timestopitemWidth = 90
+        self.timestopitemHeight = 90
+        self.timestopitemColor = (30, 30, 30)
 
-	def initDynamicSettings(self):
-		self.shipSpeed = 1.5
-		self.bulletSpeed = 3
-		self.alienSpeed = 1
-		self.fleetDropSpeed = 5
-		self.fleetDir = 1
-		self.alienPoints = 50
+        # How quickly the game speeds up
+        self.speedUp = 1.1
+        self.scoreSpeedUp = 1.5
 
-	def increaseSpeed(self):
-		"""Increase the speed settings"""
-		#self.shipSpeed *= self.speedUp
-		#self.bulletSpeed *= self.speedUp
-		if self.alienSpeed <= 1.5:
-			self.alienSpeed *= self.speedUp
-			self.fleetDropSpeed *= self.speedUp
-		self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
+        self.initDynamicSettings()
+
+    def initDynamicSettings(self):
+        self.shipSpeed = 1.5
+        self.bulletSpeed = 1
+        self.alienSpeed = 1
+        self.fleetDropSpeed = 5
+        self.fleetDir = 1
+        self.alienPoints = 50
+        self.itemSpeed = 1
+
+    def increaseSpeed(self):
+        """Increase the speed settings"""
+        # self.shipSpeed *= self.speedUp
+        # self.bulletSpeed *= self.speedUp
+        if self.alienSpeed <= 1.5:
+            self.alienSpeed *= self.speedUp
+            self.fleetDropSpeed *= self.speedUp
+        self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
