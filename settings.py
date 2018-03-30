@@ -1,4 +1,5 @@
 import pygame as pg
+import platform
 
 class Settings():
 	"""A class to store all settings for game"""
@@ -21,18 +22,28 @@ class Settings():
 		#Alien settings
 
 		#How quickly the game speeds up
-		self.speedUp = 1.1
+		if(platform.system() == 'Windows'):
+			self.speedUp = 1.005
+		else:
+			self.speedUp = 1.1
+		
 		self.scoreSpeedUp = 1.5
-
 		self.initDynamicSettings()
 
 	def initDynamicSettings(self):
-		self.shipSpeed = 1.5
-		self.bulletSpeed = 3
-		self.alienSpeed = 1
-		self.fleetDropSpeed = 5
-		self.fleetDir = 1
-		self.alienPoints = 50
+		if(platform.system() == 'Windows'):
+			self.shipSpeed = 1.5/4
+			self.bulletSpeed = 3/4
+			self.alienSpeed = 1/4
+			self.fleetDropSpeed = 5/4
+			self.fleetDir = 1/4
+		else:        
+			self.shipSpeed = 1.5
+			self.bulletSpeed = 3
+			self.alienSpeed = 1
+			self.fleetDropSpeed = 5
+			self.fleetDir = 1
+			self.alienPoints = 50
 
 	def increaseSpeed(self):
 		"""Increase the speed settings"""
