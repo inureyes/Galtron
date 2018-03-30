@@ -9,12 +9,12 @@
 | Jaewoo Yang   | Student    |     |
 | Cho young il  | Student    |     |
 | Jinsung An    | Student    |     |
-| Minwoo Son	  | Student    |     |
+| Minwoo Son	| Student    |     |
 | Kim Dain      | Student    |     |
-| Jeongin Lee   | Student    |     |
+| Jeongin Lee | Student  |     |
 | YK            | Student    |     |
-| Jeong-A Im    | Student    |     |
-| Kim Tae Yoon  | Student    |     |
+| Jeong-A Im     | Student    |     |
+| Kim Tae Yoon           | Student    |     |
 | Yulim Oh      | Student    |     |
 | Jihoon Yeom   | Student    |     |
 | MinSeong Kang | Student    |     |
@@ -48,6 +48,15 @@
 | Yejun Kim     | Student    |     |
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
+| Kim yong jun  | Student    |     |
+| Yerim Hwang	| Student    |     |
+| Minjun Kim    | Student    |     |
+| JaeHun Lee    | Student    |     |
+| Taewan Park   | Student    |     |
+| HoJin Seo     | Student    |     |
+| Sungho Yun    | Student    |     |
+| Keunmo Koo	  | Genius     |     |
+
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
