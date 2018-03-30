@@ -4,21 +4,18 @@
 |---------------|------------|-----|
 |===============|============|=====|
 | Jeongkyu Shin | Instructor |     |
-<<<<<<< HEAD
-| Hansae Ju     | Student    |     |
-=======
 | Minseok  Kang | Student    |     |
 | Jaehun Kim.   | student.   |     |
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
 | Cho young il  | Student    |     |
 | Jinsung An    | Student    |     |
-| Minwoo Son	| Student    |     |
+| Minwoo Son	  | Student    |     |
 | Kim Dain      | Student    |     |
-| Jeongin Lee | Student  |     |
+| Jeongin Lee   | Student    |     |
 | YK            | Student    |     |
-| Jeong-A Im     | Student    |     |
-| Kim Tae Yoon           | Student    |     |
+| Jeong-A Im    | Student    |     |
+| Kim Tae Yoon  | Student    |     |
 | Yulim Oh      | Student    |     |
 | Jihoon Yeom   | Student    |     |
 | MinSeong Kang | Student    |     |
@@ -52,19 +49,6 @@
 | Yejun Kim     | Student    |     |
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
-<<<<<<< HEAD
->>>>>>> fb46d1b55c86a9d375d5ce96c2ed61d884bc8155
-=======
-| Kim yong jun  | Student    |     |
-| Yerim Hwang	| Student    |     |
-| Minjun Kim    | Student    |     |
-| JaeHun Lee    | Student    |     |
-| Taewan Park   | Student    |     |
-| HoJin Seo     | Student    |     |
-| Sungho Yun    | Student    |     |
-| Keunmo Koo	  | Genius     |     |
-
->>>>>>> e5d0765bd366f826c58a090b475e0ff15ae75f64
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
