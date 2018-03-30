@@ -26,7 +26,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 			elif event.key == pg.K_DOWN:
 				if pauseBtnState < 3:
 					pauseBtnState += 1
-					sel.rect.y += 50	
+					sel.rect.y += 50
 
 			elif event.key == pg.K_RETURN:
 				if pauseBtnState == 1:
@@ -39,7 +39,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 					sel.rect.centery = playBtn.rect.centery
 					pauseBtnState = 1
 				elif pauseBtnState == 3:
-					sys.exit()	
+					sys.exit()
 
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
@@ -58,6 +58,9 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 	elif event.key == pg.K_SPACE:
 		newBullet = Bullet(setting, screen, ship)
 		bullets.add(newBullet)
+	elif event.key == pg.K_x:
+		#Ultimate key
+		useUltimate(setting, screen, stats, ship, bullets)
 	#Check for pause key
 	elif event.key == pg.K_p:
 		pause(stats)
@@ -163,7 +166,8 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	if stats.shipsLeft > 0:
 		sb.prepShips()
 		stats.shipsLeft -= 1
-		#Empty teh list of aliens and bullets
+		stats.ultimateGauge = 0
+		#Empty the list of aliens and bullets
 		aliens.empty()
 		bullets.empty()
 		eBullets.empty()
@@ -201,15 +205,19 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 		screenRect = screen.get_rect()
 		if bullet.rect.top >= screenRect.bottom:
 			eBullets.remove(bullet)
-	for bullet in bullets.copy(): 
+	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
-	
+
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
 	"""Detect collisions between alien and bullets"""
 	collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
 	if collisions:
+		#Increase the ultimate gauge, upto 100
+		stats.ultimateGauge += setting.ultimateGaugeIncrement
+		if stats.ultimateGauge > 100:
+			stats.ultimateGauge = 100
 		for aliens in collisions.values():
 			stats.score += setting.alienPoints * len(aliens)
 		checkHighScore(stats, sb)
@@ -237,6 +245,30 @@ def checkHighScore(stats, sb):
 		stats.highScore = stats.score
 		sb.prepHighScore()
 
+def updateUltimateGauge(setting, screen, stats):
+	"""Draw a bar that indicates the ultimate gauge"""
+	x = 290
+	y = 15
+	gauge = stats.ultimateGauge
+	pg.draw.rect(screen, (255,255,255), (x,y,100,10), 0)
+	pg.draw.rect(screen, (0,0,255), (x,y,gauge,10), 0)
+
+
+
+def useUltimate(setting, screen, stats, ship, bullets):
+	if stats.ultimateGauge != 100:
+		return
+	stats.ultimateGauge = 0
+	center = ship.rect.centerx
+	pos = 10
+	while pos <= 450:
+		ship.rect.centerx = pos
+		newBullet = Bullet(setting, screen, ship)
+		bullets.add(newBullet)
+		pos += 25
+	ship.rect.centerx = center
+
+
 
 def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel):
 	"""Update images on the screen and flip to the new screen"""
@@ -260,6 +292,9 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 
 	ship.blitme()
 	aliens.draw(screen)
+
+	#Update Ultimate Gauge
+	updateUltimateGauge(setting, screen, stats)
 
 	#Draw the scoreboard
 	sb.showScore()

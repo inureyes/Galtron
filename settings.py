@@ -10,6 +10,9 @@ class Settings():
 		self.bgColor = (20, 20, 20)
 		self.bg = pg.image.load("gfx/background.bmp")
 
+		#Ultimate settings
+		self.ultimateGaugeIncrement = 3
+
 		#Ships speed
 		self.shipLimit = 3
 

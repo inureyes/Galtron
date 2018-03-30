@@ -45,7 +45,7 @@ def runGame():
 
 	#Make a ship
 	ship = Ship(setting, screen)
-	#Ships for two player 
+	#Ships for two player
 	ship1 = Ship(setting, screen)
 	ship2 = Ship(setting, screen)
 

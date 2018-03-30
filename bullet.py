@@ -11,7 +11,7 @@ class Bullet(Sprite):
 		#load the bullet image and set its rect attribute
 		self.image = pg.image.load('gfx/bullet.bmp')
 		self.rect = self.image.get_rect()
-		
+
 		#Create a bullet rect at (0,0)
 		##self.rect = pg.Rect(0, 0, setting.bulletWidth, setting.bulletHeight)
 		self.rect.centerx = ship.rect.centerx
@@ -22,7 +22,6 @@ class Bullet(Sprite):
 
 		self.color = setting.bulletColor
 		self.bulletSpeed = setting.bulletSpeed
-
 
 	def update(self):
 		"""Move the bullet -y up the screen"""
