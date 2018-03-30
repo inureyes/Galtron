@@ -23,7 +23,7 @@ class Scoreboard():
 
 	def prepScore(self):
 		"""Turn the score into a rendered image"""
-		roundedScore = int(round(self.stats.score, -1))
+		roundedScore = int(self.stats.score)
 		scoreStr = "{:,}".format(roundedScore)
 		self.scoreImg = self.font.render(scoreStr, True, self.textColor, 
 			self.setting.bgColor)
@@ -35,7 +35,7 @@ class Scoreboard():
 
 	def prepHighScore(self):
 		"""Turn the high score into a rendered image"""
-		highScore = int(round(self.stats.highScore, -1))
+		highScore = int(self.stats.highScore)
 		highScoreStr = "HS: "
 		highScoreStr += "{:,}".format(highScore)
 		self.highScoreImg = self.font.render(highScoreStr, True, self.textColor,
