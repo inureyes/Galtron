@@ -51,7 +51,7 @@ class Settings():
 			self.fleetDropSpeed *= 0.5
 			self.fleetDir -= 0.1
 			self.alienPoints *= 0.5 # nerf earning points in lower speed
-			self.speedUp = 1
+			self.speedUp = 1.002
 			self.scoreSpeedUp = 1.1
 
 	def doublespeed(self):
