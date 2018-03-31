@@ -3,6 +3,7 @@ import pygame as pg
 from time import sleep
 from bullet import Bullet
 from alien import Alien
+import random
 
 pauseBtnState = 1
 back = False
@@ -124,9 +125,11 @@ def getNumberRows(setting, shipHeight, alienHeight):
 def createAlien(setting, screen, aliens, alienNumber, rowNumber):
 	alien = Alien(setting, screen)
 	alienWidth = alien.rect.width
+	screenRect = alien.screen.get_rect()
 	alien.x = alienWidth + 2 * alienWidth * alienNumber
-	alien.rect.x = alien.x
-	alien.rect.y = alien.rect.height + 2 * alien.rect.height * rowNumber
+	""" random position of enemy will be created in game window"""
+	alien.rect.x =  random.randrange(0,setting.screenWidth-alien.x/2)
+	alien.rect.y = (alien.rect.height + random.randrange(0,setting.screenHeight-alien.rect.height*2))/1.5
 	aliens.add(alien)
 
 
