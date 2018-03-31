@@ -44,7 +44,8 @@ class Settings():
 			self.alienSpeed = 1
 			self.fleetDropSpeed = 5
 			self.fleetDir = 1
-			self.alienPoints = 50
+		
+		self.alienPoints = 50
 
 	def increaseSpeed(self):
 		"""Increase the speed settings"""
