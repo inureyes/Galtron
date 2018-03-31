@@ -24,7 +24,7 @@ class Settings():
 
 		#How quickly the game speeds up
 		if(platform.system() == 'Windows'):
-			self.speedUp = 1.005
+			self.speedUp = 1.07
 		else:
 			self.speedUp = 1.1
 		
@@ -33,11 +33,11 @@ class Settings():
 
 	def initDynamicSettings(self):
 		if(platform.system() == 'Windows'):
-			self.shipSpeed = 1.5/3
-			self.bulletSpeed = 3/3
-			self.alienSpeed = 1/3
-			self.fleetDropSpeed = 5/3
-			self.fleetDir = 1/3
+			self.shipSpeed = 1.5/2
+			self.bulletSpeed = 3/2
+			self.alienSpeed = 1/2
+			self.fleetDropSpeed = 5/2
+			self.fleetDir = 1/2
 		else:        
 			self.shipSpeed = 1.5
 			self.bulletSpeed = 3
