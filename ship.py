@@ -34,6 +34,10 @@ class Ship(Sprite):
 			self.center += self.setting.shipSpeed
 		if self.movingLeft and self.rect.left > 1:
 			self.center -= self.setting.shipSpeed
+		if self.movingRight and self.rect.right >= self.screenRect.right:
+			self.center = 1.0
+		if self.movingLeft and self.rect.left <= 1:
+			self.center = self.screenRect.right
 
 		#update rect object from self.center
 		self.rect.centerx = self.center
