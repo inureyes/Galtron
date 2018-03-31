@@ -7,10 +7,11 @@ class Settings():
 		"""Initialize the class"""
 		self.windowCaption = 'Galtron'
 		self.screenWidth = 450
-		self.screenHeight = 550
+		self.screenHeight = 650
 		self.bgColor = (20, 20, 20)
-		self.bg = pg.image.load("gfx/background.bmp")
-
+		self.image = pg.image.load("gfx/background2.png")
+		self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
+		self.bg = self.image
 		#Ships speed
 		self.shipLimit = 3
 
@@ -53,6 +54,7 @@ class Settings():
 			self.alienSpeed *= self.speedUp
 			self.fleetDropSpeed *= self.speedUp
 		self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
+
 
 	def halfspeed(self):
 		if self.shipSpeed>0 and self.bulletSpeed>0 and self.alienSpeed>0 and self.fleetDropSpeed>0: 
