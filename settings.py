@@ -11,7 +11,7 @@ class Settings():
 		self.bg = pg.image.load("gfx/background.bmp")
 
 		#Ships speed
-		self.shipLimit = 3
+		self.shipLimit = 5
 
 		#Bullet settings
 		self.bulletWidth = 3
