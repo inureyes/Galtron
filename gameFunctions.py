@@ -125,10 +125,11 @@ def getNumberRows(setting, shipHeight, alienHeight):
 def createAlien(setting, screen, aliens, alienNumber, rowNumber):
 	alien = Alien(setting, screen)
 	alienWidth = alien.rect.width
+	screenRect = alien.screen.get_rect()
 	alien.x = alienWidth + 2 * alienWidth * alienNumber
 	""" random position of enemy will be created in game window"""
-	alien.rect.x = alien.x + random.randrange(1,200)
-	alien.rect.y = alien.rect.height +  2 * alien.rect.height * rowNumber - random.randrange(1,200)
+	alien.rect.x =  random.randrange(0,setting.screenWidth-alien.x/2)
+	alien.rect.y = (alien.rect.height + random.randrange(0,setting.screenHeight-alien.rect.height*2))/1.5
 	aliens.add(alien)
 
 
