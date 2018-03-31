@@ -55,7 +55,13 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 	elif event.key == pg.K_LEFT:
 		#Move the ship left
 		ship.movingLeft = True
-	elif event.key == pg.K_LCTRL:
+	elif event.key == pg.K_UP:
+		#Move the ship up
+		ship.movingUp = True
+	elif event.key == pg.K_DOWN:
+		#Move the ship down
+		ship.movingDown = True
+	elif event.key == pg.K_SPACE:
 		newBullet = Bullet(setting, screen, ship)
 		bullets.add(newBullet)
 	#Check for pause key
@@ -71,6 +77,10 @@ def checkKeyupEvents(event, ship):
 		ship.movingRight = False
 	elif event.key == pg.K_LEFT:
 		ship.movingLeft = False
+	elif event.key == pg.K_UP:
+		ship.movingUp = False
+	elif event.key == pg.K_DOWN:
+		ship.movingDown = False
 
 
 def pause(stats):
