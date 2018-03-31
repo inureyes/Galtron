@@ -118,7 +118,7 @@ def getNumberAliens(setting, alienWidth):
 def getNumberRows(setting, shipHeight, alienHeight):
 	"""Determine the number of rows of aliens that fit on the screen"""
 	availableSpaceY = (setting.screenHeight - (3 * alienHeight) - shipHeight)
-	numberRows = int(availableSpaceY / (2 * alienHeight))
+	numberRows = int(availableSpaceY / (3 * alienHeight))
 	return numberRows
 
 
