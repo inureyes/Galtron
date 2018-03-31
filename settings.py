@@ -33,11 +33,11 @@ class Settings():
 
 	def initDynamicSettings(self):
 		if(platform.system() == 'Windows'):
-			self.shipSpeed = 1.5/4
-			self.bulletSpeed = 3/4
-			self.alienSpeed = 1/4
-			self.fleetDropSpeed = 5/4
-			self.fleetDir = 1/4
+			self.shipSpeed = 1.5/3
+			self.bulletSpeed = 3/3
+			self.alienSpeed = 1/3
+			self.fleetDropSpeed = 5/3
+			self.fleetDir = 1/3
 		else:        
 			self.shipSpeed = 1.5
 			self.bulletSpeed = 3
