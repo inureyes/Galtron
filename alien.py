@@ -45,14 +45,14 @@ class Alien(Sprite):
 		self.shoot(setting, screen, self.ship, self.aliens, self.eBullets)
 
 	def shoot(self, setting, screen, ship, aliens, eBullets):
-		if self.rect.centerx == self.ship.rect.centerx and len(eBullets) <= 4:
+		if self.rect.centerx >= self.ship.rect.centerx and len(eBullets) <= 4:
 			if self.timer >= 50:
 				self.timer = 0
 				newBullet = EBullet(setting, screen, self)
 				eBullets.add(newBullet)
 		else:
 			self.timer += 1
-			
+
 
 	def blitme(self):
 		"""draw hte alien"""
