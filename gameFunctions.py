@@ -98,6 +98,7 @@ def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets
 		ship.centerShip()
 
 		#Reset score and level
+		sb.prepShips()
 		sb.prepScore()
 		sb.prepLevel()
 		sb.prepHighScore()
@@ -277,7 +278,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 		menuBtn.drawBtn()
 		quitBtn.drawBtn()
 		sel.blitme()
-		
+
 	#Make the most recently drawn screen visable.
 	pg.display.update()
 	clock.tick(FPS)
