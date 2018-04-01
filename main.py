@@ -98,6 +98,6 @@ def runGame():
 			if runGame == True:
 				print("test")
 #init bgm mixer
-pg.mixer.pre_init(44100,16,2,4096)
+#pg.mixer.pre_init(44100,16,2,4096)
 #run the runGame method to run the game
 runGame()

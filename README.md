@@ -32,21 +32,23 @@
 | TaeWoong Kong | Student    |     |
 | KeonWoong Noh | Student    |     |
 | ChaeHyun Baek | Student    |     |
-<<<<<<< HEAD
+<<<<<<<
 | JK            | Student    |     |
 <<<<<<< HEAD
 | JK2           | Student    |     |
 =======
 =======
->>>>>>> master
+
+>>>>>>>
 | SeongIn Moon  | Student    |     |
 | JeWoong Moon  | Student    |     |
 | Yushin        | Student    |     |
 | GookGon Lee   | Student    |     |
-<<<<<<< HEAD
+<<<<<<<
 >>>>>>> master
 =======
->>>>>>> master
+
+>>>>>>>
 | Hyobin Lee    | Student    |     |
 | Hayeong Lee   | Student    |     |
 | YoungHoon Kwon| Student    |     |

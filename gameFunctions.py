@@ -2,6 +2,7 @@ import sys
 import pygame as pg
 from time import sleep
 from bullet import Bullet
+from bullet import SpecialBullet
 from alien import Alien
 
 pauseBtnState = 1
@@ -62,7 +63,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		bullets.add(newBullet)
 	elif event.key == pg.K_x:
 		#Ultimate key
-		useUltimate(setting, screen, stats, ship, bullets)
+		useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
 	#Check for pause key
 	elif event.key == pg.K_p:
 		pause(stats)
@@ -255,20 +256,36 @@ def updateUltimateGauge(setting, screen, stats):
 	pg.draw.rect(screen, (255,255,255), (x,y,100,10), 0)
 	pg.draw.rect(screen, (0,0,255), (x,y,gauge,10), 0)
 
+def UltimateDiamondShape(setting, screen, stats, sbullets):
+	xpos = 10
+	yCenter = setting.screenHeight + (setting.screenWidth / 50) * 20
+	yGap = 0
+	#Make a diamond pattern
+	while xpos <= setting.screenWidth:
+		if yGap == 0:
+			sBullet = SpecialBullet(setting, screen, (xpos, yCenter))
+			sbullets.add(sBullet)
+		else:
+			upBullet = SpecialBullet(setting, screen, (xpos, yCenter + yGap))
+			downBullet = SpecialBullet(setting, screen, (xpos, yCenter - yGap))
+			sbullets.add(upBullet)
+			sbullets.add(downBullet)
+		if xpos < setting.screenWidth / 2:
+			yGap += 20
+		else:
+			yGap -= 20
+		xpos += 25
 
-
-def useUltimate(setting, screen, stats, ship, bullets):
+def useUltimate(setting, screen, stats, sbullets, pattern):
 	if stats.ultimateGauge != 100:
 		return
+	if pattern == 1:
+		UltimateDiamondShape(setting, screen, stats, sbullets)
+#	elif pattern == 2:
+#		make other pattern
 	stats.ultimateGauge = 0
-	center = ship.rect.centerx
-	pos = 10
-	while pos <= 450:
-		ship.rect.centerx = pos
-		newBullet = Bullet(setting, screen, ship)
-		bullets.add(newBullet)
-		pos += 25
-	ship.rect.centerx = center
+
+
 
 
 
@@ -287,7 +304,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	screen.blit(setting.bg, (0,rel_x - setting.bg.get_rect().height))
 	if rel_x < setting.screenHeight:
 		screen.blit(setting.bg, (0,rel_x))
-	x -= 1			
+	x -= 1
 
 	#draw all the bullets
 	for bullet in bullets.sprites():
@@ -312,11 +329,8 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 		menuBtn.drawBtn()
 		quitBtn.drawBtn()
 		sel.blitme()
-		
+
 	#Make the most recently drawn screen visable.
-<<<<<<< HEAD
 	pg.display.flip()
-=======
 	pg.display.update()
 	clock.tick(FPS)
->>>>>>> master
