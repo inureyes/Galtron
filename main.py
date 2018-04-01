@@ -46,7 +46,7 @@ def runGame():
 
 	#Make a ship
 	ship = Ship(setting, screen)
-	#Ships for two player 
+	#Ships for two player
 	ship1 = Ship(setting, screen)
 	ship2 = Ship(setting, screen)
 
@@ -99,5 +99,6 @@ def runGame():
 				print("test")
 #init bgm mixer
 pg.mixer.pre_init(44100,16,2,4096)
+pg.mixer.init(44100,-16,2,4096)
 #run the runGame method to run the game
 runGame()

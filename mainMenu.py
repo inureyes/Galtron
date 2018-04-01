@@ -48,7 +48,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 def prepTitle(setting, screen):
 	#Font settings for scoring information
 	global image, rect
-	image = pg.image.load('gfx/title.png')
+	image = pg.image.load('gfx/title_modify.png')
 	rect = image.get_rect()
 
 
@@ -59,13 +59,16 @@ def drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBt
 	quitBtn.msgImageRect.y = 350
 	menuBtn.rect.y = 450
 	menuBtn.msgImageRect.y = 450
+	screen.fill(setting.bgColor)
+	#screen.blit(setting.bg, (0,0))
+	screen.blit(image, rect)
 	#screen.fill(setting.bgColor)
-	screen.blit(setting.bg, (0,0))
+	#screen.blit(setting.bg, (0,0))
 	playBtn.drawBtn()
 	twoPlayBtn.drawBtn()
 	aboutBtn.drawBtn()
 	quitBtn.drawBtn()
 	#sb.showScore()
-	screen.blit(image, rect)
+	#screen.blit(image, rect)
 	sel.blitme()
 	pg.display.flip()
