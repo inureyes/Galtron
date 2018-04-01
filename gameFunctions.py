@@ -7,6 +7,7 @@ from alien import Alien
 pauseBtnState = 1
 back = False
 x = 0
+clock = pg.time.Clock()
 FPS = 120
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
@@ -244,8 +245,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	#Redraw the screen during each pass through the loop
 	#Fill the screen with background color
 	#Readjust the quit menu btn position
-	CLOCK = pg.time.Clock()
-	global x, FPS
+	global x, clock, FPS
 	quitBtn.rect.y = 300
 	quitBtn.msgImageRect.y = 300
 	menuBtn.rect.y = 250
@@ -256,8 +256,6 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	if rel_x < setting.screenHeight:
 		screen.blit(setting.bg, (0,rel_x))
 	x -= 1			
-	pg.display.update()
-	CLOCK.tick(FPS)
 
 	#draw all the bullets
 	for bullet in bullets.sprites():
@@ -279,5 +277,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 		menuBtn.drawBtn()
 		quitBtn.drawBtn()
 		sel.blitme()
+		
 	#Make the most recently drawn screen visable.
-	pg.display.flip()
+	pg.display.update()
+	clock.tick(FPS)
