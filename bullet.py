@@ -44,7 +44,7 @@ class SpecialBullet(Sprite):
 		self.screen = screen
 
 		#load the bullet image and set its rect attribute
-		self.image = pg.image.load('gfx/bullet.bmp')
+		self.image = pg.image.load('gfx/bullet.png')
 		self.rect = self.image.get_rect()
 
 		#Create a bullet rect at (0,0)

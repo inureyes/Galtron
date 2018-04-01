@@ -270,11 +270,11 @@ def UltimateDiamondShape(setting, screen, stats, sbullets):
 			downBullet = SpecialBullet(setting, screen, (xpos, yCenter - yGap))
 			sbullets.add(upBullet)
 			sbullets.add(downBullet)
-		if xpos < setting.screenWidth / 2:
+		if xpos <= setting.screenWidth / 2:
 			yGap += 20
 		else:
 			yGap -= 20
-		xpos += 25
+		xpos += setting.screenWidth / 30
 
 def useUltimate(setting, screen, stats, sbullets, pattern):
 	if stats.ultimateGauge != 100:
