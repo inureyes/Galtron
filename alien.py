@@ -34,6 +34,9 @@ class Alien(Sprite):
 		elif self.rect.left <= 0:
 			return True
 
+	def isInsideScreen(self):
+		screenRect = self.screen.get_rect()
+		return screenRect.contains(self.rect)
 
 	def update(self, setting, screen, ship, aliens, eBullets):
 		"""Move the alien right or left"""

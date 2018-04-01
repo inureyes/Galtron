@@ -160,6 +160,11 @@ def checkFleetEdges(setting, aliens):
 			changeFleetDir(setting, aliens)
 			break
 
+def checkIsInsideScreen(aliens):
+	"""Respond if any aliens have reached an edge"""
+	for alien in aliens.sprites():
+		if not alien.isInsideScreen():
+			alien.kill()
 
 def changeFleetDir(setting, aliens):
 	"""Change the direction of aliens"""
@@ -192,11 +197,12 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Update the aliens"""
 	checkFleetEdges(setting, aliens)
+	checkIsInsideScreen(aliens)
 	aliens.update(setting, screen, ship, aliens, eBullets)
 
 	#look for alien-ship collision
 	if pg.sprite.spritecollideany(ship, aliens):
-		shipHit(setting, stats, sb, screen, ship, aliens, bullets)
+		shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 		sb.prepShips()
 
 
