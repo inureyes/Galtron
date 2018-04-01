@@ -160,6 +160,12 @@ def checkFleetEdges(setting, aliens):
 			changeFleetDir(setting, aliens)
 			break
 
+def checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
+	"""Respond if any aliens have reached an bottom of screen"""
+	for alien in aliens.sprites():
+		if alien.checkBottom():
+			shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+
 
 def changeFleetDir(setting, aliens):
 	"""Change the direction of aliens"""
@@ -191,11 +197,13 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Update the aliens"""
 	checkFleetEdges(setting, aliens)
+	checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 	aliens.update(setting, screen, ship, aliens, eBullets)
 
 	#look for alien-ship collision
 	if pg.sprite.spritecollideany(ship, aliens):
-		shipHit(setting, stats, sb, screen, ship, aliens, bullets)
+		#74
+		shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 		sb.prepShips()
 
 
