@@ -1,5 +1,4 @@
 import pygame as pg
-import platform
 from animations import Explosions
 
 
