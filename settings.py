@@ -1,4 +1,5 @@
 import pygame as pg
+from animations import Explosions
 
 class Settings():
 	"""A class to store all settings for game"""
@@ -10,8 +11,14 @@ class Settings():
 		self.bgColor = (20, 20, 20)
 		self.bg = pg.image.load("gfx/background.bmp")
 
+		#Ultimate settings
+		self.ultimateGaugeIncrement = 3
+
+		self.image = pg.image.load("gfx/background2.png")
+		self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
+		self.bg = self.image
 		#Ships speed
-		self.shipLimit = 3
+		self.shipLimit = 5
 
 		#Bullet settings
 		self.bulletWidth = 3
@@ -22,7 +29,7 @@ class Settings():
 
 		#How quickly the game speeds up
 		self.speedUp = 1.1
-		self.scoreSpeedUp = 1.5
+		self.scoreSpeedUp = 5
 
 		self.initDynamicSettings()
 
@@ -32,7 +39,7 @@ class Settings():
 		self.alienSpeed = 1
 		self.fleetDropSpeed = 5
 		self.fleetDir = 1
-		self.alienPoints = 50
+		self.alienPoints = 10
 
 	def increaseSpeed(self):
 		"""Increase the speed settings"""
