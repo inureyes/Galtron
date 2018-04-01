@@ -41,9 +41,9 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship
 def prepAbout(setting, screen):
 	#Font settings for scoring information
 	global image, rect
-	image = pg.image.load('gfx/about.png')
+	image = pg.image.load('gfx/About_modify.png')
 	rect = image.get_rect()
-	
+
 
 def drawMenu(setting, screen, sb, menuBtn, quitBtn, sel):
 	"""Draw the menu and all of its elements"""
@@ -53,8 +53,9 @@ def drawMenu(setting, screen, sb, menuBtn, quitBtn, sel):
 	menuBtn.rect.y = 450
 	menuBtn.msgImageRect.y = 450
 	screen.fill(setting.bgColor)
+	screen.blit(image, rect)
 	menuBtn.drawBtn()
 	quitBtn.drawBtn()
-	screen.blit(image, rect)
+	#screen.blit(image, rect)
 	sel.blitme()
 	pg.display.flip()
