@@ -59,7 +59,7 @@ class Settings():
 			self.bulletSpeed *= 0.5
 			self.alienSpeed *= 0.5
 			self.fleetDropSpeed *= 0.5
-			self.fleetDir -= 0.1
+			self.fleetDir *= 0.5
 			self.alienPoints *= 0.5 # nerf earning points in lower speed
 			self.scoreSpeedUp = 1.1
 
@@ -68,7 +68,7 @@ class Settings():
 		self.bulletSpeed *= 2
 		self.alienSpeed *= 2
 		self.fleetDropSpeed *= 2
-		self.fleetDir *= 1.5
+		self.fleetDir *= 2
 		self.alienPoints *= 2
 		
 
