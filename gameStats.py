@@ -25,6 +25,8 @@ class GameStats():
 		self.level = 1
 		self.score = 0
 		self.counter = 3
+		self.ultimateGauge = 0
+		self.ultimatePattern = 1
 		filename = 'data-files/highscore.json'
 		with open(filename, 'r') as f_obj:
 			self.tempScore = json.load(f_obj)
