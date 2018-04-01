@@ -8,6 +8,8 @@ import random
 
 pauseBtnState = 1
 back = False
+trajectory = 0
+
 x = 0
 clock = pg.time.Clock()
 FPS = 120
@@ -53,14 +55,27 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to kepresses"""
 	global back
+	global trajectory
 	if event.key == pg.K_RIGHT:
 		#Move the ship right
 		ship.movingRight = True
 	elif event.key == pg.K_LEFT:
 		#Move the ship left
 		ship.movingLeft = True
+	elif event.key == pg.K_UP:
+		#Move the ship up
+		ship.movingUp = True
+	elif event.key == pg.K_DOWN:
+		#Move the ship down
+		ship.movingDown = True
+	elif event.key == pg.K_TAB:
+		#Change the style of trajectory of bullet
+		if (trajectory < 5):
+			trajectory += 1
+		else:
+			trajectory = 0
 	elif event.key == pg.K_SPACE:
-		newBullet = Bullet(setting, screen, ship)
+		newBullet = Bullet(setting, screen, ship, trajectory)
 		bullets.add(newBullet)
 	elif event.key == pg.K_x:
 		#Ultimate key
@@ -78,6 +93,10 @@ def checkKeyupEvents(event, ship):
 		ship.movingRight = False
 	elif event.key == pg.K_LEFT:
 		ship.movingLeft = False
+	elif event.key == pg.K_UP:
+		ship.movingUp = False
+	elif event.key == pg.K_DOWN:
+		ship.movingDown = False
 
 
 def pause(stats):
@@ -166,6 +185,12 @@ def checkIsInsideScreen(aliens):
 		if not alien.isInsideScreen():
 			alien.kill()
 
+def checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
+	"""Respond if any aliens have reached an bottom of screen"""
+	for alien in aliens.sprites():
+		if alien.checkBottom():
+			shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+
 def changeFleetDir(setting, aliens):
 	"""Change the direction of aliens"""
 	for alien in aliens.sprites():
@@ -197,11 +222,13 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Update the aliens"""
 	checkFleetEdges(setting, aliens)
-	checkIsInsideScreen(aliens)
+	#checkIsInsideScreen(aliens)
+	checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 	aliens.update(setting, screen, ship, aliens, eBullets)
 
 	#look for alien-ship collision
 	if pg.sprite.spritecollideany(ship, aliens):
+		#74
 		shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 		sb.prepShips()
 
@@ -227,6 +254,9 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
 	"""Detect collisions between alien and bullets"""
 	collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
 	if collisions:
+		for c in collisions:
+			setting.explosions.add(c.rect.x, c.rect.y)
+		
 		#Increase the ultimate gauge, upto 100
 		stats.ultimateGauge += setting.ultimateGaugeIncrement
 		if stats.ultimateGauge > 100:
@@ -339,8 +369,9 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 		menuBtn.drawBtn()
 		quitBtn.drawBtn()
 		sel.blitme()
-
+	setting.explosions.draw(screen)
 	#Make the most recently drawn screen visable.
 	pg.display.flip()
 	pg.display.update()
 	clock.tick(FPS)
+

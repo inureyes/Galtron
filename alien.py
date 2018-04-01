@@ -34,9 +34,17 @@ class Alien(Sprite):
 		elif self.rect.left <= 0:
 			return True
 
+
 	def isInsideScreen(self):
 		screenRect = self.screen.get_rect()
 		return screenRect.contains(self.rect)
+
+	def checkBottom(self):
+		"""Returns True if alien is at the bottom of screen"""
+		screenRect = self.screen.get_rect()
+		if self.rect.bottom >= screenRect.bottom:
+			return True
+
 
 	def update(self, setting, screen, ship, aliens, eBullets):
 		"""Move the alien right or left"""
@@ -53,7 +61,6 @@ class Alien(Sprite):
 				self.timer = 0
 				newBullet = EBullet(setting, screen, self)
 				eBullets.add(newBullet)
-		else:
 			self.timer += 1
 			
 

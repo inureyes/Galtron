@@ -1,4 +1,5 @@
 import pygame as pg
+from animations import Explosions
 
 class Settings():
 	"""A class to store all settings for game"""
@@ -34,7 +35,7 @@ class Settings():
 
 	def initDynamicSettings(self):
 		self.shipSpeed = 1.5
-		self.bulletSpeed = 3
+		self.bulletSpeed = 0.6
 		self.alienSpeed = 1
 		self.fleetDropSpeed = 5
 		self.fleetDir = 1
