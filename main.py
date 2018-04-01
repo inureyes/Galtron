@@ -1,5 +1,6 @@
 #Created by Matt Boan
 import sys
+from _pickle import load
 import pygame as pg
 from pygame.sprite import Group
 
@@ -58,6 +59,11 @@ def runGame():
 	gf.createFleet(setting, screen, ship, aliens)
 	pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
 
+	#plays bgm
+	pg.mixer.music.load("galtron.mp3")
+	pg.mixer.music.set_volume(0.25)
+	pg.mixer.music.play(-1)
+
 	runGame = True
 
 	#Set the two while loops to start mainMenu first
@@ -91,5 +97,7 @@ def runGame():
 		while stats.mainGame:
 			if runGame == True:
 				print("test")
+#init bgm mixer
+pg.mixer.pre_init(44100,16,2,4096)
 #run the runGame method to run the game
 runGame()
