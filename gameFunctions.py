@@ -47,7 +47,6 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 					sel.rect.centery = playBtn.rect.centery
 					pauseBtnState = 1
 				elif pauseBtnState == 3:
-
 					pg.mixer.Sound.play(button_click_sound)
 					pg.time.delay(300)
 					sys.exit()	
@@ -67,11 +66,9 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 	elif event.key == pg.K_LEFT:
 		#Move the ship left
 		ship.movingLeft = True
-<<<<<<< HEAD
 	elif event.key == pg.K_SPACE:
-		newBullet = Bullet(setting, screen, ship)
+		newBullet = Bullet(setting, screen, ship,ship.trajectory)
 		bullets.add(newBullet)
-=======
 	elif event.key == pg.K_UP:
 		#Move the ship up
 		ship.movingUp = True
@@ -92,7 +89,6 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 	elif event.key == pg.K_x:
 		#Ultimate key
 		useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
->>>>>>> fa0c7bdd1b7f7f05207f4d8e836529072aaeb4a4
 	#Check for pause key
 	elif event.key == pg.K_p:
 		pause(stats)
@@ -275,9 +271,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
 	# add enemy_explosion_sound
 	enemy_explosion_sound = pg.mixer.Sound('./sound_effect/enemy_explosion.wav')
 	if collisions:
-<<<<<<< HEAD
 		pg.mixer.Sound.play(enemy_explosion_sound)
-=======
 		for c in collisions:
 			setting.explosions.add(c.rect.x, c.rect.y)
 
@@ -285,7 +279,6 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
 		stats.ultimateGauge += setting.ultimateGaugeIncrement
 		if stats.ultimateGauge > 100:
 			stats.ultimateGauge = 100
->>>>>>> fa0c7bdd1b7f7f05207f4d8e836529072aaeb4a4
 		for aliens in collisions.values():
 			stats.score += setting.alienPoints * len(aliens)
 		checkHighScore(stats, sb)
