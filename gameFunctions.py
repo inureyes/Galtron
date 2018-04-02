@@ -9,6 +9,8 @@ back = False
 
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
+	# add button_click sound(case quit)
+	button_click_sound = pg.mixer.Sound('./sound_effect/button_clicked.wav')
 	global pauseBtnState
 	for event in pg.event.get():
 		#Check for quit event
@@ -39,6 +41,8 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 					sel.rect.centery = playBtn.rect.centery
 					pauseBtnState = 1
 				elif pauseBtnState == 3:
+					pg.mixer.Sound.play(button_click_sound)
+					pg.time.delay(300)
 					sys.exit()	
 
 		#Check if the key has been released
@@ -49,6 +53,8 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to kepresses"""
 	global back
+	# add button_click_sound (case quit)
+	button_click_sound2 = pg.mixer.Sound('./sound_effect/button_clicked.wav')
 	if event.key == pg.K_RIGHT:
 		#Move the ship right
 		ship.movingRight = True
@@ -63,6 +69,8 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		pause(stats)
 	elif event.key == pg.K_ESCAPE:
 		#Quit game
+		pg.mixer.Sound.play(button_click_sound2)
+		pg.time.delay(300)
 		sys.exit()
 
 def checkKeyupEvents(event, ship):
@@ -160,7 +168,10 @@ def changeFleetDir(setting, aliens):
 
 def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Respond to ship being hit"""
+	# add exprosion_sound
+	explosion_sound = pg.mixer.Sound('./sound_effect/explosion.wav')
 	if stats.shipsLeft > 0:
+		pg.mixer.Sound.play(explosion_sound)
 		sb.prepShips()
 		stats.shipsLeft -= 1
 		#Empty teh list of aliens and bullets
@@ -209,7 +220,10 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
 	"""Detect collisions between alien and bullets"""
 	collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
+	# add enemy_explosion_sound
+	enemy_explosion_sound = pg.mixer.Sound('./sound_effect/enemy_explosion.wav')
 	if collisions:
+		pg.mixer.Sound.play(enemy_explosion_sound)
 		for aliens in collisions.values():
 			stats.score += setting.alienPoints * len(aliens)
 		checkHighScore(stats, sb)

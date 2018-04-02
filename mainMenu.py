@@ -10,6 +10,8 @@ joystickEnter = False
 def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
 	global currentBtn
+	# add button_click_sound(case quit)
+	button_click_sound = pg.mixer.Sound('./sound_effect/button_clicked.wav')
 	for event in pg.event.get():
 		if event.type == pg.QUIT:
 			sys.exit()
@@ -40,8 +42,12 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 					currentBtn = 1
 					sel.rect.centery = menuBtn.rect.centery
 				elif currentBtn == 4:
+					pg.mixer.Sound.play(button_click_sound)
+					pg.time.delay(300)
 					sys.exit()
 			if event.key == pg.K_ESCAPE:
+				pg.mixer.Sound.play(button_click_sound)
+				pg.time.delay(300)
 				sys.exit()
 	prepTitle(setting, screen)
 
