@@ -68,11 +68,11 @@ class Settings():
                         self.Limit -= 1
 
 	def doublespeed(self):
-                if self.Limit <= 1:
-                        self.shipSpeed *= 2
-                        self.bulletSpeed *= 2
-                        self.alienSpeed *= 2
-                        self.fleetDropSpeed *= 2
-                        self.fleetDir *= 2
-                        self.alienPoints *= 2
-                        self.Limit += 1
+                
+                self.shipSpeed *= 1.3
+                self.bulletSpeed *= 1.3
+                self.alienSpeed *= 1.3
+                self.fleetDropSpeed *= 1.3
+                self.fleetDir *= 1.3
+                self.alienPoints *= 1.3
+                self.Limit += 1
