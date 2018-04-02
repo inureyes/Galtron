@@ -34,26 +34,36 @@ def checkEvents(setting, screen, stats, playBtn, quitBtn, sel, bullets, eBullets
 					stats.mainMenu = True
 					stats.mainGame = False
 					stats.mainAbout = False
-					print("worked")
 				elif pauseBtnState2 == 3:
 					sys.exit()	
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
-			checkKeyupEvents(event, ship1)
+			checkKeyupEvents(event, ship1, ship2)
 
 
 def checkKeydownEvents(event, setting, screen, stats, playBtn, quitBtn, sel, bullets, eBullets, pauseBtnState2, ship1, ship2):
 	"""Response to kepresses"""
 	global back
 	if event.key == pg.K_RIGHT:
-		#Move the ship right
 		ship1.movingRight = True
 	elif event.key == pg.K_LEFT:
-		#Move the ship left
 		ship1.movingLeft = True
-	elif event.key == pg.K_RCTRL:
-		newBullet = Bullet(setting, screen, ship1)
-		bullets.add(newBullet)
+	elif event.key == pg.K_UP:
+		ship1.movingUp = True
+	elif event.key == pg.K_DOWN:
+		ship1.movingDown = True
+	elif event.key == pg.K_d:
+		ship2.movingRight = True
+	elif event.key == pg.K_a:
+		ship2.movingLeft = True
+	elif event.key == pg.K_s:
+		ship2.movingDown = True
+	elif event.key == pg.K_w:
+		ship2.movingUp = True
+	elif event.key == pg.K_RALT:
+		ship1.shoot = True
+	elif event.key == pg.K_LALT:
+		ship2.shoot = True
 	#Check for pause key
 	elif event.key == pg.K_p:
 		pause(stats)
@@ -61,12 +71,28 @@ def checkKeydownEvents(event, setting, screen, stats, playBtn, quitBtn, sel, bul
 		#Quit game
 		sys.exit()
 
-def checkKeyupEvents(event, ship1):
+def checkKeyupEvents(event, ship1,ship2):
 	"""Response to keyrealeses"""
 	if event.key == pg.K_RIGHT:
 		ship1.movingRight = False
 	elif event.key == pg.K_LEFT:
 		ship1.movingLeft = False
+	elif event.key == pg.K_RALT:
+		ship1.shoot = False
+	elif event.key == pg.K_UP:
+		ship1.movingUp = False
+	elif event.key == pg.K_DOWN:
+		ship1.movingDown = False
+	elif event.key == pg.K_d:
+		ship2.movingRight = False
+	elif event.key == pg.K_a:
+		ship2.movingLeft = False
+	elif event.key == pg.K_s:
+		ship2.movingDown = False
+	elif event.key == pg.K_w:
+		ship2.movingUp = False
+	elif event.key == pg.K_LALT:
+		ship2.shoot = False
 
 def pause(stats):
 	"""Pause the game when the pause button is pressed"""
@@ -98,6 +124,8 @@ def updateScreen(setting, screen, stats, bullets, eBullets, playBtn, menuBtn, qu
 	#Redraw the screen during each pass through the loop
 	#Fill the screen with background color
 	#Readjust the quit menu btn position
+	playBtn.rect.y = 200
+	playBtn.msgImageRect.y = 200
 	quitBtn.rect.y = 300
 	quitBtn.msgImageRect.y = 300
 	menuBtn.rect.y = 250
@@ -114,7 +142,7 @@ def updateScreen(setting, screen, stats, bullets, eBullets, playBtn, menuBtn, qu
 		ebull.drawBullet()
 
 	ship1.blitme()
-
+	ship2.blitme()
 	#Draw the play button if the game is inActive
 	if not stats.gameActive:
 		playBtn.drawBtn()
