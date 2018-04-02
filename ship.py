@@ -1,6 +1,7 @@
 import pygame as pg
 from playMenu import *
 from pygame.sprite import *
+from bullet import Bullet
 
 class Ship(Sprite):
 	"""Class of a player ship"""
@@ -24,12 +25,9 @@ class Ship(Sprite):
 		self.rect.bottom = self.screenRect.bottom - 10
 
 		self.center = float(self.rect.centerx)
-<<<<<<< HEAD
 		self.right = self.screenRect.right
 		self.left = self.screenRect.left
-=======
 		self.centery = float(self.rect.centery)
->>>>>>> upstream/master
 
 		#Movement flag
 		self.movingRight = False
@@ -37,7 +35,12 @@ class Ship(Sprite):
 		self.movingUp = False
 		self.movingDown = False
 
-	def update(self):
+		#about shoot
+		self.shoot = False
+		self.timer = 0
+		self.trajectory = 0
+
+  def update(self, bullets):
 		self.image = pg.image.load(checkColor())
 		"""Update the ships position"""
 		if self.movingRight and self.rect.right < self.screenRect.right:
@@ -52,6 +55,13 @@ class Ship(Sprite):
 			self.centery -= self.setting.shipSpeed
 		if self.movingDown and self.rect.bottom < self.screenRect.bottom:
 			self.centery += self.setting.shipSpeed
+		if self.shoot == True:
+			if self.timer > 5:
+				newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
+				bullets.add(newBullet)
+				self.timer = 0
+			else:
+				self.timer += 1
 
 
 		#update rect object from self.center
@@ -65,7 +75,4 @@ class Ship(Sprite):
 	def centerShip(self):
 		"""Centers the ship"""
 		self.center = self.screenRect.centerx
-<<<<<<< HEAD
-=======
 		self.centery = self.screenRect.centery + self.screenRect.bottom / 2 - self.rect.height
->>>>>>> upstream/master

@@ -88,7 +88,7 @@ def runGame():
 			if stats.gameActive:
 				gf.updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets) #Update aliens
 				gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets) #Update collisions
-				ship.update() #update the ship
+				ship.update(bullets) #update the ship
 			gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel) #Update the screen
 
 		while stats.mainAbout:
@@ -96,13 +96,12 @@ def runGame():
 			About.drawMenu(setting, screen, sb, menuBtn, quitBtn, sel)
 
 		while stats.twoPlayer:
-			"""
 			tp.checkEvents(setting, screen, stats, playBtn, quitBtn, sel, bullets, eBullets, ship1, ship2)
 			if stats.gameActive:
-				ship1.update()
+				ship1.update(bullets)
+				ship2.update(bullets)
 				tp.updateBullets(setting, screen, stats, ship1, ship2, bullets, eBullets)
 			tp.updateScreen(setting, screen, stats, bullets, eBullets, playBtn, menuBtn, quitBtn, sel, ship1, ship2)
-			"""
 		while stats.mainGame:
 			if runGame == True:
 				print("test")
