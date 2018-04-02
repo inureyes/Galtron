@@ -49,18 +49,20 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 					sel.rect.centery = menuBtn.rect.centery
 				elif currentBtn == 4:
 					sys.exit()
-			if event.key == 61:
+			if event.key == 46:
 				setting.shipLimit += 1
-			if event.key == 45 and setting.shipLimit > 1:
+			if event.key == 44 and setting.shipLimit > 1:
 				setting.shipLimit -= 1					
 			if event.key == pg.K_ESCAPE:
 				sys.exit()
+			print(event.key)
 	prepTitle(setting, screen)
 
 def prepTitle(setting, screen):
 	#Font settings for scoring information
 	global image, rect
-	image = pg.image.load('gfx/title_modify.png')
+	image = pg.image.load('gfx/airplane.png')
+	image = pg.transform.scale(image,(setting.screenWidth,setting.screenHeight))
 	rect = image.get_rect()
 
 
