@@ -34,9 +34,7 @@
 | Jaehun Kim.   | student.   |     |
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
-<<<<<<< HEAD
 | KeonWoong Noh | Student    |     |
-=======
 | Onyu Park     | Student    |     |
 | TaeWoong Kong | Student    |     |
 | KeonWoong Noh | Student    |     |
@@ -66,7 +64,6 @@
 | Sungho Yun    | Student    |     |
 | Keunmo Koo.   | Genius     |     |
 
->>>>>>> fa0c7bdd1b7f7f05207f4d8e836529072aaeb4a4
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
