@@ -78,7 +78,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 def prepTitle(setting, screen):
 	#Font settings for scoring information
 	global image, rect
-	image = pg.image.load('gfx/airplane.jpg')
+	image = pg.image.load('gfx/title_c.png')
 	image = pg.transform.scale(image,(setting.screenWidth,setting.screenHeight))
 	rect = image.get_rect()
 
