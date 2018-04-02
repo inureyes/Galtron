@@ -13,6 +13,20 @@ back = False
 x = 0
 clock = pg.time.Clock()
 FPS = 120
+
+#Init and load sound effects
+pg.mixer.init(44100, -16, 2, 4096)
+control_menu = pg.mixer.Sound("sounds/control_menu.wav")
+control_menu.set_volume(0.22)
+select_menu = pg.mixer.Sound("sounds/select_menu.wav")
+select_menu.set_volume(0.18)
+attack = pg.mixer.Sound("sounds/attack.wav")
+attack.set_volume(0.08)
+ult_attack = pg.mixer.Sound("sounds/ult_attack.wav")
+ult_attack.set_volume(0.08)
+paused = pg.mixer.Sound("sounds/paused.wav")
+paused.set_volume(0.1)
+
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
 	global pauseBtnState
@@ -27,17 +41,21 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 			#Pause menu controls
 			if event.key == pg.K_UP:
 				if pauseBtnState > 1:
+					control_menu.play()
 					pauseBtnState -= 1
 					sel.rect.y -= 50
 			elif event.key == pg.K_DOWN:
 				if pauseBtnState < 3:
+					control_menu.play()
 					pauseBtnState += 1
 					sel.rect.y += 50
 
 			elif event.key == pg.K_RETURN:
 				if pauseBtnState == 1:
+					select_menu.play()
 					checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets)
 				elif pauseBtnState == 2:
+					select_menu.play()
 					stats.mainGame = False
 					stats.mainAbout = False
 					stats.twoPlay = False
@@ -74,6 +92,8 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		else:
 			ship.trajectory = 0
 	elif event.key == pg.K_SPACE:
+		if (stats.paused == False):
+			attack.play()
 		if len(bullets) <= 6:
 			newBullet = Bullet(setting, screen, ship, ship.trajectory)
 			bullets.add(newBullet)
@@ -83,6 +103,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
 	#Check for pause key
 	elif event.key == pg.K_p:
+		paused.play()
 		pause(stats)
 	#Add speed control key
 	elif event.key == pg.K_q:
@@ -249,7 +270,6 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
-      
 
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
@@ -324,6 +344,7 @@ def useUltimate(setting, screen, stats, sbullets, pattern):
 	if stats.ultimateGauge != 100:
 		return
 	if pattern == 1:
+		ult_attack.play()
 		UltimateDiamondShape(setting, screen, stats, sbullets)
 #	elif pattern == 2:
 #		make other pattern
@@ -378,4 +399,3 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	pg.display.flip()
 	pg.display.update()
 	clock.tick(FPS)
-
