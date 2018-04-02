@@ -65,7 +65,7 @@ def runGame():
 	pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
 
 	#plays bgm
-	pg.mixer.music.load("galtron.mp3")
+	pg.mixer.music.load("sounds/galtron.mp3")
 	pg.mixer.music.set_volume(0.25)
 	pg.mixer.music.play(-1)
 
@@ -85,12 +85,13 @@ def runGame():
 		while stats.mainGame:
 			#Game functions
 			gf.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets) #Check for events
+			
 			if stats.gameActive:
 				gf.updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets) #Update aliens
 				gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets) #Update collisions
 				ship.update(bullets) #update the ship
-			gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel) #Update the screen
-
+			 #Update the screen
+			gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel)
 		while stats.mainAbout:
 			About.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
 			About.drawMenu(setting, screen, sb, menuBtn, quitBtn, sel)
