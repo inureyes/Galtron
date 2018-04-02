@@ -6,14 +6,13 @@ from alien import Alien
 from settings import Settings
 import random
 
-
 pauseBtnState = 1
 back = False
 
 x = 0
 clock = pg.time.Clock()
 FPS = 120
-
+bgloop = 0
 #Init and load sound effects
 pg.mixer.init(44100, -16, 2, 4096)
 control_menu = pg.mixer.Sound("sounds/control_menu.wav")
@@ -164,7 +163,8 @@ def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets
 		sb.prepScore()
 		sb.prepLevel()
 		sb.prepHighScore()
-
+                #Reset BackGround
+		setting.bgimg(0)
 	elif not stats.gameActive and stats.paused:
 		#IF the game is not running and game is paused unpause the game
 		stats.gameActive = True
@@ -313,6 +313,13 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
 		sb.prepLevel()
 		time.sleep(1)
 		createFleet(setting, screen, ship, aliens)
+		global bgloop
+		if stats.level % 5 == 1:
+			bgloop += 1
+		if bgloop == 3:
+			bgloop -= 3
+		setting.bgimg(bgloop)
+                
 
 def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Check for collisions using collision mask between ship and enemy bullets"""
