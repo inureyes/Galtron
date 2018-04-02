@@ -1,14 +1,12 @@
-import sys
+import sys, time
 import pygame as pg
 from time import sleep
-from bullet import Bullet
 from bullet import SpecialBullet
 from alien import Alien
 import random
 
 pauseBtnState = 1
 back = False
-trajectory = 0
 
 x = 0
 clock = pg.time.Clock()
@@ -55,7 +53,6 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to kepresses"""
 	global back
-	global trajectory
 	if event.key == pg.K_RIGHT:
 		#Move the ship right
 		ship.movingRight = True
@@ -70,13 +67,15 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		ship.movingDown = True
 	elif event.key == pg.K_TAB:
 		#Change the style of trajectory of bullet
-		if (trajectory < 5):
-			trajectory += 1
+		if (ship.trajectory < 5):
+			ship.trajectory += 1
 		else:
-			trajectory = 0
+			ship.trajectory = 0
 	elif event.key == pg.K_SPACE:
-		newBullet = Bullet(setting, screen, ship, trajectory)
-		bullets.add(newBullet)
+		if len(bullets) <= 6:
+			newBullet = Bullet(setting, screen, ship, trajectory)
+			bullets.add(newBullet)
+		ship.shoot = True
 	elif event.key == pg.K_x:
 		#Ultimate key
 		useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
@@ -97,7 +96,8 @@ def checkKeyupEvents(event, ship):
 		ship.movingUp = False
 	elif event.key == pg.K_DOWN:
 		ship.movingDown = False
-
+	elif event.key == pg.K_SPACE:
+		ship.shoot = False
 
 def pause(stats):
 	"""Pause the game when the pause button is pressed"""
@@ -200,11 +200,11 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 		stats.shipsLeft -= 1
 		stats.ultimateGauge = 0
 		#Empty the list of aliens and bullets
-		aliens.empty()
-		bullets.empty()
-		eBullets.empty()
+#		aliens.empty()
+#		bullets.empty()
+#		eBullets.empty()
 		#Create a new fleet and center the ship.
-		createFleet(setting, screen, ship, aliens)
+#		createFleet(setting, screen, ship, aliens)
 		ship.centerShip()
 		sb.prepShips()
 		sb.prepScore()
@@ -232,7 +232,7 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	#check if we are colliding
 	bullets.update()
 	eBullets.update()
-	checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets)
+	checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets)
 	checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 	#if bullet goes off screen delete it
 	for bullet in eBullets.copy():
@@ -244,7 +244,7 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 			bullets.remove(bullet)
 
 
-def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
+def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	"""Detect collisions between alien and bullets"""
 	collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
 	if collisions:
@@ -263,9 +263,11 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
 	if len(aliens) == 0:
 		#Destroy exsiting bullets and create new fleet
 		bullets.empty()
+		eBullets.empty()
 		setting.increaseSpeed() #Speed up game
 		stats.level += 1
 		sb.prepLevel()
+		time.sleep(1)
 		createFleet(setting, screen, ship, aliens)
 
 def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
