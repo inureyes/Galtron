@@ -40,7 +40,8 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 		#Check for key down has been pressed
 		elif event.type == pg.KEYDOWN:
 			checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
-			#Pause menu controls
+			if(stats.gameActive):
+				continue
 			if event.key == pg.K_UP:
 				if pauseBtnState > 1:
 					control_menu.play()
