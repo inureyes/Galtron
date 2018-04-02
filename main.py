@@ -65,7 +65,7 @@ def runGame():
 	pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
 
 	#plays bgm
-	pg.mixer.music.load("galtron.mp3")
+	pg.mixer.music.load("sounds/galtron.mp3")
 	pg.mixer.music.set_volume(0.25)
 	pg.mixer.music.play(-1)
 

@@ -5,6 +5,13 @@ import pygame as pg
 aboutBtn = 1
 back = False
 
+#Init and load sound effects
+pg.mixer.init(44100, -16, 2, 4096)
+control_menu = pg.mixer.Sound("sounds/control_menu.wav")
+control_menu.set_volume(0.22)
+select_menu = pg.mixer.Sound("sounds/select_menu.wav")
+select_menu.set_volume(0.22)
+
 
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
@@ -18,14 +25,17 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship
 			#Check if down, up, enter, esc is pressed
 			if event.key == pg.K_DOWN:
 				if aboutBtn < 2:
+					control_menu.play()
 					aboutBtn += 1
 					sel.rect.y += 50
 			if event.key == pg.K_UP:
 				if aboutBtn > 1:
+					control_menu.play()
 					aboutBtn -= 1
 					sel.rect.y -= 50
 			if event.key == pg.K_RETURN:
 				if aboutBtn == 1:
+					select_menu.play()
 					stats.mainMenu = True
 					stats.mainGame = False
 					stats.twoPlayer = False
