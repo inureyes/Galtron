@@ -23,27 +23,28 @@ class Scoreboard():
 
 	def prepScore(self):
 		"""Turn the score into a rendered image"""
-		roundedScore = int(round(self.stats.score, -1))
-		scoreStr = "{:,}".format(roundedScore)
-		self.scoreImg = self.font.render(scoreStr, True, self.textColor, 
+		roundedScore = int(self.stats.score)
+		scoreStr = "Score : "
+		scoreStr += "{:,}".format(roundedScore)
+		self.scoreImg = self.font.render(scoreStr, True, self.textColor,
 			self.setting.bgColor)
 
 		#Display the score at the top left corner
 		self.scoreRect = self.scoreImg.get_rect()
 		self.scoreRect.right = self.screenRect.right - 20
-		self.scoreRect.top = 10
+		self.scoreRect.top = 30
 
 	def prepHighScore(self):
 		"""Turn the high score into a rendered image"""
-		highScore = int(round(self.stats.highScore, -1))
+		highScore = int(self.stats.highScore)
 		highScoreStr = "HS: "
 		highScoreStr += "{:,}".format(highScore)
 		self.highScoreImg = self.font.render(highScoreStr, True, self.textColor,
 			self.setting.bgColor)
 		#Center the highscore
 		self.highScoreRect = self.highScoreImg.get_rect()
-		self.highScoreRect.centerx = self.screenRect.centerx
-		self.highScoreRect.top = self.scoreRect.top
+		self.highScoreRect.right = self.screenRect.right - 20
+		self.highScoreRect.top = 10
 
 	def prepLevel(self):
 		"""Turn the level into a rendered image."""
@@ -60,7 +61,7 @@ class Scoreboard():
 		self.ships = Group()
 		for shipNumber in range(self.stats.shipsLeft):
 			ship = Ship(self.setting, self.screen)
-			ship.rect.x = 10 + shipNumber * ship.rect.width
+			ship.rect.x = 10 + shipNumber * (ship.rect.width -10)
 			ship.rect.y = 10
 			self.ships.add(ship)
 
