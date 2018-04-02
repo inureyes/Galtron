@@ -49,6 +49,10 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 					sel.rect.centery = menuBtn.rect.centery
 				elif currentBtn == 4:
 					sys.exit()
+			if event.key == 61:
+				setting.shipLimit += 1
+			if event.key == 45 and setting.shipLimit > 1:
+				setting.shipLimit -= 1					
 			if event.key == pg.K_ESCAPE:
 				sys.exit()
 	prepTitle(setting, screen)

@@ -24,7 +24,8 @@ class Scoreboard():
 	def prepScore(self):
 		"""Turn the score into a rendered image"""
 		roundedScore = int(self.stats.score)
-		scoreStr = "{:,}".format(roundedScore)
+		scoreStr = "Score : "
+		scoreStr += "{:,}".format(roundedScore)
 		self.scoreImg = self.font.render(scoreStr, True, self.textColor,
 			self.setting.bgColor)
 
