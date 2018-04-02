@@ -75,8 +75,9 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		else:
 			trajectory = 0
 	elif event.key == pg.K_SPACE:
-		newBullet = Bullet(setting, screen, ship, trajectory)
-		bullets.add(newBullet)
+		if len(bullets) <= 6:
+			newBullet = Bullet(setting, screen, ship, trajectory)
+			bullets.add(newBullet)
 	elif event.key == pg.K_x:
 		#Ultimate key
 		useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
