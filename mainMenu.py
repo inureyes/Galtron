@@ -27,11 +27,19 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 			if event.key == pg.K_RETURN:
 				if currentBtn == 1:
 					stats.mainMenu = False
-					stats.mainGame = True
+					stats.mainGame = False
+					stats.playMenu = True
 					stats.mainAbout = False
 					stats.twoPlayer = False
 					currentBtn = 1
 					sel.centery = playBtn.rect.centery
+				elif currentBtn == 2:
+					stats.mainMenu = False
+					stats.mainAbout = False
+					stats.mainGame = False
+					stats.twoPlayer = True
+					currentBtn = 1
+					sel.rect.centery = playBtn.rect.centery
 				elif currentBtn == 3:
 					stats.mainMenu = False
 					stats.mainAbout = True
@@ -48,7 +56,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 def prepTitle(setting, screen):
 	#Font settings for scoring information
 	global image, rect
-	image = pg.image.load('gfx/title.png')
+	image = pg.image.load('gfx/title_modify.png')
 	rect = image.get_rect()
 
 
@@ -61,11 +69,14 @@ def drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBt
 	menuBtn.msgImageRect.y = 450
 	screen.fill(setting.bgColor)
 	#screen.blit(setting.bg, (0,0))
+	screen.blit(image, rect)
+	#screen.fill(setting.bgColor)
+	#screen.blit(setting.bg, (0,0))
 	playBtn.drawBtn()
 	twoPlayBtn.drawBtn()
 	aboutBtn.drawBtn()
 	quitBtn.drawBtn()
 	#sb.showScore()
-	screen.blit(image, rect)
+	#screen.blit(image, rect)
 	sel.blitme()
 	pg.display.flip()

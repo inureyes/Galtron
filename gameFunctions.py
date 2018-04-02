@@ -1,12 +1,18 @@
-import sys
+import sys, time
 import pygame as pg
 from time import sleep
-from bullet import Bullet
+from bullet import Bullet, SpecialBullet
 from alien import Alien
+from settings import Settings
+import random
+
 
 pauseBtnState = 1
 back = False
 
+x = 0
+clock = pg.time.Clock()
+FPS = 120
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
 	global pauseBtnState
@@ -26,7 +32,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 			elif event.key == pg.K_DOWN:
 				if pauseBtnState < 3:
 					pauseBtnState += 1
-					sel.rect.y += 50	
+					sel.rect.y += 50
 
 			elif event.key == pg.K_RETURN:
 				if pauseBtnState == 1:
@@ -39,7 +45,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 					sel.rect.centery = playBtn.rect.centery
 					pauseBtnState = 1
 				elif pauseBtnState == 3:
-					sys.exit()	
+					sys.exit()
 
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
@@ -55,12 +61,34 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 	elif event.key == pg.K_LEFT:
 		#Move the ship left
 		ship.movingLeft = True
-	elif event.key == pg.K_LCTRL:
-		newBullet = Bullet(setting, screen, ship)
-		bullets.add(newBullet)
+	elif event.key == pg.K_UP:
+		#Move the ship up
+		ship.movingUp = True
+	elif event.key == pg.K_DOWN:
+		#Move the ship down
+		ship.movingDown = True
+	elif event.key == pg.K_TAB:
+		#Change the style of trajectory of bullet
+		if (ship.trajectory < 5):
+			ship.trajectory += 1
+		else:
+			ship.trajectory = 0
+	elif event.key == pg.K_SPACE:
+		if len(bullets) <= 6:
+			newBullet = Bullet(setting, screen, ship, ship.trajectory)
+			bullets.add(newBullet)
+		ship.shoot = True
+	elif event.key == pg.K_x:
+		#Ultimate key
+		useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
 	#Check for pause key
 	elif event.key == pg.K_p:
 		pause(stats)
+	#Add speed control key
+	elif event.key == pg.K_q:
+		setting.halfspeed()
+	elif event.key == pg.K_w:
+		setting.doublespeed()
 	elif event.key == pg.K_ESCAPE:
 		#Quit game
 		sys.exit()
@@ -71,7 +99,12 @@ def checkKeyupEvents(event, ship):
 		ship.movingRight = False
 	elif event.key == pg.K_LEFT:
 		ship.movingLeft = False
-
+	elif event.key == pg.K_UP:
+		ship.movingUp = False
+	elif event.key == pg.K_DOWN:
+		ship.movingDown = False
+	elif event.key == pg.K_SPACE:
+		ship.shoot = False
 
 def pause(stats):
 	"""Pause the game when the pause button is pressed"""
@@ -96,6 +129,7 @@ def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets
 		ship.centerShip()
 
 		#Reset score and level
+		sb.prepShips()
 		sb.prepScore()
 		sb.prepLevel()
 		sb.prepHighScore()
@@ -117,16 +151,18 @@ def getNumberAliens(setting, alienWidth):
 def getNumberRows(setting, shipHeight, alienHeight):
 	"""Determine the number of rows of aliens that fit on the screen"""
 	availableSpaceY = (setting.screenHeight - (3 * alienHeight) - shipHeight)
-	numberRows = int(availableSpaceY / (2 * alienHeight))
+	numberRows = int(availableSpaceY / (3 * alienHeight))
 	return numberRows
 
 
 def createAlien(setting, screen, aliens, alienNumber, rowNumber):
 	alien = Alien(setting, screen)
 	alienWidth = alien.rect.width
+	screenRect = alien.screen.get_rect()
 	alien.x = alienWidth + 2 * alienWidth * alienNumber
-	alien.rect.x = alien.x
-	alien.rect.y = alien.rect.height + 2 * alien.rect.height * rowNumber
+	""" random position of enemy will be created in game window"""
+	alien.rect.x =  random.randrange(0,setting.screenWidth-alien.x/2)
+	alien.rect.y = (alien.rect.height + random.randrange(0,setting.screenHeight-alien.rect.height*2))/1.5
 	aliens.add(alien)
 
 
@@ -150,6 +186,12 @@ def checkFleetEdges(setting, aliens):
 			changeFleetDir(setting, aliens)
 			break
 
+def checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
+	"""Respond if any aliens have reached an bottom of screen"""
+	for alien in aliens.sprites():
+		if alien.checkBottom():
+			shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+
 
 def changeFleetDir(setting, aliens):
 	"""Change the direction of aliens"""
@@ -163,12 +205,13 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	if stats.shipsLeft > 0:
 		sb.prepShips()
 		stats.shipsLeft -= 1
-		#Empty teh list of aliens and bullets
-		aliens.empty()
-		bullets.empty()
-		eBullets.empty()
+		stats.ultimateGauge = 0
+		#Empty the list of aliens and bullets
+#		aliens.empty()
+#		bullets.empty()
+#		eBullets.empty()
 		#Create a new fleet and center the ship.
-		createFleet(setting, screen, ship, aliens)
+#		createFleet(setting, screen, ship, aliens)
 		ship.centerShip()
 		sb.prepShips()
 		sb.prepScore()
@@ -181,11 +224,13 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Update the aliens"""
 	checkFleetEdges(setting, aliens)
+	checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 	aliens.update(setting, screen, ship, aliens, eBullets)
 
 	#look for alien-ship collision
 	if pg.sprite.spritecollideany(ship, aliens):
-		shipHit(setting, stats, sb, screen, ship, aliens, bullets)
+		#74
+		shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 		sb.prepShips()
 
 
@@ -194,22 +239,29 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	#check if we are colliding
 	bullets.update()
 	eBullets.update()
-	checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets)
+	checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets)
 	checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 	#if bullet goes off screen delete it
 	for bullet in eBullets.copy():
 		screenRect = screen.get_rect()
 		if bullet.rect.top >= screenRect.bottom:
 			eBullets.remove(bullet)
-	for bullet in bullets.copy(): 
+	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
-	
 
-def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
+
+def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	"""Detect collisions between alien and bullets"""
 	collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
 	if collisions:
+		for c in collisions:
+			setting.explosions.add(c.rect.x, c.rect.y)
+
+		#Increase the ultimate gauge, upto 100
+		stats.ultimateGauge += setting.ultimateGaugeIncrement
+		if stats.ultimateGauge > 100:
+			stats.ultimateGauge = 100
 		for aliens in collisions.values():
 			stats.score += setting.alienPoints * len(aliens)
 		checkHighScore(stats, sb)
@@ -218,9 +270,11 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
 	if len(aliens) == 0:
 		#Destroy exsiting bullets and create new fleet
 		bullets.empty()
+		eBullets.empty()
 		setting.increaseSpeed() #Speed up game
 		stats.level += 1
 		sb.prepLevel()
+		time.sleep(1)
 		createFleet(setting, screen, ship, aliens)
 
 def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
@@ -237,18 +291,63 @@ def checkHighScore(stats, sb):
 		stats.highScore = stats.score
 		sb.prepHighScore()
 
+def updateUltimateGauge(setting, screen, stats):
+	"""Draw a bar that indicates the ultimate gauge"""
+	x = 290
+	y = 15
+	gauge = stats.ultimateGauge
+	pg.draw.rect(screen, (255,255,255), (x,y,100,10), 0)
+	pg.draw.rect(screen, (0,0,255), (x,y,gauge,10), 0)
+
+def UltimateDiamondShape(setting, screen, stats, sbullets):
+	xpos = 10
+	yCenter = setting.screenHeight + (setting.screenWidth / 50) * 20
+	yGap = 0
+	#Make a diamond pattern
+	while xpos <= setting.screenWidth:
+		if yGap == 0:
+			sBullet = SpecialBullet(setting, screen, (xpos, yCenter))
+			sbullets.add(sBullet)
+		else:
+			upBullet = SpecialBullet(setting, screen, (xpos, yCenter + yGap))
+			downBullet = SpecialBullet(setting, screen, (xpos, yCenter - yGap))
+			sbullets.add(upBullet)
+			sbullets.add(downBullet)
+		if xpos <= setting.screenWidth / 2:
+			yGap += 20
+		else:
+			yGap -= 20
+		xpos += setting.screenWidth / 30
+
+def useUltimate(setting, screen, stats, sbullets, pattern):
+	if stats.ultimateGauge != 100:
+		return
+	if pattern == 1:
+		UltimateDiamondShape(setting, screen, stats, sbullets)
+#	elif pattern == 2:
+#		make other pattern
+	stats.ultimateGauge = 0
+
+
+
+
 
 def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel):
 	"""Update images on the screen and flip to the new screen"""
 	#Redraw the screen during each pass through the loop
 	#Fill the screen with background color
 	#Readjust the quit menu btn position
+	global x, clock, FPS
 	quitBtn.rect.y = 300
 	quitBtn.msgImageRect.y = 300
 	menuBtn.rect.y = 250
 	menuBtn.msgImageRect.y = 250
-	screen.fill(setting.bgColor)
-	#screen.blit(setting.bg, (0,0))
+	#screen.fill(setting.bgColor)
+	rel_x = x % setting.bg.get_rect().height
+	screen.blit(setting.bg, (0,rel_x - setting.bg.get_rect().height))
+	if rel_x < setting.screenHeight:
+		screen.blit(setting.bg, (0,rel_x))
+	x += 3
 
 	#draw all the bullets
 	for bullet in bullets.sprites():
@@ -261,6 +360,9 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	ship.blitme()
 	aliens.draw(screen)
 
+	#Update Ultimate Gauge
+	updateUltimateGauge(setting, screen, stats)
+
 	#Draw the scoreboard
 	sb.showScore()
 
@@ -270,5 +372,8 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 		menuBtn.drawBtn()
 		quitBtn.drawBtn()
 		sel.blitme()
+	setting.explosions.draw(screen)
 	#Make the most recently drawn screen visable.
 	pg.display.flip()
+	pg.display.update()
+	clock.tick(FPS)
