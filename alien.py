@@ -13,7 +13,7 @@ class Alien(Sprite):
 		self.setting = setting
 
 		#load the alien image and set its rect attribute
-		self.image = pg.image.load('gfx/alien.bmp')
+		self.image = pg.image.load('gfx/alien3.png')
 		self.rect = self.image.get_rect()
 
 		#start each new alien near the top left of the screen
@@ -34,6 +34,11 @@ class Alien(Sprite):
 		elif self.rect.left <= 0:
 			return True
 
+	def checkBottom(self):
+		"""Returns True if alien is at the bottom of screen"""
+		screenRect = self.screen.get_rect()
+		if self.rect.bottom >= screenRect.bottom:
+			return True
 
 	def update(self, setting, screen, ship, aliens, eBullets):
 		"""Move the alien right or left"""
@@ -45,17 +50,20 @@ class Alien(Sprite):
 		self.shoot(setting, screen, self.ship, self.aliens, self.eBullets)
 
 	def shoot(self, setting, screen, ship, aliens, eBullets):
+<<<<<<< HEAD
 		# add enemy_shooting_sound
 		enemy_shoot_sound = pg.mixer.Sound('./sound_effect/enemy_shot.wav')
 		if self.rect.centerx == self.ship.rect.centerx and len(eBullets) <= 4:
+=======
+		if self.rect.centerx >= self.ship.rect.centerx and len(eBullets) <= 4:
+>>>>>>> fa0c7bdd1b7f7f05207f4d8e836529072aaeb4a4
 			if self.timer >= 50:
 				pg.mixer.Sound.play(enemy_shoot_sound)
 				self.timer = 0
 				newBullet = EBullet(setting, screen, self)
 				eBullets.add(newBullet)
-		else:
 			self.timer += 1
-			
+
 
 	def blitme(self):
 		"""draw hte alien"""
