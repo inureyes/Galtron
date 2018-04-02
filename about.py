@@ -52,6 +52,7 @@ def prepAbout(setting, screen):
 	#Font settings for scoring information
 	global image, rect
 	image = pg.image.load('gfx/About_modify.png')
+	image = pg.transform.scale(image,(setting.screenWidth,setting.screenHeight))
 	rect = image.get_rect()
 
 
