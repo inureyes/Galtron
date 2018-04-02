@@ -13,7 +13,7 @@ class Alien(Sprite):
 		self.setting = setting
 
 		#load the alien image and set its rect attribute
-		self.image = pg.image.load('gfx/alien.bmp')
+		self.image = pg.image.load('gfx/alien3.png')
 		self.rect = self.image.get_rect()
 
 		#start each new alien near the top left of the screen
