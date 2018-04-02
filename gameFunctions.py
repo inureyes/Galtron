@@ -253,6 +253,7 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	else:
 		stats.gameActive = False
 		checkHighScore(stats, sb)
+		stats.resetStats()
 
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
