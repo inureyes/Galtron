@@ -1,6 +1,7 @@
 import pygame as pg
 from animations import Explosions
 
+
 class Settings():
 	"""A class to store all settings for game"""
 	def __init__(self):
@@ -41,6 +42,7 @@ class Settings():
 		self.fleetDir = 1
 		self.alienPoints = 10
 
+
 	def increaseSpeed(self):
 		"""Increase the speed settings"""
 		#self.shipSpeed *= self.speedUp
@@ -48,4 +50,24 @@ class Settings():
 		if self.alienSpeed <= 1.5:
 			self.alienSpeed *= self.speedUp
 			self.fleetDropSpeed *= self.speedUp
-		self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
+		self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
+
+
+	def halfspeed(self):
+		if self.shipSpeed>0 and self.bulletSpeed>0 and self.alienSpeed>0 and self.fleetDropSpeed>0: 
+			self.shipSpeed *= 0.5
+			self.bulletSpeed *= 0.5
+			self.alienSpeed *= 0.5
+			self.fleetDropSpeed *= 0.5
+			self.fleetDir *= 0.5
+			self.alienPoints *= 0.5 # nerf earning points in lower speed
+			self.scoreSpeedUp = 1.1
+
+	def doublespeed(self):
+		self.shipSpeed *= 2
+		self.bulletSpeed *= 2
+		self.alienSpeed *= 2
+		self.fleetDropSpeed *= 2
+		self.fleetDir *= 2
+		self.alienPoints *= 2
+		

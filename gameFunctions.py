@@ -1,9 +1,11 @@
 import sys, time
 import pygame as pg
 from time import sleep
-from bullet import SpecialBullet
+from bullet import Bullet, SpecialBullet
 from alien import Alien
+from settings import Settings
 import random
+
 
 pauseBtnState = 1
 back = False
@@ -73,7 +75,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 			ship.trajectory = 0
 	elif event.key == pg.K_SPACE:
 		if len(bullets) <= 6:
-			newBullet = Bullet(setting, screen, ship, trajectory)
+			newBullet = Bullet(setting, screen, ship, ship.trajectory)
 			bullets.add(newBullet)
 		ship.shoot = True
 	elif event.key == pg.K_x:
@@ -82,6 +84,11 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 	#Check for pause key
 	elif event.key == pg.K_p:
 		pause(stats)
+	#Add speed control key
+	elif event.key == pg.K_q:
+		setting.halfspeed()
+	elif event.key == pg.K_w:
+		setting.doublespeed()
 	elif event.key == pg.K_ESCAPE:
 		#Quit game
 		sys.exit()
@@ -250,7 +257,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
 	if collisions:
 		for c in collisions:
 			setting.explosions.add(c.rect.x, c.rect.y)
-		
+
 		#Increase the ultimate gauge, upto 100
 		stats.ultimateGauge += setting.ultimateGaugeIncrement
 		if stats.ultimateGauge > 100:
@@ -340,7 +347,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	screen.blit(setting.bg, (0,rel_x - setting.bg.get_rect().height))
 	if rel_x < setting.screenHeight:
 		screen.blit(setting.bg, (0,rel_x))
-	x += 3 
+	x += 3
 
 	#draw all the bullets
 	for bullet in bullets.sprites():
@@ -370,4 +377,3 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	pg.display.flip()
 	pg.display.update()
 	clock.tick(FPS)
-
