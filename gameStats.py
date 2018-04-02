@@ -10,6 +10,7 @@ class GameStats():
 		self.mainMenu = True
 		self.mainGame = False
 		self.mainAbout = False
+		self.playMenu = False
 		self.twoPlayer = False
 		self.paused = False
 		self.score = 0

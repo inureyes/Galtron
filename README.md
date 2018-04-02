@@ -1,4 +1,4 @@
-# Learning OSS development through GitHub
+﻿# Learning OSS development through GitHub
 
 
 | Participant   | Role       | ETC |
@@ -25,6 +25,7 @@
 | MinSeong Kang | Student    |     |
 | Keongi Kim    | Student    |     |
 | Sungchan Kim  | Student    |     |
+| Wonik Jang    | Student    |     |
 | Kim tae O     | Student    |     |
 | Jeshin Lee    | Student    |     |
 | Hoesung  Jung | Student^^7 | Nerd|
