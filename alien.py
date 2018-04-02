@@ -50,8 +50,11 @@ class Alien(Sprite):
 		self.shoot(setting, screen, self.ship, self.aliens, self.eBullets)
 
 	def shoot(self, setting, screen, ship, aliens, eBullets):
+		# add enemy_shooting_sound
+		enemy_shoot_sound = pg.mixer.Sound('./sound_effect/enemy_shot.wav')
 		if self.rect.centerx >= self.ship.rect.centerx and len(eBullets) <= 4:
 			if self.timer >= 50:
+				pg.mixer.Sound.play(enemy_shoot_sound)
 				self.timer = 0
 				newBullet = EBullet(setting, screen, self)
 				eBullets.add(newBullet)
