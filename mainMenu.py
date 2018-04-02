@@ -1,5 +1,6 @@
 import sys
 import pygame as pg
+import sounds
 #Create a variable to change current button being selected
 currentBtn = 1
 back = False
@@ -7,18 +8,9 @@ back = False
 pg.joystick.init()
 joystickEnter = False
 
-#Init and load sound effects
-pg.mixer.init(44100, -16, 2, 4096)
-control_menu = pg.mixer.Sound("sounds/control_menu.wav")
-control_menu.set_volume(0.22)
-select_menu = pg.mixer.Sound("sounds/select_menu.wav")
-select_menu.set_volume(0.22)
-
 def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
 	global currentBtn
-	# add button_click_sound(case quit)
-	button_click_sound = pg.mixer.Sound('./sound_effect/button_clicked.wav')
 	for event in pg.event.get():
 		if event.type == pg.QUIT:
 			sys.exit()
@@ -27,17 +19,17 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 			#Check if down, up, enter, esc is pressed
 			if event.key == pg.K_DOWN :
 				if currentBtn < 4:
-					control_menu.play()
+					sounds.control_menu.play()
 					currentBtn += 1
 					sel.rect.y += 50
 			if event.key == pg.K_UP:
 				if currentBtn > 1:
-					control_menu.play()
+					sounds.control_menu.play()
 					currentBtn -= 1
 					sel.rect.y -= 50
 			if event.key == pg.K_RETURN:
 				if currentBtn == 1:
-					select_menu.play()
+					sounds.select_menu.play()
 					stats.mainMenu = False
 					stats.mainGame = False
 					stats.playMenu = True
@@ -46,7 +38,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 					currentBtn = 1
 					sel.centery = playBtn.rect.centery
 				elif currentBtn == 2:
-					select_menu.play()
+					sounds.select_menu.play()
 					stats.mainMenu = False
 					stats.mainAbout = False
 					stats.mainGame = False
@@ -54,7 +46,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 					currentBtn = 1
 					sel.rect.centery = playBtn.rect.centery
 				elif currentBtn == 3:
-					select_menu.play()
+					sounds.select_menu.play()
 					stats.mainMenu = False
 					stats.mainAbout = True
 					stats.mainGame = False
@@ -62,7 +54,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 					currentBtn = 1
 					sel.rect.centery = menuBtn.rect.centery
 				elif currentBtn == 4:
-					pg.mixer.Sound.play(button_click_sound)
+					sounds.button_click_sound.play()
 					pg.time.delay(300)
 					sys.exit()
 			if event.key == 46:
@@ -70,7 +62,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 			if event.key == 44 and setting.shipLimit > 1:
 				setting.shipLimit -= 1					
 			if event.key == pg.K_ESCAPE:
-				pg.mixer.Sound.play(button_click_sound)
+				sounds.button_click_sound.play()
 				pg.time.delay(300)
 				sys.exit()
 	prepTitle(setting, screen)

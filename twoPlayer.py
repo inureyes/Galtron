@@ -2,19 +2,9 @@ import sys
 import pygame as pg
 from time import sleep
 from bullet import Bullet
+import sounds
 
 pauseBtnState2 = 1
-
-#Init and load sound effects
-pg.mixer.init(44100, -16, 2, 4096)
-control_menu = pg.mixer.Sound("sounds/control_menu.wav")
-control_menu.set_volume(0.22)
-select_menu = pg.mixer.Sound("sounds/select_menu.wav")
-select_menu.set_volume(0.18)
-attack = pg.mixer.Sound("sounds/attack.wav")
-attack.set_volume(0.08)
-paused = pg.mixer.Sound("sounds/paused.wav")
-paused.set_volume(0.1)
 
 def checkEvents(setting, screen, stats, playBtn, quitBtn, sel, bullets, eBullets, ship1, ship2):
 	"""Respond to keypresses and mouse events."""
@@ -29,12 +19,12 @@ def checkEvents(setting, screen, stats, playBtn, quitBtn, sel, bullets, eBullets
 			#Pause menu controls
 			if event.key == pg.K_UP:
 				if pauseBtnState2 > 1:
-					control_menu.play()
+					sounds.control_menu.play()
 					pauseBtnState2 -= 1
 					sel.rect.y -= 50
 			elif event.key == pg.K_DOWN:
 				if pauseBtnState2 < 3:
-					control_menu.play()
+					sounds.control_menu.play()
 					pauseBtnState2 += 1
 					sel.rect.y += 50	
 			elif event.key == pg.K_RETURN:
@@ -74,10 +64,10 @@ def checkKeydownEvents(event, setting, screen, stats, playBtn, quitBtn, sel, bul
 	elif event.key == pg.K_w:
 		ship2.movingUp = True
 	elif event.key == pg.K_RALT:
-		attack.play()
+		sounds.attack.play()
 		ship1.shoot = True
 	elif event.key == pg.K_LALT:
-		attack.play()
+		sounds.attack.play()
 		ship2.shoot = True
 	#Check for pause key
 	elif event.key == pg.K_p:
@@ -111,7 +101,7 @@ def checkKeyupEvents(event, ship1,ship2):
 
 def pause(stats):
 	"""Pause the game when the pause button is pressed"""
-	paused.play()
+	sounds.paused.play()
 	stats.gameActive = False
 	stats.paused = True
 
