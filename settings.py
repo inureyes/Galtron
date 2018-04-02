@@ -7,8 +7,8 @@ class Settings():
 	def __init__(self):
 		"""Initialize the class"""
 		self.windowCaption = 'Galtron'
-		self.screenWidth = 450
-		self.screenHeight = 550
+		self.screenWidth = 550
+		self.screenHeight = 650
 		self.bgColor = (20, 20, 20)
 		self.bg = pg.image.load("gfx/background.bmp")
 
@@ -50,6 +50,8 @@ class Settings():
 		if self.alienSpeed <= 1.5:
 			self.alienSpeed *= self.speedUp
 			self.fleetDropSpeed *= self.speedUp
+      
+		self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
 		self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
 
 

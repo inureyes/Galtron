@@ -53,6 +53,7 @@
 | Yejun Kim     | Student    |     |
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
+| Yerim Hwang	| Student    |     |
 | Kim yong jun  | Student    |     |
 | Yerim Hwang	| Student    |     |
 | Minjun Kim    | Student    |     |
@@ -61,6 +62,7 @@
 | HoJin Seo     | Student    |     |
 | Sungho Yun    | Student    |     |
 | Keunmo Koo.   | Genius     |     |
+
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
