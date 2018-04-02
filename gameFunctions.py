@@ -13,6 +13,7 @@ back = False
 x = 0
 clock = pg.time.Clock()
 FPS = 120
+reset = 0
 
 #Init and load sound effects
 pg.mixer.init(44100, -16, 2, 4096)
@@ -110,6 +111,10 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		setting.halfspeed()
 	elif event.key == pg.K_w:
 		setting.doublespeed()
+	# Reset Game
+	elif event.key == pg.K_r:
+		global reset
+		reset = 1
 	elif event.key == pg.K_ESCAPE:
 		#Quit game
 		sys.exit()
