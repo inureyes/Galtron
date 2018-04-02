@@ -1,14 +1,12 @@
 import sys
 import pygame as pg
 from time import sleep
-from bullet import Bullet
 from bullet import SpecialBullet
 from alien import Alien
 import random
 
 pauseBtnState = 1
 back = False
-trajectory = 0
 
 x = 0
 clock = pg.time.Clock()
@@ -55,7 +53,6 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to kepresses"""
 	global back
-	global trajectory
 	if event.key == pg.K_RIGHT:
 		#Move the ship right
 		ship.movingRight = True
@@ -70,13 +67,12 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		ship.movingDown = True
 	elif event.key == pg.K_TAB:
 		#Change the style of trajectory of bullet
-		if (trajectory < 5):
-			trajectory += 1
+		if (ship.trajectory < 5):
+			ship.trajectory += 1
 		else:
-			trajectory = 0
+			ship.trajectory = 0
 	elif event.key == pg.K_SPACE:
-		newBullet = Bullet(setting, screen, ship, trajectory)
-		bullets.add(newBullet)
+		ship.shoot = True
 	elif event.key == pg.K_x:
 		#Ultimate key
 		useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
@@ -97,7 +93,8 @@ def checkKeyupEvents(event, ship):
 		ship.movingUp = False
 	elif event.key == pg.K_DOWN:
 		ship.movingDown = False
-
+	elif event.key == pg.K_SPACE:
+		ship.shoot = False
 
 def pause(stats):
 	"""Pause the game when the pause button is pressed"""

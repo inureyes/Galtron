@@ -1,5 +1,6 @@
 import pygame as pg
 from pygame.sprite import *
+from bullet import Bullet
 
 class Ship(Sprite):
 	"""Class of a player ship"""
@@ -31,7 +32,11 @@ class Ship(Sprite):
 		self.movingUp = False
 		self.movingDown = False
 
-	def update(self):
+		#about shoot
+		self.shoot = False
+		self.timer = 0
+		self.trajectory = 0
+	def update(self, bullets):
 		"""Update the ships position"""
 		if self.movingRight and self.rect.right < self.screenRect.right:
 			self.center += self.setting.shipSpeed
@@ -45,6 +50,12 @@ class Ship(Sprite):
 			self.centery -= self.setting.shipSpeed
 		if self.movingDown and self.rect.bottom < self.screenRect.bottom:
 			self.centery += self.setting.shipSpeed
+		if self.shoot == True and self.timer > 5:
+			newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
+			bullets.add(newBullet)
+			self.timer = 0
+		else:
+			self.timer += 1
 
 
 		#update rect object from self.center
