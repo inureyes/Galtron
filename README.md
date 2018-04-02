@@ -1,20 +1,25 @@
 # Learning OSS development through GitHub
 
+
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
+| Lee jaehee    | student    |     |
 | Minseok  Kang | Student    |     |
-| Jaehun Kim.   | student.   |     |
+| Jaehun Kim.   | student    |     |
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
 | Cho young il  | Student    |     |
 | Jinsung An    | Student    |     |
 | Minwoo Son	| Student    |     |
 | Kim Dain      | Student    |     |
-| Jeongin Lee | Student  |     |
+| Jeongin Lee   | Student.   |     |
+| Minwoo Son.   | Student    |     |
+| Kim Dain      | Student    |     |
+| Jeongin Lee   | Student    |     |
 | YK            | Student    |     |
-| Jeong-A Im     | Student    |     |
-| Kim Tae Yoon           | Student    |     |
+| Jeong-A Im    | Student    |     |
+| Kim Tae Yoon  | Student    |     |
 | Yulim Oh      | Student    |     |
 | Jihoon Yeom   | Student    |     |
 | MinSeong Kang | Student    |     |
@@ -32,7 +37,6 @@
 | TaeWoong Kong | Student    |     |
 | KeonWoong Noh | Student    |     |
 | ChaeHyun Baek | Student    |     |
-| JK            | Student    |     |
 | SeongIn Moon  | Student    |     |
 | JeWoong Moon  | Student    |     |
 | Yushin        | Student    |     |
@@ -55,8 +59,7 @@
 | Taewan Park   | Student    |     |
 | HoJin Seo     | Student    |     |
 | Sungho Yun    | Student    |     |
-| Keunmo Koo	  | Genius     |     |
-
+| Keunmo Koo.   | Genius     |     |
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
