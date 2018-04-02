@@ -85,6 +85,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		#Move the ship left
 		ship.movingLeft = True
 	elif event.key == pg.K_SPACE:
+		attack.play()
 		newBullet = Bullet(setting, screen, ship,ship.trajectory)
 		bullets.add(newBullet)
 	elif event.key == pg.K_UP:
