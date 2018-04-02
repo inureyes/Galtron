@@ -27,11 +27,19 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 			if event.key == pg.K_RETURN:
 				if currentBtn == 1:
 					stats.mainMenu = False
-					stats.mainGame = True
+					stats.mainGame = False
+					stats.playMenu = True
 					stats.mainAbout = False
 					stats.twoPlayer = False
 					currentBtn = 1
 					sel.centery = playBtn.rect.centery
+				elif currentBtn == 2:
+					stats.mainMenu = False
+					stats.mainAbout = False
+					stats.mainGame = False
+					stats.twoPlayer = True
+					currentBtn = 1
+					sel.rect.centery = playBtn.rect.centery
 				elif currentBtn == 3:
 					stats.mainMenu = False
 					stats.mainAbout = True

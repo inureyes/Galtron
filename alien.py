@@ -56,7 +56,7 @@ class Alien(Sprite):
 				newBullet = EBullet(setting, screen, self)
 				eBullets.add(newBullet)
 			self.timer += 1
-			
+
 
 	def blitme(self):
 		"""draw hte alien"""
