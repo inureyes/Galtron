@@ -17,7 +17,7 @@ from gameStats import GameStats #Game stats that are changed during the duration
 from button import Button #A button class that can be called for every new button
 from selector import Selector #Import the main menu selector
 from scoreboard import Scoreboard #Score board for points, high score, lives, level ect.
-
+from animations import Explosions
 
 
 def runGame():
@@ -57,6 +57,7 @@ def runGame():
 	#make a group of bullets to store
 	bullets = Group()
 	eBullets = Group()
+	setting.explosions = Explosions()
 
 	#Make an alien
 	aliens = Group()
@@ -108,5 +109,6 @@ def runGame():
 
 #init bgm mixer
 pg.mixer.pre_init(44100,16,2,4096)
+pg.mixer.init(44100,-16,2,4096)
 #run the runGame method to run the game
 runGame()

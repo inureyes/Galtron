@@ -20,16 +20,22 @@ class Ship(Sprite):
 
 		#Start each new ship at the bottom center of the screen.
 		self.rect.centerx = self.screenRect.centerx
+		self.rect.centery = self.screenRect.centery + self.screenRect.bottom / 2 - self.rect.height
 		self.rect.bottom = self.screenRect.bottom - 10
 
 		self.center = float(self.rect.centerx)
+<<<<<<< HEAD
 		self.right = self.screenRect.right
 		self.left = self.screenRect.left
+=======
+		self.centery = float(self.rect.centery)
+>>>>>>> upstream/master
 
 		#Movement flag
 		self.movingRight = False
 		self.movingLeft = False
-
+		self.movingUp = False
+		self.movingDown = False
 
 	def update(self):
 		self.image = pg.image.load(checkColor())
@@ -38,10 +44,19 @@ class Ship(Sprite):
 			self.center += self.setting.shipSpeed
 		if self.movingLeft and self.rect.left > 1:
 			self.center -= self.setting.shipSpeed
+		if self.movingRight and self.rect.right >= self.screenRect.right:
+			self.center = 1.0
+		if self.movingLeft and self.rect.left <= 1:
+			self.center = self.screenRect.right
+		if self.movingUp and self.rect.top > self.screenRect.top + self.rect.height + 10:
+			self.centery -= self.setting.shipSpeed
+		if self.movingDown and self.rect.bottom < self.screenRect.bottom:
+			self.centery += self.setting.shipSpeed
+
 
 		#update rect object from self.center
 		self.rect.centerx = self.center
-
+		self.rect.centery = self.centery
 
 	def blitme(self):
 		"""Draw the ship at its current location."""
@@ -50,3 +65,7 @@ class Ship(Sprite):
 	def centerShip(self):
 		"""Centers the ship"""
 		self.center = self.screenRect.centerx
+<<<<<<< HEAD
+=======
+		self.centery = self.screenRect.centery + self.screenRect.bottom / 2 - self.rect.height
+>>>>>>> upstream/master
