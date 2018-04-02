@@ -1,4 +1,5 @@
 import json
+import os
 
 class GameStats():
 	"""Track stats for alien shooter"""
@@ -10,6 +11,7 @@ class GameStats():
 		self.mainMenu = True
 		self.mainGame = False
 		self.mainAbout = False
+		self.playMenu = False
 		self.twoPlayer = False
 		self.paused = False
 		self.score = 0
@@ -28,6 +30,10 @@ class GameStats():
 		self.ultimateGauge = 0
 		self.ultimatePattern = 1
 		filename = 'data-files/highscore.json'
+		if not os.path.isfile(filename):
+			with open(filename, 'w') as f_obj:
+				f_obj.write('0')
+
 		with open(filename, 'r') as f_obj:
 			self.tempScore = json.load(f_obj)
 		if self.highScore >= self.tempScore:
