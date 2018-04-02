@@ -32,6 +32,13 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 					stats.twoPlayer = False
 					currentBtn = 1
 					sel.centery = playBtn.rect.centery
+				elif currentBtn == 2:
+					stats.mainMenu = False
+					stats.mainAbout = False
+					stats.mainGame = False
+					stats.twoPlayer = True
+					currentBtn = 1
+					sel.rect.centery = playBtn.rect.centery
 				elif currentBtn == 3:
 					stats.mainMenu = False
 					stats.mainAbout = True

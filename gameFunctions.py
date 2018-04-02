@@ -1,4 +1,4 @@
-import sys
+import sys, time
 import pygame as pg
 from time import sleep
 from bullet import SpecialBullet
@@ -197,11 +197,11 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 		stats.shipsLeft -= 1
 		stats.ultimateGauge = 0
 		#Empty the list of aliens and bullets
-		aliens.empty()
-		bullets.empty()
-		eBullets.empty()
+#		aliens.empty()
+#		bullets.empty()
+#		eBullets.empty()
 		#Create a new fleet and center the ship.
-		createFleet(setting, screen, ship, aliens)
+#		createFleet(setting, screen, ship, aliens)
 		ship.centerShip()
 		sb.prepShips()
 		sb.prepScore()
@@ -229,7 +229,7 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	#check if we are colliding
 	bullets.update()
 	eBullets.update()
-	checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets)
+	checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets)
 	checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 	#if bullet goes off screen delete it
 	for bullet in eBullets.copy():
@@ -241,12 +241,12 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 			bullets.remove(bullet)
 
 
-def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
+def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	"""Detect collisions between alien and bullets"""
 	collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
 	if collisions:
-		for c in collisions:
-			setting.explosions.add(c.rect.x, c.rect.y)
+		#for c in collisions:
+		#	setting.explosions.add(c.rect.x, c.rect.y)
 		
 		#Increase the ultimate gauge, upto 100
 		stats.ultimateGauge += setting.ultimateGaugeIncrement
@@ -260,9 +260,11 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
 	if len(aliens) == 0:
 		#Destroy exsiting bullets and create new fleet
 		bullets.empty()
+		eBullets.empty()
 		setting.increaseSpeed() #Speed up game
 		stats.level += 1
 		sb.prepLevel()
+		time.sleep(1)
 		createFleet(setting, screen, ship, aliens)
 
 def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
@@ -360,7 +362,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 		menuBtn.drawBtn()
 		quitBtn.drawBtn()
 		sel.blitme()
-	setting.explosions.draw(screen)
+#	setting.explosions.draw(screen)
 	#Make the most recently drawn screen visable.
 	pg.display.flip()
 	pg.display.update()

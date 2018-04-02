@@ -1,5 +1,5 @@
 import pygame as pg
-from animations import Explosions
+#from animations import Explosions
 
 class Settings():
 	"""A class to store all settings for game"""

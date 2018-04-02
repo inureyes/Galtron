@@ -50,12 +50,13 @@ class Ship(Sprite):
 			self.centery -= self.setting.shipSpeed
 		if self.movingDown and self.rect.bottom < self.screenRect.bottom:
 			self.centery += self.setting.shipSpeed
-		if self.shoot == True and self.timer > 5:
-			newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
-			bullets.add(newBullet)
-			self.timer = 0
-		else:
-			self.timer += 1
+		if self.shoot == True:
+			if self.timer > 5:
+				newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
+				bullets.add(newBullet)
+				self.timer = 0
+			else:
+				self.timer += 1
 
 
 		#update rect object from self.center
