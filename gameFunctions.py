@@ -67,7 +67,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 				elif pauseBtnState == 3:
 					pg.mixer.Sound.play(button_click_sound)
 					pg.time.delay(300)
-					sys.exit()	
+					sys.exit()
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, ship)
@@ -141,6 +141,7 @@ def pause(stats):
 	"""Pause the game when the pause button is pressed"""
 	stats.gameActive = False
 	stats.paused = True
+	pg.mixer.music.set_volume(0)
 
 
 def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets):
@@ -169,6 +170,7 @@ def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets
 		#IF the game is not running and game is paused unpause the game
 		stats.gameActive = True
 		stats.paused = False
+		pg.mixer.music.set_volume(0.25)
 
 
 
