@@ -15,6 +15,8 @@ select_menu.set_volume(0.22)
 
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
+	# add button_sound (case quit)
+	button_click_sound = pg.mixer.Sound('./sound_effect/button_clicked.wav')
 	global aboutBtn
 	for event in pg.event.get():
 		#Check for quit event
@@ -43,8 +45,12 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship
 					aboutBtn = 1
 					sel.rect.centery = playBtn.rect.centery
 				elif aboutBtn == 2:
+					pg.mixer.Sound.play(button_click_sound)
+					pg.time.delay(300)
 					sys.exit()
 			if event.key == pg.K_ESCAPE:
+				pg.mixer.Sound.play(button_click_sound)
+				pg.time.delay(300)
 				sys.exit()
 	prepAbout(setting, screen)
 
