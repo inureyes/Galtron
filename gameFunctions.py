@@ -47,14 +47,10 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 					sel.rect.centery = playBtn.rect.centery
 					pauseBtnState = 1
 				elif pauseBtnState == 3:
-<<<<<<< HEAD
+
 					pg.mixer.Sound.play(button_click_sound)
 					pg.time.delay(300)
 					sys.exit()	
-=======
-					sys.exit()
->>>>>>> fa0c7bdd1b7f7f05207f4d8e836529072aaeb4a4
-
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, ship)
