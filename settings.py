@@ -7,8 +7,8 @@ class Settings():
 	def __init__(self):
 		"""Initialize the class"""
 		self.windowCaption = 'Galtron'
-		self.screenWidth = 450
-		self.screenHeight = 550
+		self.screenWidth = 550
+		self.screenHeight = 650
 		self.bgColor = (20, 20, 20)
 		self.bg = pg.image.load("gfx/background.bmp")
 
@@ -32,6 +32,9 @@ class Settings():
 		self.speedUp = 1.1
 		self.scoreSpeedUp = 5
 
+		#GameSpeedLimit
+		self.Limit = 0
+
 		self.initDynamicSettings()
 
 	def initDynamicSettings(self):
@@ -54,6 +57,7 @@ class Settings():
 
 
 	def halfspeed(self):
+<<<<<<< HEAD
 		if self.shipSpeed>0 and self.bulletSpeed>0 and self.alienSpeed>0 and self.fleetDropSpeed>0: 
 			self.shipSpeed *= 0.5
 			self.bulletSpeed *= 0.5
@@ -71,3 +75,24 @@ class Settings():
 		self.fleetDir *= 2
 		self.alienPoints *= 2
 		
+=======
+                if self.Limit >= -1 and self.shipSpeed>0 and self.bulletSpeed>0 and self.alienSpeed>0 and self.fleetDropSpeed>0: 
+                        self.shipSpeed *= 0.5
+                        self.bulletSpeed *= 0.5
+                        self.alienSpeed *= 0.5
+                        self.fleetDropSpeed *= 0.5
+                        self.fleetDir *= 0.5
+                        self.alienPoints *= 0.5 # nerf earning points in lower speed
+                        self.scoreSpeedUp = 1.1
+                        self.Limit -= 1
+
+	def doublespeed(self):
+                if self.Limit <= 1:
+                        self.shipSpeed *= 2
+                        self.bulletSpeed *= 2
+                        self.alienSpeed *= 2
+                        self.fleetDropSpeed *= 2
+                        self.fleetDir *= 2
+                        self.alienPoints *= 2
+                        self.Limit += 1
+>>>>>>> 44d2236cfd44e988fa095d64f9f80a3c2e83019a
