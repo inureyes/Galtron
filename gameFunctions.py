@@ -71,6 +71,10 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, ship)
+			
+		elif event.type == pg.MOUSEMOTION:
+                        ship.center = event.pos[0]
+                        ship.centery = event.pos[1]
 
 
 def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
@@ -123,6 +127,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		pg.mixer.Sound.play(button_click_sound2)
 		pg.time.delay(300)
 		sys.exit()
+
 
 def checkKeyupEvents(event, ship):
 	"""Response to keyrealeses"""
