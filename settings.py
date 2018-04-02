@@ -36,7 +36,7 @@ class Settings():
 
 	def initDynamicSettings(self):
 		self.shipSpeed = 1.5
-		self.bulletSpeed = 0.6
+		self.bulletSpeed = 4
 		self.alienSpeed = 1
 		self.fleetDropSpeed = 5
 		self.fleetDir = 1
@@ -50,7 +50,7 @@ class Settings():
 		if self.alienSpeed <= 1.5:
 			self.alienSpeed *= self.speedUp
 			self.fleetDropSpeed *= self.speedUp
-		self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
+		self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
 
 
 	def halfspeed(self):
@@ -71,5 +71,3 @@ class Settings():
 		self.fleetDir *= 2
 		self.alienPoints *= 2
 		
-
-	

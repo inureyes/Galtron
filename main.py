@@ -8,6 +8,7 @@ from pygame.sprite import Group
 from settings import Settings
 import gameFunctions as gf #Event checker and update screen
 import mainMenu as mm #Main menu
+import playMenu as pm #choosing ship color
 import twoPlayer as tp #two player mode
 import about as About
 from ship import Ship
@@ -32,9 +33,12 @@ def runGame():
 	playBtn = Button(setting, screen, "PLAY", 200)
 	menuBtn = Button(setting, screen, "MENU", 250)
 	twoPlayBtn = Button(setting, screen, "2PVS", 250)
-	setBtnbtn = Button(setting, screen, "SETTING", 400)
+	#setBtnbtn = Button(setting, screen, "SETTING", 300)
 	aboutBtn = Button(setting, screen, "ABOUT", 300)
-	quitBtn = Button(setting, screen, "QUIT", 350)
+	quitBtn = Button(setting, screen, "QUIT", 400)
+	greyBtn = Button(setting, screen, "GREY", 200)
+	redBtn = Button(setting, screen, "RED", 250)
+	blueBtn = Button(setting, screen, "BLUE", 300)
 	#make slector for buttons
 	sel = Selector(setting, screen)
 	sel.rect.x = playBtn.rect.x + playBtn.width + 10
@@ -74,13 +78,17 @@ def runGame():
 			mm.checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
 			mm.drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBtn, sel)
 
+		while stats.playMenu:
+			pm.checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
+			pm.drawMenu(setting, screen, sb, greyBtn, redBtn, blueBtn, menuBtn, quitBtn, sel)
+
 		while stats.mainGame:
 			#Game functions
 			gf.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets) #Check for events
 			if stats.gameActive:
 				gf.updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets) #Update aliens
 				gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets) #Update collisions
-				ship.update() #update the ship
+				ship.update(bullets) #update the ship
 			gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel) #Update the screen
 
 		while stats.mainAbout:
@@ -88,16 +96,16 @@ def runGame():
 			About.drawMenu(setting, screen, sb, menuBtn, quitBtn, sel)
 
 		while stats.twoPlayer:
-			"""
 			tp.checkEvents(setting, screen, stats, playBtn, quitBtn, sel, bullets, eBullets, ship1, ship2)
 			if stats.gameActive:
-				ship1.update()
+				ship1.update(bullets)
+				ship2.update(bullets)
 				tp.updateBullets(setting, screen, stats, ship1, ship2, bullets, eBullets)
 			tp.updateScreen(setting, screen, stats, bullets, eBullets, playBtn, menuBtn, quitBtn, sel, ship1, ship2)
-			"""
 		while stats.mainGame:
 			if runGame == True:
 				print("test")
+
 #init bgm mixer
 pg.mixer.pre_init(44100,16,2,4096)
 pg.mixer.init(44100,-16,2,4096)
