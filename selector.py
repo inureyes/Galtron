@@ -14,7 +14,7 @@ class Selector(Sprite):
 		self.image = pg.transform.scale(self.image, (10, 10))
 		self.rect = self.image.get_rect()
 		self.screenRect = screen.get_rect()
-
+		
 
 	def blitme(self):
 		"""Draw the ship at its current location."""
