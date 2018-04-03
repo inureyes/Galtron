@@ -9,8 +9,9 @@ class Settings():
 		self.screenWidth = 550
 		self.screenHeight = 650
 		self.bgColor = (20, 20, 20)
-		self.bg = pg.image.load("gfx/background.bmp")
-                
+		self.image = pg.image.load("gfx/background.bmp")
+		self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
+		self.bg = self.image
 		#Ultimate settings
 		self.ultimateGaugeIncrement = 3
                 		
@@ -33,20 +34,24 @@ class Settings():
 
 		self.initDynamicSettings()
 
+		#Interception settings
+		self.checkBtnPressed = 0
+		self.interception = False
+
         #BackGroundChange
 	def bgimg(self,number):
-                if number == 0:
-                        self.image = pg.image.load("gfx/background2.png")
-                        self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
-                        self.bg = self.image
-                elif number == 1:
-                        self.image = pg.image.load("gfx/background3.png")
-                        self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
-                        self.bg = self.image
-                else:
-                        self.image = pg.image.load("gfx/background4.png")
-                        self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
-                        self.bg = self.image
+		number = number % 3
+		if number == 0:
+				self.image = pg.image.load("gfx/background2.png")
+				self.bg = self.image
+		elif number == 1:
+				self.image = pg.image.load("gfx/background3.png")
+				self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
+				self.bg = self.image
+		else:
+				self.image = pg.image.load("gfx/background4.png")
+				self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
+				self.bg = self.image
         #        
 	def initDynamicSettings(self):
 		self.shipSpeed = 1.5
@@ -75,7 +80,6 @@ class Settings():
                         self.fleetDropSpeed *= 0.5
                         self.fleetDir *= 0.5
                         self.alienPoints *= 0.5 # nerf earning points in lower speed
-                        self.scoreSpeedUp = 1.1
                         self.Limit -= 1
 
 	def doublespeed(self):
