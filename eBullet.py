@@ -24,7 +24,7 @@ class EBullet(Sprite):
 		self.y = float(self.rect.y)
 
 		self.color = setting.bulletColor
-		self.bulletSpeed = setting.bulletSpeed
+		self.bulletSpeed = setting.bulletSpeed / 2
 
 
 	def update(self):
