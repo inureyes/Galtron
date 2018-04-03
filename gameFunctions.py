@@ -97,6 +97,13 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		setting.halfspeed()
 	elif event.key == pg.K_w:
 		setting.doublespeed()
+	elif event.key == pg.K_c:
+		#interception Key
+		setting.checkBtnPressed += 1
+		if setting.checkBtnPressed % 2 != 0:
+			setting.interception = True
+		else:
+			setting.interception = False
 	elif event.key == pg.K_ESCAPE:
 		#Quit game
 		sounds.button_click_sound.play()
@@ -263,6 +270,7 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	eBullets.update()
 	checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets)
 	checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+
 	#if bullet goes off screen delete it
 	for bullet in eBullets.copy():
 		screenRect = screen.get_rect()
@@ -271,6 +279,8 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
+	if setting.interception:
+		pg.sprite.groupcollide(bullets, eBullets, bullets, eBullets)
 
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
