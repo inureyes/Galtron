@@ -32,6 +32,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, q
 					#default mode
 					sounds.start_game.play()
 					color = 'grey'
+					ship.image = pg.image.load(checkColor())
 					stats.mainMenu = False
 					stats.mainGame = True
 					stats.playMenu = False
@@ -42,6 +43,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, q
 				elif setBtn == 2:
 					sounds.start_game.play()
 					color = 'red'
+					ship.image = pg.image.load(checkColor())
 					stats.mainMenu = False
 					stats.mainGame = True
 					stats.playMenu = False
@@ -52,6 +54,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, q
 				elif setBtn == 3:
 					sounds.start_game.play()
 					color = 'blue'
+					ship.image = pg.image.load(checkColor())
 					stats.mainMenu = False
 					stats.mainGame = True
 					stats.playMenu = False
