@@ -209,6 +209,13 @@ def checkFleetEdges(setting, aliens):
 			changeFleetDir(setting, aliens)
 			break
 
+def checkFleetEdges2(setting, aliens):
+	"""Respond if any aliens have reached an edge"""
+	for alien in aliens.sprites():
+		if alien.checkEdges():
+			return True;
+	return False;
+
 def checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Respond if any aliens have reached an bottom of screen"""
 	for alien in aliens.sprites():
@@ -251,6 +258,9 @@ def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Update the aliens"""
 	checkFleetEdges(setting, aliens)
 	checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+	if not checkFleetEdges2(setting, aliens):
+                if(random.randrange(0,100) < 2):
+                        setting.fleetDir *= -1
 	aliens.update(setting, screen, ship, aliens, eBullets)
 
 	#look for alien-ship collision
