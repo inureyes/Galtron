@@ -63,8 +63,8 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
 		elif event.type == pg.MOUSEMOTION:
-                        ship.center = event.pos[0]
-                        ship.centery = event.pos[1]
+			ship.center = event.pos[0]
+			ship.centery = event.pos[1]
 
 def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to kepresses"""
@@ -182,7 +182,7 @@ def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets
 		sb.prepScore()
 		sb.prepLevel()
 		sb.prepHighScore()
-                #Reset BackGround
+		#Reset BackGround
 		setting.bgimg(0)
 	elif not stats.gameActive and stats.paused:
 		#IF the game is not running and game is paused unpause the game
@@ -396,7 +396,7 @@ def UltimateDiamondShape(setting, screen, stats, sbullets):
 
 def useUltimate(setting, screen, stats, sbullets, pattern):
 	if stats.ultimateGauge != 100:
-		return
+		return 
 	if pattern == 1:
 		sounds.ult_attack.play()
 		UltimateDiamondShape(setting, screen, stats, sbullets)
