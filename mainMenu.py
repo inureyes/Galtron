@@ -7,7 +7,7 @@ back = False
 pg.joystick.init()
 joystickEnter = False
 
-def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
+def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, setBtnbtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
 	global currentBtn
 	for event in pg.event.get():
@@ -17,7 +17,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 		elif event.type == pg.KEYDOWN:
 			#Check if down, up, enter, esc is pressed
 			if event.key == pg.K_DOWN :
-				if currentBtn < 4:
+				if currentBtn < 5:
 					currentBtn += 1
 					sel.rect.y += 50
 			if event.key == pg.K_UP:
@@ -30,6 +30,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 					stats.mainGame = True
 					stats.mainAbout = False
 					stats.twoPlayer = False
+					stats.settingsMenu = False
 					currentBtn = 1
 					sel.centery = playBtn.rect.centery
 				elif currentBtn == 3:
@@ -37,10 +38,18 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 					stats.mainAbout = True
 					stats.mainGame = False
 					stats.twoPlayer = False
+					stats.settingsMenu = False
 					currentBtn = 1
 					sel.rect.centery = menuBtn.rect.centery
 				elif currentBtn == 4:
 					sys.exit()
+				elif currentBtn == 5:
+					stats.mainMenu = False
+					stats.mainAbout = False
+					stats.mainGame = False
+					stats.twoPlayer = False
+					stats.settingsMenu = True
+					currentBtn = 1
 			if event.key == pg.K_ESCAPE:
 				sys.exit()
 	prepTitle(setting, screen)
@@ -52,11 +61,13 @@ def prepTitle(setting, screen):
 	rect = image.get_rect()
 
 
-def drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBtn, sel):
+def drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBtn, setBtnbtn, sel):
 	"""Draw the menu and all of its elements"""
 	global image, rect
 	quitBtn.rect.y = 350
 	quitBtn.msgImageRect.y = 350
+	setBtnbtn.rect.y = 400
+	setBtnbtn.msgImageRect.y = 400
 	menuBtn.rect.y = 450
 	menuBtn.msgImageRect.y = 450
 	screen.fill(setting.bgColor)
@@ -65,6 +76,7 @@ def drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBt
 	twoPlayBtn.drawBtn()
 	aboutBtn.drawBtn()
 	quitBtn.drawBtn()
+	setBtnbtn.drawBtn()
 	#sb.showScore()
 	screen.blit(image, rect)
 	sel.blitme()

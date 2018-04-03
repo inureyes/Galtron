@@ -1,13 +1,19 @@
 import pygame as pg
 
 class Settings():
+	bgColor = (20, 20, 20)
+	bgColor1 = (235,235,235)
+	emp1 = (0,0,0)
+	bulletColor = (60, 60, 60)
+	bulletColor1 = (195,195,195)
+	emp2 = (0,0,0)
 	"""A class to store all settings for game"""
 	def __init__(self):
 		"""Initialize the class"""
 		self.windowCaption = 'Galtron'
 		self.screenWidth = 450
 		self.screenHeight = 550
-		self.bgColor = (20, 20, 20)
+		self.bgColor
 		self.bg = pg.image.load("gfx/background.bmp")
 
 		#Ships speed
@@ -16,7 +22,7 @@ class Settings():
 		#Bullet settings
 		self.bulletWidth = 3
 		self.bulletHeight = 15
-		self.bulletColor = (60, 60, 60)
+		self.bulletColor
 
 		#Alien settings
 
@@ -26,6 +32,13 @@ class Settings():
 
 		self.initDynamicSettings()
 
+	def reverseCol():
+			Settings.emp1 = Settings.bgColor
+			Settings.bgColor = Settings.bgColor1
+			Settings.bgColor1 = Settings.emp1
+			Settings.emp2 = Settings.bulletColor
+			Settings.bulletColor = Settings.bulletColor1
+			Settings.bulletColor1 = Settings.emp2
 	def initDynamicSettings(self):
 		self.shipSpeed = 1.5
 		self.bulletSpeed = 3
