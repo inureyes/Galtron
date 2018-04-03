@@ -400,6 +400,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	menuBtn.rect.y = 250
 	menuBtn.msgImageRect.y = 250
 	#screen.fill(setting.bgColor)
+	setting.bgimg(stats.level)
 	rel_x = x % setting.bg.get_rect().height
 	screen.blit(setting.bg, (0,rel_x - setting.bg.get_rect().height))
 	if rel_x < setting.screenHeight:
