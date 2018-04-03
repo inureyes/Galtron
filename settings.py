@@ -34,6 +34,10 @@ class Settings():
 
 		self.initDynamicSettings()
 
+		#Interception settings
+		self.checkBtnPressed = 0
+		self.interception = False
+
         #BackGroundChange
 	def bgimg(self,number):
 		number = number % 3
@@ -76,7 +80,6 @@ class Settings():
                         self.fleetDropSpeed *= 0.5
                         self.fleetDir *= 0.5
                         self.alienPoints *= 0.5 # nerf earning points in lower speed
-                        self.scoreSpeedUp = 1.1
                         self.Limit -= 1
 
 	def doublespeed(self):
