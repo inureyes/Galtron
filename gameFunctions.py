@@ -118,10 +118,7 @@ def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, s
 			sounds.charge_shot.play()
 			newBullet = Bullet(setting, screen, ship, ship.trajectory, 2)
 			bullets.add(newBullet)
-		elif (50 <= ship.chargeGauge):
-			sounds.charge_shot.play()
-			newBullet = Bullet(setting, screen, ship, ship.trajectory, 1)
-			bullets.add(newBullet)
+			ship.chargeGauge = 0
 		ship.shoot = False
 
 def pause(stats):
@@ -372,7 +369,7 @@ def useUltimate(setting, screen, stats, sbullets, pattern):
 def updateChargeGauge(ship):
 	gauge = 0
 	if ship.shoot == True:
-		gauge = 100 * ((pg.time.get_ticks() - ship.chargeGaugeStartTime) / ship.fullChargeTime)
+		gauge = 10 * ((pg.time.get_ticks() - ship.chargeGaugeStartTime) / ship.fullChargeTime)
 		if (100 < gauge):
 			gauge = 100
 	ship.chargeGauge = gauge
