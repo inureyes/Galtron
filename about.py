@@ -1,5 +1,6 @@
 import sys
 import pygame as pg
+import sounds
 
 #Create a variable to change current button being selected
 aboutBtn = 1
@@ -8,6 +9,7 @@ back = False
 
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
+	# add button_sound (case quit)
 	global aboutBtn
 	for event in pg.event.get():
 		#Check for quit event
@@ -18,14 +20,17 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship
 			#Check if down, up, enter, esc is pressed
 			if event.key == pg.K_DOWN:
 				if aboutBtn < 2:
+					sounds.control_menu.play()
 					aboutBtn += 1
 					sel.rect.y += 50
 			if event.key == pg.K_UP:
 				if aboutBtn > 1:
+					sounds.control_menu.play()
 					aboutBtn -= 1
 					sel.rect.y -= 50
 			if event.key == pg.K_RETURN:
 				if aboutBtn == 1:
+					sounds.select_menu.play()
 					stats.mainMenu = True
 					stats.mainGame = False
 					stats.twoPlayer = False
@@ -33,8 +38,12 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship
 					aboutBtn = 1
 					sel.rect.centery = playBtn.rect.centery
 				elif aboutBtn == 2:
+					sounds.button_click_sound.play()
+					pg.time.delay(300)
 					sys.exit()
 			if event.key == pg.K_ESCAPE:
+				sounds.button_click_sound.play()
+				pg.time.delay(300)
 				sys.exit()
 	prepAbout(setting, screen)
 
@@ -42,6 +51,7 @@ def prepAbout(setting, screen):
 	#Font settings for scoring information
 	global image, rect
 	image = pg.image.load('gfx/About_modify.png')
+	image = pg.transform.scale(image,(setting.screenWidth,setting.screenHeight))
 	rect = image.get_rect()
 
 

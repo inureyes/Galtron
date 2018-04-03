@@ -2,6 +2,7 @@ import pygame as pg
 from playMenu import *
 from pygame.sprite import *
 from bullet import Bullet
+import sounds
 
 class Ship(Sprite):
 	"""Class of a player ship"""
@@ -40,13 +41,19 @@ class Ship(Sprite):
 		self.timer = 0
 		self.trajectory = 0
 
-	def update(self, bullets):
+		self.chargeGaugeStartTime = 0
+		self.fullChargeTime = 2500
+		self.chargeGauge = 0
+
+	def update(self, bullets, aliens):
 		self.image = pg.image.load(checkColor())
 		"""Update the ships position"""
 		if self.movingRight and self.rect.right < self.screenRect.right:
 			self.center += self.setting.shipSpeed
+			self.image = pg.transform.rotate(self.image,-45)
 		if self.movingLeft and self.rect.left > 1:
 			self.center -= self.setting.shipSpeed
+			self.image = pg.transform.rotate(self.image,45)
 		if self.movingRight and self.rect.right >= self.screenRect.right:
 			self.center = 1.0
 		if self.movingLeft and self.rect.left <= 1:
@@ -56,9 +63,13 @@ class Ship(Sprite):
 		if self.movingDown and self.rect.bottom < self.screenRect.bottom:
 			self.centery += self.setting.shipSpeed
 		if self.shoot == True:
-			if self.timer > 5:
+			if self.timer > 10:
+				self.image = pg.transform.rotate(self.image,0)
+			if self.timer > 10 and len(bullets) < 6:
+				sounds.attack.play()
 				newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
 				bullets.add(newBullet)
+				sounds.attack.play()
 				self.timer = 0
 			else:
 				self.timer += 1

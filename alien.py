@@ -2,6 +2,7 @@ import pygame as pg
 from pygame.sprite import Sprite
 from time import sleep
 from eBullet import EBullet
+import sounds
 
 
 class Alien(Sprite):
@@ -13,7 +14,7 @@ class Alien(Sprite):
 		self.setting = setting
 
 		#load the alien image and set its rect attribute
-		self.image = pg.image.load('gfx/alien3.png')
+		self.image = pg.image.load('gfx/alienchange.png')
 		self.rect = self.image.get_rect()
 
 		#start each new alien near the top left of the screen
@@ -50,8 +51,10 @@ class Alien(Sprite):
 		self.shoot(setting, screen, self.ship, self.aliens, self.eBullets)
 
 	def shoot(self, setting, screen, ship, aliens, eBullets):
+		# add enemy_shooting_sound
 		if self.rect.centerx >= self.ship.rect.centerx and len(eBullets) <= 4:
 			if self.timer >= 50:
+				sounds.enemy_shoot_sound.play()
 				self.timer = 0
 				newBullet = EBullet(setting, screen, self)
 				eBullets.add(newBullet)

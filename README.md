@@ -40,6 +40,7 @@
 | Jaehun Kim.   | student.   |     |
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
+| KeonWoong Noh | Student    |     |
 | Onyu Park     | Student    |     |
 | TaeWoong Kong | Student    |     |
 | KeonWoong Noh | Student    |     |
@@ -93,4 +94,3 @@ To run the game:
 
 <<<<<<< HEAD
 By Matt Boan 2017
-
