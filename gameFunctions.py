@@ -5,6 +5,8 @@ from bullet import Bullet, SpecialBullet
 from alien import Alien
 from settings import Settings
 import random
+import sounds
+from button import Button
 
 pauseBtnState = 1
 back = False
@@ -12,24 +14,11 @@ back = False
 x = 0
 clock = pg.time.Clock()
 FPS = 120
-
-#Init and load sound effects
-pg.mixer.init(44100, -16, 2, 4096)
-control_menu = pg.mixer.Sound("sounds/control_menu.wav")
-control_menu.set_volume(0.22)
-select_menu = pg.mixer.Sound("sounds/select_menu.wav")
-select_menu.set_volume(0.18)
-attack = pg.mixer.Sound("sounds/attack.wav")
-attack.set_volume(0.08)
-ult_attack = pg.mixer.Sound("sounds/ult_attack.wav")
-ult_attack.set_volume(0.08)
-paused = pg.mixer.Sound("sounds/paused.wav")
-paused.set_volume(0.1)
+bgloop = 0
+reset = 0
 
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
-	# add button_click sound(case quit)
-	button_click_sound = pg.mixer.Sound('./sound_effect/button_clicked.wav')
 	global pauseBtnState
 	for event in pg.event.get():
 		#Check for quit event
@@ -39,58 +28,53 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 		#Check for key down has been pressed
 		elif event.type == pg.KEYDOWN:
 			checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
-			#Pause menu controls
+			if(stats.gameActive):
+				continue
 			if event.key == pg.K_UP:
 				if pauseBtnState > 1:
-					control_menu.play()
+					sounds.control_menu.play()
 					pauseBtnState -= 1
 					sel.rect.y -= 50
 			elif event.key == pg.K_DOWN:
 				if pauseBtnState < 3:
-					control_menu.play()
+					sounds.control_menu.play()
 					pauseBtnState += 1
 					sel.rect.y += 50
 
 			elif event.key == pg.K_RETURN:
 				if pauseBtnState == 1:
-					select_menu.play()
+					sounds.select_menu.play()
 					checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets)
 					pg.time.delay(3000)
 				elif pauseBtnState == 2:
-					select_menu.play()
+					sounds.select_menu.play()
 					stats.mainGame = False
 					stats.mainAbout = False
 					stats.twoPlay = False
 					stats.mainMenu = True
+					stats.resetStats()
 					sel.rect.centery = playBtn.rect.centery
 					pauseBtnState = 1
 				elif pauseBtnState == 3:
-					pg.mixer.Sound.play(button_click_sound)
+					sounds.button_click_sound.play()
 					pg.time.delay(300)
 					sys.exit()
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
-			checkKeyupEvents(event, ship)
-			
+			checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
 		elif event.type == pg.MOUSEMOTION:
                         ship.center = event.pos[0]
                         ship.centery = event.pos[1]
 
-
 def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to kepresses"""
 	global back
-	# add button_click_sound (case quit)
-	button_click_sound2 = pg.mixer.Sound('./sound_effect/button_clicked.wav')
 	if event.key == pg.K_RIGHT:
 		#Move the ship right
 		ship.movingRight = True
 	elif event.key == pg.K_LEFT:
 		#Move the ship left
 		ship.movingLeft = True
-	elif event.key == pg.K_SPACE:
-		newBullet = Bullet(setting, screen, ship,ship.trajectory)
-		bullets.add(newBullet)
 	elif event.key == pg.K_UP:
 		#Move the ship up
 		ship.movingUp = True
@@ -99,38 +83,51 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		ship.movingDown = True
 	elif event.key == pg.K_TAB:
 		#Change the style of trajectory of bullet
-		if (ship.trajectory < 5):
+		if (ship.trajectory < 4):
 			ship.trajectory += 1
 		else:
 			ship.trajectory = 0
 	elif event.key == pg.K_SPACE:
-		if (stats.paused == False):
-			attack.play()
-		if len(bullets) <= 6:
-			newBullet = Bullet(setting, screen, ship, ship.trajectory)
-			bullets.add(newBullet)
-		ship.shoot = True
+		if not stats.paused:
+			if len(bullets) < 10:
+				sounds.attack.play()
+				newBullet = Bullet(setting, screen, ship, ship.trajectory)
+				bullets.add(newBullet)
+				ship.chargeGaugeStartTime = pg.time.get_ticks()
+				ship.shoot = True
+
 	elif event.key == pg.K_x:
 		#Ultimate key
 		useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
 	#Check for pause key
 	elif event.key == pg.K_p:
-		paused.play()
+		sounds.paused.play()
 		pause(stats)
 	#Add speed control key
 	elif event.key == pg.K_q:
 		setting.halfspeed()
 	elif event.key == pg.K_w:
 		setting.doublespeed()
+	elif event.key == pg.K_c:
+		#interception Key
+		setting.checkBtnPressed += 1
+		if setting.checkBtnPressed % 2 != 0:
+			setting.interception = True
+		else:
+			setting.interception = False
+	elif event.key == pg.K_F12:
+		# Reset Game
+		sounds.button_click_sound.play()
+		resetGame()
 	elif event.key == pg.K_ESCAPE:
 		#Quit game
-		pg.mixer.Sound.play(button_click_sound2)
+		sounds.button_click_sound.play()
 		pg.time.delay(300)
 		sys.exit()
 
-
-def checkKeyupEvents(event, ship):
+def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to keyrealeses"""
+	global gauge
 	if event.key == pg.K_RIGHT:
 		ship.movingRight = False
 	elif event.key == pg.K_LEFT:
@@ -140,13 +137,28 @@ def checkKeyupEvents(event, ship):
 	elif event.key == pg.K_DOWN:
 		ship.movingDown = False
 	elif event.key == pg.K_SPACE:
+		if not stats.paused:
+			if (ship.chargeGauge == 100):
+				sounds.charge_shot.play()
+				newBullet = Bullet(setting, screen, ship, ship.trajectory, 2)
+				bullets.add(newBullet)
+				ship.chargeGauge = 0
+			elif (50 <= ship.chargeGauge):
+				sounds.charge_shot.play()
+				newBullet = Bullet(setting, screen, ship, ship.trajectory, 1)
+				bullets.add(newBullet)
 		ship.shoot = False
 
 def pause(stats):
 	"""Pause the game when the pause button is pressed"""
 	stats.gameActive = False
 	stats.paused = True
-	pg.mixer.music.set_volume(0)
+
+def resetGame():
+    global reset
+    reset = 1
+    with open('data-files/highscore.json', 'w') as f_obj:
+        f_obj.write('0')
 
 
 def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets):
@@ -170,12 +182,12 @@ def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets
 		sb.prepScore()
 		sb.prepLevel()
 		sb.prepHighScore()
-
+                #Reset BackGround
+		setting.bgimg(0)
 	elif not stats.gameActive and stats.paused:
 		#IF the game is not running and game is paused unpause the game
 		stats.gameActive = True
 		stats.paused = False
-		pg.mixer.music.set_volume(0.25)
 
 
 
@@ -241,9 +253,8 @@ def changeFleetDir(setting, aliens):
 def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Respond to ship being hit"""
 	# add exprosion_sound
-	explosion_sound = pg.mixer.Sound('./sound_effect/explosion.wav')
 	if stats.shipsLeft > 0:
-		pg.mixer.Sound.play(explosion_sound)
+		sounds.explosion_sound.play()
 		sb.prepShips()
 		stats.shipsLeft -= 1
 		stats.ultimateGauge = 0
@@ -260,7 +271,6 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	else:
 		stats.gameActive = False
 		checkHighScore(stats, sb)
-		stats.resetStats()
 
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
@@ -283,6 +293,7 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	eBullets.update()
 	checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets)
 	checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+
 	#if bullet goes off screen delete it
 	for bullet in eBullets.copy():
 		screenRect = screen.get_rect()
@@ -292,14 +303,15 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
 
+	if setting.interception:
+		pg.sprite.groupcollide(bullets, eBullets, bullets, eBullets)
+
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	"""Detect collisions between alien and bullets"""
 	collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
-	# add enemy_explosion_sound
-	enemy_explosion_sound = pg.mixer.Sound('./sound_effect/enemy_explosion.wav')
 	if collisions:
-		pg.mixer.Sound.play(enemy_explosion_sound)
+		sounds.enemy_explosion_sound.play()
 		for c in collisions:
 			setting.explosions.add(c.rect.x, c.rect.y)
 
@@ -321,6 +333,13 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
 		sb.prepLevel()
 		time.sleep(1)
 		createFleet(setting, screen, ship, aliens)
+		global bgloop
+		if stats.level % 5 == 1:
+			bgloop += 1
+		if bgloop == 3:
+			bgloop -= 3
+		setting.bgimg(bgloop)
+
 
 def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Check for collisions using collision mask between ship and enemy bullets"""
@@ -328,6 +347,7 @@ def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBull
 		if pg.sprite.collide_mask(ship, ebullet):
 			shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 			sb.prepShips()
+			eBullets.empty()
 
 
 def checkHighScore(stats, sb):
@@ -336,13 +356,23 @@ def checkHighScore(stats, sb):
 		stats.highScore = stats.score
 		sb.prepHighScore()
 
-def updateUltimateGauge(setting, screen, stats):
+def updateUltimateGauge(setting, screen, stats, sb):
 	"""Draw a bar that indicates the ultimate gauge"""
-	x = 290
-	y = 15
+	x = sb.levelRect.left - 130
+	y = sb.levelRect.top + 4
 	gauge = stats.ultimateGauge
-	pg.draw.rect(screen, (255,255,255), (x,y,100,10), 0)
-	pg.draw.rect(screen, (0,0,255), (x,y,gauge,10), 0)
+	ultimateImg = pg.font.Font('Fonts/Square.ttf', 10).render("POWER SHOT(X)", True, (255,255,255),
+		(255,100,0))
+	ultimateRect = ultimateImg.get_rect()
+	ultimateRect.x = x + 5
+	ultimateRect.y = y
+	if gauge == 100:
+		pg.draw.rect(screen, (255,255,255), (x,y,100,12), 0)
+		pg.draw.rect(screen, (255,100,0), (x,y,gauge,12), 0)
+		screen.blit(ultimateImg, ultimateRect)
+	else:
+		pg.draw.rect(screen, (255,255,255), (x,y,100,12), 0)
+		pg.draw.rect(screen, (0,255,255), (x,y,gauge,12), 0)
 
 def UltimateDiamondShape(setting, screen, stats, sbullets):
 	xpos = 10
@@ -368,15 +398,31 @@ def useUltimate(setting, screen, stats, sbullets, pattern):
 	if stats.ultimateGauge != 100:
 		return
 	if pattern == 1:
-		ult_attack.play()
+		sounds.ult_attack.play()
 		UltimateDiamondShape(setting, screen, stats, sbullets)
 #	elif pattern == 2:
 #		make other pattern
 	stats.ultimateGauge = 0
 
+def updateChargeGauge(ship):
+	gauge = 0
+	if ship.shoot == True:
+		gauge = 100 * ((pg.time.get_ticks() - ship.chargeGaugeStartTime) / ship.fullChargeTime)
+		if (100 < gauge):
+			gauge = 100
+	ship.chargeGauge = gauge
 
+def drawChargeGauge(setting, screen, ship, sb):
+	x = sb.levelRect.left - 240
+	y = sb.levelRect.top + 4
+	color = (50,50,50)
+	if (ship.chargeGauge == 100):
+		color = (255,0,0)
+	elif (50 <= ship.chargeGauge):
+		color = (255,120,0)
 
-
+	pg.draw.rect(screen, (255, 255, 255), (x, y, 100, 10), 0)
+	pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
 
 def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel):
 	"""Update images on the screen and flip to the new screen"""
@@ -393,7 +439,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	screen.blit(setting.bg, (0,rel_x - setting.bg.get_rect().height))
 	if rel_x < setting.screenHeight:
 		screen.blit(setting.bg, (0,rel_x))
-	x += 3
+	x += 15
 
 	#draw all the bullets
 	for bullet in bullets.sprites():
@@ -407,13 +453,30 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	aliens.draw(screen)
 
 	#Update Ultimate Gauge
-	updateUltimateGauge(setting, screen, stats)
+	updateUltimateGauge(setting, screen, stats, sb)
+
+	updateChargeGauge(ship)
+	drawChargeGauge(setting, screen, ship, sb)
 
 	#Draw the scoreboard
+	sb.prepScore()
 	sb.showScore()
 
 	#Draw the play button if the game is inActive
-	if not stats.gameActive:
+	if not stats.gameActive and stats.shipsLeft < 1:
+		retryBtn = Button(setting, screen, "retry", 200)
+		scoreImg = pg.font.Font('Fonts/Square.ttf', 50).render("Score: " + str(stats.score), True, (0,0,0),(255,255,255))
+		setting.image = pg.image.load("gfx/gameover.png")
+		setting.image = pg.transform.scale(setting.image,(setting.screenWidth-40,setting.image.get_height()))
+		setting.bg = setting.image
+		screen.fill((0,0,0))
+		screen.blit(scoreImg,((setting.screenWidth-scoreImg.get_width())/2,120))
+		screen.blit(setting.bg,(20,30))
+		retryBtn.drawBtn()
+		menuBtn.drawBtn()
+		quitBtn.drawBtn()
+		sel.blitme()
+	elif not stats.gameActive:
 		playBtn.drawBtn()
 		menuBtn.drawBtn()
 		quitBtn.drawBtn()
