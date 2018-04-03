@@ -34,6 +34,7 @@
 | Jaehun Kim.   | student.   |     |
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
+| Kim Tae Yoon           | Student    |     |
 | KeonWoong Noh | Student    |     |
 | Onyu Park     | Student    |     |
 | TaeWoong Kong | Student    |     |

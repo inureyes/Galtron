@@ -2,6 +2,12 @@ import pygame as pg
 from animations import Explosions
 
 class Settings():
+	bgColor = (20, 20, 20)
+	bgColor1 = (235,235,235)
+	emp1 = (0,0,0)
+	bulletColor = (60, 60, 60)
+	bulletColor1 = (195,195,195)
+	emp2 = (0,0,0)
 	"""A class to store all settings for game"""
 	def __init__(self):
 		"""Initialize the class"""
@@ -21,7 +27,7 @@ class Settings():
 		#Bullet settings
 		self.bulletWidth = 3
 		self.bulletHeight = 15
-		self.bulletColor = (60, 60, 60)
+		self.bulletColor
 
 		#Alien settings
 
@@ -33,12 +39,18 @@ class Settings():
 		self.Limit = 0
 
 		self.initDynamicSettings()
-
 		#Interception settings
 		self.checkBtnPressed = 0
 		self.interception = False
 
-        #BackGroundChange
+	def reverseCol():
+			Settings.emp1 = Settings.bgColor
+			Settings.bgColor = Settings.bgColor1
+			Settings.bgColor1 = Settings.emp1
+			Settings.emp2 = Settings.bulletColor
+			Settings.bulletColor = Settings.bulletColor1
+			Settings.bulletColor1 = Settings.emp2
+
 	def bgimg(self,number):
 		number = number % 3
 		if number == 0:

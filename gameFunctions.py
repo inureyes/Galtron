@@ -55,7 +55,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 				elif pauseBtnState == 3:
 					sounds.button_click_sound.play()
 					pg.time.delay(300)
-					sys.exit()	
+					sys.exit()
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
@@ -117,6 +117,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 
 def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to keyrealeses"""
+	global gauge
 	if event.key == pg.K_RIGHT:
 		ship.movingRight = False
 	elif event.key == pg.K_LEFT:
@@ -126,11 +127,6 @@ def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, s
 	elif event.key == pg.K_DOWN:
 		ship.movingDown = False
 	elif event.key == pg.K_SPACE:
-		if (ship.chargeGauge == 100):
-			sounds.charge_shot.play()
-			newBullet = Bullet(setting, screen, ship, ship.trajectory, 2)
-			bullets.add(newBullet)
-			ship.chargeGauge = 0
 		ship.shoot = False
 
 def pause(stats):
@@ -388,13 +384,7 @@ def useUltimate(setting, screen, stats, sbullets, pattern):
 #		make other pattern
 	stats.ultimateGauge = 0
 
-def updateChargeGauge(ship):
-	gauge = 0
-	if ship.shoot == True:
-		gauge = 30 * ((pg.time.get_ticks() - ship.chargeGaugeStartTime) / ship.fullChargeTime)
-		if (100 < gauge):
-			gauge = 100
-	ship.chargeGauge = gauge
+
 
 def drawChargeGauge(setting, screen, ship):
 	x = 290
@@ -440,7 +430,6 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	#Update Ultimate Gauge
 	updateUltimateGauge(setting, screen, stats, sb)
 
-	updateChargeGauge(ship)
 	drawChargeGauge(setting, screen, ship)
 
 	#Draw the scoreboard
