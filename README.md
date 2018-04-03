@@ -1,36 +1,45 @@
-# Learning OSS development through GitHub
+﻿# Learning OSS development through GitHub
 
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
+| Minseok  Kang | Student    |     |
+| Jaehun Kim.   | student.   |     |
+| Hansae Ju     | Student    |     |
+| Jaewoo Yang   | Student    |     |
+| Cho young il  | Student    |     |
+| Jinsung An    | Student    |     |
+| Minwoo Son	| Student    |     |
+| Kim Dain      | Student    |     |
+| Jeongin Lee | Student  |     |
+| YK            | Student    |     |
+| Jeong-A Im     | Student    |     |
+| Kim Tae Yoon           | Student    |     |
+| Yulim Oh      | Student    |     |
+| Jihoon Yeom   | Student    |     |
+| MinSeong Kang | Student    |     |
+| Keongi Kim    | Student    |     |
+| Sungchan Kim  | Student    |     |
+| Kim tae O     | Student    |     |
+| Jeshin Lee    | Student    |     |
 | Hoesung  Jung | Student^^7 | Nerd|
 | Hyunjun Lee   | Student    |     |
 | Minseok  Kang | Student    |     |
 | Jaehun Kim.   | student.   |     |
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
+| Onyu Park     | Student    |     |
 | TaeWoong Kong | Student    |     |
 | KeonWoong Noh | Student    |     |
 | ChaeHyun Baek | Student    |     |
 | JK            | Student    |     |
 <<<<<<< HEAD
-| GookGon Lee   | Student    |     |
-| Hyobin Lee    | Student    |     |
-| Hayeong Lee   | Student    |     |
-| YoungHoon Kwon| Student    |     |
-| Haeun Choi    | Student    |     |
-| Moon ki hun   | Student    |     |
-| Seungchan Yu  | Student    |     |
-| JK2           | Student    |     |
-| Yushin Kim    | Student    |     |
-| Yejun Kim     | Student    |     |
-| Yunjea Nam    | Student    |     |
-| Cho young il  | Student    |     |
-| Minjun Kim    | Student    |     |
-| JaeHun Lee    | Student    |     |
-| Taewan Park   | Student    |     |
-
->>>>>>> 91949b8f84131f9ef49e1ff6a4b1560f35c64057
+<<<<<<< HEAD
+=======
+| SeongIn Moon  | Student    |     |
+| JeWoong Moon  | Student    |     |
+| Yushin        | Student    |     |
+>>>>>>> 96382483cc1beab60773ca037712a173aa613158
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
