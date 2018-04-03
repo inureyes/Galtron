@@ -56,7 +56,7 @@
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
 | Yerim Hwang	| Student    |     |
-| Kim yong jun  | Student    |     |
+| Kim yong jun  | Student    |     |
 | Yerim Hwang	| Student    |     |
 | Minjun Kim    | Student    |     |
 | JaeHun Lee    | Student    |     |
@@ -64,6 +64,7 @@
 | HoJin Seo     | Student    |     |
 | Sungho Yun    | Student    |     |
 | Keunmo Koo.   | Genius     |     |
+
 
 
 # Galtron

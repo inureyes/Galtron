@@ -15,7 +15,8 @@ x = 0
 clock = pg.time.Clock()
 FPS = 120
 bgloop = 0
-gauge = 0
+reset = 0
+
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
 	global pauseBtnState
@@ -44,8 +45,6 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 				if pauseBtnState == 1:
 					sounds.select_menu.play()
 					checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets)
-					print(stats.score)
-					print("hi")
 				elif pauseBtnState == 2:
 					sounds.select_menu.play()
 					stats.mainGame = False
@@ -63,8 +62,8 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
 		elif event.type == pg.MOUSEMOTION:
-                        ship.center = event.pos[0]
-                        ship.centery = event.pos[1]
+			ship.center = event.pos[0]
+			ship.centery = event.pos[1]
 
 def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to kepresses"""
@@ -83,7 +82,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		ship.movingDown = True
 	elif event.key == pg.K_TAB:
 		#Change the style of trajectory of bullet
-		if (ship.trajectory < 5):
+		if (ship.trajectory < 4):
 			ship.trajectory += 1
 		else:
 			ship.trajectory = 0
@@ -115,6 +114,10 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 			setting.interception = True
 		else:
 			setting.interception = False
+	elif event.key == pg.K_F12:
+		# Reset Game
+		sounds.button_click_sound.play()
+		resetGame()
 	elif event.key == pg.K_ESCAPE:
 		#Quit game
 		sounds.button_click_sound.play()
@@ -150,6 +153,12 @@ def pause(stats):
 	stats.gameActive = False
 	stats.paused = True
 
+def resetGame():
+    global reset
+    reset = 1
+    with open('data-files/highscore.json', 'w') as f_obj:
+        f_obj.write('0')
+
 
 def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets):
 	"""Start new game if playbutton is pressed"""
@@ -172,7 +181,7 @@ def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets
 		sb.prepScore()
 		sb.prepLevel()
 		sb.prepHighScore()
-                #Reset BackGround
+		#Reset BackGround
 		setting.bgimg(0)
 	elif not stats.gameActive and stats.paused:
 		#IF the game is not running and game is paused unpause the game
@@ -292,6 +301,7 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
+
 	if setting.interception:
 		pg.sprite.groupcollide(bullets, eBullets, bullets, eBullets)
 
@@ -387,7 +397,7 @@ def UltimateDiamondShape(setting, screen, stats, sbullets):
 
 def useUltimate(setting, screen, stats, sbullets, pattern):
 	if stats.ultimateGauge != 100:
-		return
+		return 
 	if pattern == 1:
 		sounds.ult_attack.play()
 		UltimateDiamondShape(setting, screen, stats, sbullets)
@@ -430,7 +440,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	screen.blit(setting.bg, (0,rel_x - setting.bg.get_rect().height))
 	if rel_x < setting.screenHeight:
 		screen.blit(setting.bg, (0,rel_x))
-	x += 3
+	x += 15
 
 	#draw all the bullets
 	for bullet in bullets.sprites():
@@ -446,7 +456,8 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	#Update Ultimate Gauge
 	updateUltimateGauge(setting, screen, stats, sb)
 
-	drawChargeGauge(setting, screen, ship)
+	updateChargeGauge(ship)
+	drawChargeGauge(setting, screen, ship, sb)
 
 	#Draw the scoreboard
 	sb.prepScore()
