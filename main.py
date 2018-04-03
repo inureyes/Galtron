@@ -72,10 +72,10 @@ def runGame():
 	pg.mixer.music.set_volume(0.25)
 	pg.mixer.music.play(-1)
 
-	runGame = True
+	rungame = True
 
 	#Set the two while loops to start mainMenu first
-	while runGame:
+	while rungame:
 		#Set to true to run main game loop
 		while stats.mainMenu:
 			mm.checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, setBtnbtn, sel, ship, aliens, bullets, eBullets)
@@ -88,7 +88,10 @@ def runGame():
 		while stats.mainGame:
 			#Game functions
 			gf.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets) #Check for events
-			
+			# Reset Game
+			if gf.reset == 1:
+				gf.reset = 0
+				pg.register_quit(runGame())
 			if stats.gameActive:
 				gf.updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets) #Update aliens
 				gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets) #Update collisions
@@ -111,7 +114,7 @@ def runGame():
 			sm.drawMenu(setting, screen, sb, menuBtn, quitBtn, bgcrbtn, sel)
 
 		while stats.mainGame:
-			if runGame == True:
+			if rungame == True:
 				print("test")
 
 #init bgm mixer
