@@ -1,6 +1,7 @@
 import pygame as pg
 
 
+
 class AnimatedSprite:
 
     def __init__(self, sprite, item_width, item_height, item_count):
