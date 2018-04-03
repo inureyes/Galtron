@@ -310,6 +310,7 @@ def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBull
 		if pg.sprite.collide_mask(ship, ebullet):
 			shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 			sb.prepShips()
+			eBullets.empty()
 
 
 def checkHighScore(stats, sb):
