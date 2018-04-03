@@ -85,12 +85,12 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 			ship.trajectory = 0
 	elif event.key == pg.K_SPACE:
 		if not stats.paused:
-			sounds.attack.play()
-			newBullet = Bullet(setting, screen, ship, ship.trajectory)
-			bullets.add(newBullet)
-			ship.chargeGaugeStartTime = pg.time.get_ticks()
-			ship.shoot = True
-#if len(bullets) <= 6:
+			if len(bullets) < 10:
+				sounds.attack.play()
+				newBullet = Bullet(setting, screen, ship, ship.trajectory)
+				bullets.add(newBullet)
+				ship.chargeGaugeStartTime = pg.time.get_ticks()
+				ship.shoot = True
 
 	elif event.key == pg.K_x:
 		#Ultimate key

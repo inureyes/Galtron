@@ -65,7 +65,7 @@ class Ship(Sprite):
 		if self.shoot == True:
 			if self.timer > 10:
 				self.image = pg.transform.rotate(self.image,0)
-			if self.timer > 10 and len(bullets) < 6:
+			if self.timer > 10 and len(bullets) < 10:
 				sounds.attack.play()
 				newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
 				bullets.add(newBullet)
