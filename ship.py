@@ -45,7 +45,7 @@ class Ship(Sprite):
 		self.fullChargeTime = 2500
 		self.chargeGauge = 0
 
-	def update(self, bullets):
+	def update(self, bullets, aliens):
 		self.image = pg.image.load(checkColor())
 		"""Update the ships position"""
 		if self.movingRight and self.rect.right < self.screenRect.right:
@@ -65,6 +65,7 @@ class Ship(Sprite):
 		if self.shoot == True:
 			if self.timer > 10:
 				self.image = pg.transform.rotate(self.image,0)
+			if self.timer > 10 and len(bullets) < 6:
 				sounds.attack.play()
 				newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
 				bullets.add(newBullet)

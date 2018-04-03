@@ -97,6 +97,13 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		setting.halfspeed()
 	elif event.key == pg.K_w:
 		setting.doublespeed()
+	elif event.key == pg.K_c:
+		#interception Key
+		setting.checkBtnPressed += 1
+		if setting.checkBtnPressed % 2 != 0:
+			setting.interception = True
+		else:
+			setting.interception = False
 	elif event.key == pg.K_ESCAPE:
 		#Quit game
 		sounds.button_click_sound.play()
@@ -118,10 +125,7 @@ def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, s
 			sounds.charge_shot.play()
 			newBullet = Bullet(setting, screen, ship, ship.trajectory, 2)
 			bullets.add(newBullet)
-		elif (50 <= ship.chargeGauge):
-			sounds.charge_shot.play()
-			newBullet = Bullet(setting, screen, ship, ship.trajectory, 1)
-			bullets.add(newBullet)
+			ship.chargeGauge = 0
 		ship.shoot = False
 
 def pause(stats):
@@ -263,6 +267,7 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	eBullets.update()
 	checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets)
 	checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+
 	#if bullet goes off screen delete it
 	for bullet in eBullets.copy():
 		screenRect = screen.get_rect()
@@ -271,6 +276,8 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
+	if setting.interception:
+		pg.sprite.groupcollide(bullets, eBullets, bullets, eBullets)
 
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
@@ -313,6 +320,7 @@ def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBull
 		if pg.sprite.collide_mask(ship, ebullet):
 			shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 			sb.prepShips()
+			eBullets.empty()
 
 
 def checkHighScore(stats, sb):
@@ -372,7 +380,7 @@ def useUltimate(setting, screen, stats, sbullets, pattern):
 def updateChargeGauge(ship):
 	gauge = 0
 	if ship.shoot == True:
-		gauge = 100 * ((pg.time.get_ticks() - ship.chargeGaugeStartTime) / ship.fullChargeTime)
+		gauge = 30 * ((pg.time.get_ticks() - ship.chargeGaugeStartTime) / ship.fullChargeTime)
 		if (100 < gauge):
 			gauge = 100
 	ship.chargeGauge = gauge
@@ -400,6 +408,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	menuBtn.rect.y = 250
 	menuBtn.msgImageRect.y = 250
 	#screen.fill(setting.bgColor)
+	setting.bgimg(stats.level)
 	rel_x = x % setting.bg.get_rect().height
 	screen.blit(setting.bg, (0,rel_x - setting.bg.get_rect().height))
 	if rel_x < setting.screenHeight:
