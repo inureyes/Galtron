@@ -1,8 +1,13 @@
 import pygame.font
 from pygame.sprite import Group
 from ship import Ship
+from playMenu import *
 
 class Scoreboard():
+
+	textColor = (255, 255, 255)
+	textColor1 = (0,0,0)
+	emp1 = (0,0,0)
 	"""A class for scorekeeping"""
 	def __init__(self, setting, screen, stats):
 		self.screen = screen
@@ -12,7 +17,7 @@ class Scoreboard():
 		self.active = False
 
 		#Font settings for scoring information
-		self.textColor = (255, 255, 255)
+		self.textColor
 		self.font = pygame.font.Font('Fonts/Square.ttf', 20)
 
 		#Prepare the initial score image
@@ -21,10 +26,17 @@ class Scoreboard():
 		self.prepLevel()
 		self.prepShips()
 
+	def reverseCol():
+
+		Scoreboard.emp1 = Scoreboard.textColor
+		Scoreboard.textColor = Scoreboard.textColor1
+		Scoreboard.textColor1 = Scoreboard.emp1
+
 	def prepScore(self):
 		"""Turn the score into a rendered image"""
 		roundedScore = int(self.stats.score)
-		scoreStr = "{:,}".format(roundedScore)
+		scoreStr = "Score: "
+		scoreStr += "{:,}".format(roundedScore)
 		self.scoreImg = self.font.render(scoreStr, True, self.textColor,
 			self.setting.bgColor)
 
@@ -32,6 +44,7 @@ class Scoreboard():
 		self.scoreRect = self.scoreImg.get_rect()
 		self.scoreRect.right = self.screenRect.right - 20
 		self.scoreRect.top = 10
+
 
 	def prepHighScore(self):
 		"""Turn the high score into a rendered image"""
@@ -42,13 +55,13 @@ class Scoreboard():
 			self.setting.bgColor)
 		#Center the highscore
 		self.highScoreRect = self.highScoreImg.get_rect()
-		self.highScoreRect.centerx = self.screenRect.centerx
+		self.highScoreRect.x = 20
 		self.highScoreRect.top = self.scoreRect.top
 
 	def prepLevel(self):
 		"""Turn the level into a rendered image."""
 		#self.stats.level = "LVL " + str(self.stats.level)
-		self.levelImg = self.font.render(str(self.stats.level), True,self.textColor,
+		self.levelImg = self.font.render("Level: " + str(self.stats.level), True,self.textColor,
 			self.setting.bgColor)
 		#position below the score
 		self.levelRect = self.levelImg.get_rect()
@@ -60,8 +73,9 @@ class Scoreboard():
 		self.ships = Group()
 		for shipNumber in range(self.stats.shipsLeft):
 			ship = Ship(self.setting, self.screen)
+			ship.image = pygame.image.load(checkColor())
 			ship.rect.x = 10 + shipNumber * (ship.rect.width -10)
-			ship.rect.y = 10
+			ship.rect.y = self.scoreRect.bottom + 2
 			self.ships.add(ship)
 
 	def prepCounter(self, active):
