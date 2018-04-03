@@ -7,13 +7,25 @@ from settings import Settings
 import random
 import sounds
 
-
 pauseBtnState = 1
 back = False
 
 x = 0
 clock = pg.time.Clock()
 FPS = 120
+bgloop = 0
+#Init and load sound effects
+pg.mixer.init(44100, -16, 2, 4096)
+control_menu = pg.mixer.Sound("sounds/control_menu.wav")
+control_menu.set_volume(0.22)
+select_menu = pg.mixer.Sound("sounds/select_menu.wav")
+select_menu.set_volume(0.18)
+attack = pg.mixer.Sound("sounds/attack.wav")
+attack.set_volume(0.08)
+ult_attack = pg.mixer.Sound("sounds/ult_attack.wav")
+ult_attack.set_volume(0.08)
+paused = pg.mixer.Sound("sounds/paused.wav")
+paused.set_volume(0.1)
 
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
@@ -57,7 +69,9 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
-
+		elif event.type == pg.MOUSEMOTION:
+                        ship.center = event.pos[0]
+                        ship.centery = event.pos[1]
 
 def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to kepresses"""
@@ -155,7 +169,8 @@ def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets
 		sb.prepScore()
 		sb.prepLevel()
 		sb.prepHighScore()
-
+                #Reset BackGround
+		setting.bgimg(0)
 	elif not stats.gameActive and stats.paused:
 		#IF the game is not running and game is paused unpause the game
 		stats.gameActive = True
@@ -303,6 +318,13 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
 		sb.prepLevel()
 		time.sleep(1)
 		createFleet(setting, screen, ship, aliens)
+		global bgloop
+		if stats.level % 5 == 1:
+			bgloop += 1
+		if bgloop == 3:
+			bgloop -= 3
+		setting.bgimg(bgloop)
+                
 
 def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Check for collisions using collision mask between ship and enemy bullets"""
@@ -318,13 +340,23 @@ def checkHighScore(stats, sb):
 		stats.highScore = stats.score
 		sb.prepHighScore()
 
-def updateUltimateGauge(setting, screen, stats):
+def updateUltimateGauge(setting, screen, stats, sb):
 	"""Draw a bar that indicates the ultimate gauge"""
-	x = 290
-	y = 15
+	x = sb.levelRect.left - 110
+	y = sb.levelRect.top + 4
 	gauge = stats.ultimateGauge
-	pg.draw.rect(screen, (255,255,255), (x,y,100,10), 0)
-	pg.draw.rect(screen, (0,0,255), (x,y,gauge,10), 0)
+	ultimateImg = pg.font.Font('Fonts/Square.ttf', 10).render("POWER SHOT(X)", True, (255,255,255),
+		(255,100,0))
+	ultimateRect = ultimateImg.get_rect()
+	ultimateRect.x = x + 5
+	ultimateRect.y = y
+	if gauge == 100:
+		pg.draw.rect(screen, (255,255,255), (x,y,100,12), 0)
+		pg.draw.rect(screen, (255,100,0), (x,y,gauge,12), 0)
+		screen.blit(ultimateImg, ultimateRect)
+	else:
+		pg.draw.rect(screen, (255,255,255), (x,y,100,12), 0)
+		pg.draw.rect(screen, (0,255,255), (x,y,gauge,12), 0)
 
 def UltimateDiamondShape(setting, screen, stats, sbullets):
 	xpos = 10
@@ -376,8 +408,6 @@ def drawChargeGauge(setting, screen, ship):
 	pg.draw.rect(screen, (255, 255, 255), (x, y, 100, 10), 0)
 	pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
 
-
-
 def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel):
 	"""Update images on the screen and flip to the new screen"""
 	#Redraw the screen during each pass through the loop
@@ -407,7 +437,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	aliens.draw(screen)
 
 	#Update Ultimate Gauge
-	updateUltimateGauge(setting, screen, stats)
+	updateUltimateGauge(setting, screen, stats, sb)
 
 	updateChargeGauge(ship)
 	drawChargeGauge(setting, screen, ship)
