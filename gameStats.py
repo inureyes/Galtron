@@ -11,6 +11,7 @@ class GameStats():
 		self.mainGame = False
 		self.mainAbout = False
 		self.twoPlayer = False
+		self.mainOption = False
 		self.paused = False
 		self.score = 0
 		self.level = 1

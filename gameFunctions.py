@@ -26,7 +26,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 			elif event.key == pg.K_DOWN:
 				if pauseBtnState < 3:
 					pauseBtnState += 1
-					sel.rect.y += 50	
+					sel.rect.y += 50
 
 			elif event.key == pg.K_RETURN:
 				if pauseBtnState == 1:
@@ -39,7 +39,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 					sel.rect.centery = playBtn.rect.centery
 					pauseBtnState = 1
 				elif pauseBtnState == 3:
-					sys.exit()	
+					sys.exit()
 
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
@@ -201,10 +201,10 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 		screenRect = screen.get_rect()
 		if bullet.rect.top >= screenRect.bottom:
 			eBullets.remove(bullet)
-	for bullet in bullets.copy(): 
+	for bullet in bullets.copy():
 		if bullet.rect.bottom <= 0:
 			bullets.remove(bullet)
-	
+
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets):
 	"""Detect collisions between alien and bullets"""

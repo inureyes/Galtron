@@ -9,6 +9,7 @@ import gameFunctions as gf #Event checker and update screen
 import mainMenu as mm #Main menu
 import twoPlayer as tp #two player mode
 import about as About
+import option as op
 from ship import Ship
 from alien import Alien
 from gameStats import GameStats #Game stats that are changed during the duration of the game
@@ -33,7 +34,8 @@ def runGame():
 	twoPlayBtn = Button(setting, screen, "2PVS", 250)
 	setBtnbtn = Button(setting, screen, "SETTING", 400)
 	aboutBtn = Button(setting, screen, "ABOUT", 300)
-	quitBtn = Button(setting, screen, "QUIT", 350)
+	quitBtn = Button(setting, screen, "QUIT", 400)
+	optionBtn = Button(setting, screen, "OPTION", 350)
 	#make slector for buttons
 	sel = Selector(setting, screen)
 	sel.rect.x = playBtn.rect.x + playBtn.width + 10
@@ -45,7 +47,7 @@ def runGame():
 
 	#Make a ship
 	ship = Ship(setting, screen)
-	#Ships for two player 
+	#Ships for two player
 	ship1 = Ship(setting, screen)
 	ship2 = Ship(setting, screen)
 
@@ -64,8 +66,8 @@ def runGame():
 	while runGame:
 		#Set to true to run main game loop
 		while stats.mainMenu:
-			mm.checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
-			mm.drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBtn, sel)
+			mm.checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, optionBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
+			mm.drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, optionBtn, quitBtn, sel)
 
 		while stats.mainGame:
 			#Game functions
@@ -77,8 +79,12 @@ def runGame():
 			gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel) #Update the screen
 
 		while stats.mainAbout:
-			About.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
+			About.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, optionBtn, sel, ship, aliens, bullets, eBullets)
 			About.drawMenu(setting, screen, sb, menuBtn, quitBtn, sel)
+
+		while stats.mainOption:
+			op.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, optionBtn, sel, ship, aliens, bullets, eBullets)
+			op.drawMenu(setting, screen, sb, chagneCBtn, menuBtn, quitBtn, sel)
 
 		while stats.twoPlayer:
 			"""
