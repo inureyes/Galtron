@@ -11,6 +11,7 @@ import mainMenu as mm #Main menu
 import playMenu as pm #choosing ship color
 import twoPlayer as tp #two player mode
 import about as About
+import settingsMenu as sm
 from ship import Ship
 from alien import Alien
 from gameStats import GameStats #Game stats that are changed during the duration of the game
@@ -34,7 +35,8 @@ def runGame():
 	playBtn = Button(setting, screen, "PLAY", 200)
 	menuBtn = Button(setting, screen, "MENU", 250)
 	twoPlayBtn = Button(setting, screen, "2PVS", 250)
-	#setBtnbtn = Button(setting, screen, "SETTING", 300)
+	setBtnbtn = Button(setting, screen, "SETTING", 400)
+	bgcrbtn = Button(setting, screen, "CL REV", 500)
 	aboutBtn = Button(setting, screen, "ABOUT", 300)
 	quitBtn = Button(setting, screen, "QUIT", 400)
 	greyBtn = Button(setting, screen, "GREY", 200)
@@ -76,8 +78,8 @@ def runGame():
 	while runGame:
 		#Set to true to run main game loop
 		while stats.mainMenu:
-			mm.checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
-			mm.drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBtn, sel)
+			mm.checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, setBtnbtn, sel, ship, aliens, bullets, eBullets)
+			mm.drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBtn, setBtnbtn, sel)
 
 		while stats.playMenu:
 			pm.checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
@@ -104,6 +106,10 @@ def runGame():
 				ship2.update(bullets)
 #				tp.updateBullets(setting, screen, stats, ship1, ship2, bullets, eBullets)
 #			tp.updateScreen(setting, screen, stats, bullets, eBullets, playBtn, menuBtn, quitBtn, sel, ship1, ship2)
+		while stats.settingsMenu:
+			sm.checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
+			sm.drawMenu(setting, screen, sb, menuBtn, quitBtn, bgcrbtn, sel)
+
 		while stats.mainGame:
 			if runGame == True:
 				print("test")

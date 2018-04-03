@@ -14,7 +14,7 @@ x = 0
 clock = pg.time.Clock()
 FPS = 120
 bgloop = 0
-
+gauge = 0
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
 	global pauseBtnState
@@ -54,7 +54,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 				elif pauseBtnState == 3:
 					sounds.button_click_sound.play()
 					pg.time.delay(300)
-					sys.exit()	
+					sys.exit()
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
@@ -119,6 +119,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 
 def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
 	"""Response to keyrealeses"""
+	global gauge
 	if event.key == pg.K_RIGHT:
 		ship.movingRight = False
 	elif event.key == pg.K_LEFT:
@@ -441,7 +442,6 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	#Update Ultimate Gauge
 	updateUltimateGauge(setting, screen, stats, sb)
 
-	updateChargeGauge(ship)
 	drawChargeGauge(setting, screen, ship)
 
 	#Draw the scoreboard
