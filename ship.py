@@ -75,8 +75,16 @@ class Ship(Sprite):
 				self.timer2 += 1
 			if self.timer > 10 and len(bullets) < 10:
 				sounds.attack.play()
-				newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
-				bullets.add(newBullet)
+				if(self.trajectory == 4):
+					newBullet0 = Bullet(self.setting, self.screen, self, 0)
+					newBullet1 = Bullet(self.setting, self.screen, self, 1)
+					newBullet2 = Bullet(self.setting, self.screen, self, 2)
+					bullets.add(newBullet0)
+					bullets.add(newBullet1)
+					bullets.add(newBullet2)
+				else:
+					newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
+					bullets.add(newBullet)
 				sounds.attack.play()
 				self.timer = 0
 			else:
