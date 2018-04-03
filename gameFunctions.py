@@ -54,7 +54,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 				elif pauseBtnState == 3:
 					sounds.button_click_sound.play()
 					pg.time.delay(300)
-					sys.exit()	
+					sys.exit()
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
@@ -79,7 +79,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		ship.movingDown = True
 	elif event.key == pg.K_TAB:
 		#Change the style of trajectory of bullet
-		if (ship.trajectory < 5):
+		if (ship.trajectory < 4):
 			ship.trajectory += 1
 		else:
 			ship.trajectory = 0

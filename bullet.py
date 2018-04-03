@@ -42,11 +42,8 @@ class Bullet(Sprite):
 		elif (self.traj == 2):
 			self.x -= 0.5 * self.bulletSpeed
 			self.y -= 0.5 * 2.0 * self.bulletSpeed
-		elif (self.traj == 3):
-			self.x -= 0.8 * math.sin(0.05 * self.y)
-			self.y -= 0.8 * self.bulletSpeed
 		else:
-			self.x += 0.8 * math.sin(0.05 * self.y)
+			self.x -= 0.8 * math.sin(0.05 * self.y)
 			self.y -= 0.8 * self.bulletSpeed
 
 		#Update the rect position899
@@ -57,7 +54,7 @@ class Bullet(Sprite):
 		"""Draw the bullet to the screen"""
 		#pg.draw.rect(self.screen, self.color, self.rect)
 		self.screen.blit(self.image, self.rect)
-    
+
 
 class SpecialBullet(Sprite):
 	"""A class to manage special bullet which can be fired only by the ultimate"""
