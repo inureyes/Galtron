@@ -32,7 +32,7 @@ class Scoreboard():
 		#Display the score at the top left corner
 		self.scoreRect = self.scoreImg.get_rect()
 		self.scoreRect.right = self.screenRect.right - 20
-		self.scoreRect.top = 30
+		self.scoreRect.top = 10
 
 
 	def prepHighScore(self):
