@@ -6,6 +6,7 @@ from alien import Alien
 from settings import Settings
 import random
 import sounds
+from button import Button
 
 pauseBtnState = 1
 back = False
@@ -43,18 +44,21 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 				if pauseBtnState == 1:
 					sounds.select_menu.play()
 					checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets)
+					print(stats.score)
+					print("hi")
 				elif pauseBtnState == 2:
 					sounds.select_menu.play()
 					stats.mainGame = False
 					stats.mainAbout = False
 					stats.twoPlay = False
 					stats.mainMenu = True
+					stats.resetStats()
 					sel.rect.centery = playBtn.rect.centery
 					pauseBtnState = 1
 				elif pauseBtnState == 3:
 					sounds.button_click_sound.play()
 					pg.time.delay(300)
-					sys.exit()	
+					sys.exit()
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
@@ -209,13 +213,6 @@ def checkFleetEdges(setting, aliens):
 			changeFleetDir(setting, aliens)
 			break
 
-def checkFleetEdges2(setting, aliens):
-	"""Respond if any aliens have reached an edge"""
-	for alien in aliens.sprites():
-		if alien.checkEdges():
-			return True;
-	return False;
-
 def checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Respond if any aliens have reached an bottom of screen"""
 	for alien in aliens.sprites():
@@ -251,16 +248,12 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	else:
 		stats.gameActive = False
 		checkHighScore(stats, sb)
-		stats.resetStats()
 
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Update the aliens"""
 	checkFleetEdges(setting, aliens)
 	checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
-	if not checkFleetEdges2(setting, aliens):
-                if(random.randrange(0,100) < 2):
-                        setting.fleetDir *= -1
 	aliens.update(setting, screen, ship, aliens, eBullets)
 
 	#look for alien-ship collision
@@ -443,10 +436,24 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	drawChargeGauge(setting, screen, ship)
 
 	#Draw the scoreboard
+	sb.prepScore()
 	sb.showScore()
 
 	#Draw the play button if the game is inActive
-	if not stats.gameActive:
+	if not stats.gameActive and stats.shipsLeft < 1:
+		retryBtn = Button(setting, screen, "retry", 200)
+		scoreImg = pg.font.Font('Fonts/Square.ttf', 50).render("Score: " + str(stats.score), True, (0,0,0),(255,255,255))
+		setting.image = pg.image.load("gfx/gameover.png")
+		setting.image = pg.transform.scale(setting.image,(setting.screenWidth-40,setting.image.get_height()))
+		setting.bg = setting.image
+		screen.fill((0,0,0))
+		screen.blit(scoreImg,((setting.screenWidth-scoreImg.get_width())/2,120))
+		screen.blit(setting.bg,(20,30))
+		retryBtn.drawBtn()
+		menuBtn.drawBtn()
+		quitBtn.drawBtn()
+		sel.blitme()
+	elif not stats.gameActive:
 		playBtn.drawBtn()
 		menuBtn.drawBtn()
 		quitBtn.drawBtn()
