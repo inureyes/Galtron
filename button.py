@@ -1,16 +1,25 @@
 import pygame.font
 
 class Button():
+
+	buttonColor = (255,255,255)
+	buttonColor1 = (0,0,0)
+	emp1 = (0,0,0)
+	textColor = (0,0,0)
+	textColor1 = (255,255,255)
+	emp2 = (0,0,0)
 	"""Button Class"""
 	def __init__(self, setting, screen, msg, yCord):
+
+
 		"""initialize button attributes"""
 		self.screen = screen
 		self.screenRect = screen.get_rect()
 
 		#Set the dimensions and properties of the button"""
 		self.width, self.height = 100, 30
-		self.buttonColor = (255, 255, 255)
-		self.textColor = (0, 0, 0)
+		self.buttonColor
+		self.textColor
 		self.font = pygame.font.Font('Fonts/Square.ttf', 28)
 
 		#Buid the button rect object and center it.
@@ -23,6 +32,14 @@ class Button():
 
 		#The button message needs to prepped only once.
 		self.prepMsg(msg)
+
+	def reverseCol():
+			Button.emp1 = Button.buttonColor
+			Button.buttonColor = Button.buttonColor1
+			Button.buttonColor1 = Button.emp1
+			Button.emp2 = Button.textColor
+			Button.textColor = Button.textColor1
+			Button.textColor1 = Button.emp2
 
 
 	def prepMsg(self, msg):
