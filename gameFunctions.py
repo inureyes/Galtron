@@ -396,11 +396,7 @@ def useUltimate(setting, screen, stats, sbullets, pattern):
 	if stats.ultimateGauge != 100:
 		return 
 	if pattern == 1:
-<<<<<<< HEAD
-		ult_attack.play()
-=======
 		sounds.ult_attack.play()
->>>>>>> 002aa923d7073607cd211e8cd4b12a685a534642
 		UltimateDiamondShape(setting, screen, stats, sbullets)
 #	elif pattern == 2:
 #		make other pattern
