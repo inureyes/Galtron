@@ -18,6 +18,7 @@ from button import Button #A button class that can be called for every new butto
 from selector import Selector #Import the main menu selector
 from scoreboard import Scoreboard #Score board for points, high score, lives, level ect.
 from animations import Explosions
+import sounds
 
 
 def runGame():
@@ -65,7 +66,7 @@ def runGame():
 	pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
 
 	#plays bgm
-	pg.mixer.music.load("sounds/galtron.mp3")
+	pg.mixer.music.load("sound_bgms/galtron.mp3")
 	pg.mixer.music.set_volume(0.25)
 	pg.mixer.music.play(-1)
 

@@ -2,6 +2,7 @@ import pygame as pg
 from pygame.sprite import Sprite
 from time import sleep
 from eBullet import EBullet
+import sounds
 
 
 class Alien(Sprite):
@@ -51,10 +52,9 @@ class Alien(Sprite):
 
 	def shoot(self, setting, screen, ship, aliens, eBullets):
 		# add enemy_shooting_sound
-		enemy_shoot_sound = pg.mixer.Sound('./sound_effect/enemy_shot.wav')
 		if self.rect.centerx >= self.ship.rect.centerx and len(eBullets) <= 4:
 			if self.timer >= 50:
-				pg.mixer.Sound.play(enemy_shoot_sound)
+				sounds.enemy_shoot_sound.play()
 				self.timer = 0
 				newBullet = EBullet(setting, screen, self)
 				eBullets.add(newBullet)
