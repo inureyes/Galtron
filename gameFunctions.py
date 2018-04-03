@@ -13,7 +13,24 @@ back = False
 x = 0
 clock = pg.time.Clock()
 FPS = 120
+<<<<<<< HEAD
+reset = 0
+
+#Init and load sound effects
+pg.mixer.init(44100, -16, 2, 4096)
+control_menu = pg.mixer.Sound("sounds/control_menu.wav")
+control_menu.set_volume(0.22)
+select_menu = pg.mixer.Sound("sounds/select_menu.wav")
+select_menu.set_volume(0.18)
+attack = pg.mixer.Sound("sounds/attack.wav")
+attack.set_volume(0.08)
+ult_attack = pg.mixer.Sound("sounds/ult_attack.wav")
+ult_attack.set_volume(0.08)
+paused = pg.mixer.Sound("sounds/paused.wav")
+paused.set_volume(0.1)
+=======
 bgloop = 0
+>>>>>>> 95e5fd59e03ca0584c0237aafa142f7262a65685
 
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
@@ -97,6 +114,12 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		setting.halfspeed()
 	elif event.key == pg.K_w:
 		setting.doublespeed()
+<<<<<<< HEAD
+	# Reset Game
+	elif event.key == pg.K_r:
+		global reset
+		reset = 1
+=======
 	elif event.key == pg.K_c:
 		#interception Key
 		setting.checkBtnPressed += 1
@@ -104,6 +127,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 			setting.interception = True
 		else:
 			setting.interception = False
+>>>>>>> 95e5fd59e03ca0584c0237aafa142f7262a65685
 	elif event.key == pg.K_ESCAPE:
 		#Quit game
 		sounds.button_click_sound.play()
