@@ -266,7 +266,7 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 		ship.centerShip()
 		sb.prepShips()
 		sb.prepScore()
-		sleep(0.5)
+		setting.newStartTime = pg.time.get_ticks()
 	else:
 		stats.gameActive = False
 		checkHighScore(stats, sb)
@@ -279,7 +279,7 @@ def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	aliens.update(setting, screen, ship, aliens, eBullets)
 
 	#look for alien-ship collision
-	if pg.sprite.spritecollideany(ship, aliens):
+	if pg.sprite.spritecollideany(ship, aliens) and pg.time.get_ticks() - setting.newStartTime >= 1500:
 		#74
 		shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 		sb.prepShips()
@@ -305,8 +305,6 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	if setting.interception:
 		pg.sprite.groupcollide(bullets, eBullets, bullets, eBullets)
 
->>>>>>> master
-
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
 	"""Detect collisions between alien and bullets"""
@@ -327,13 +325,15 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
 	#Check if there are no more aliens
 	if len(aliens) == 0:
 		#Destroy exsiting bullets and create new fleet
-		bullets.empty()
+		# bullets.empty()
 		eBullets.empty()
 		setting.increaseSpeed() #Speed up game
 		stats.level += 1
 		sb.prepLevel()
-		time.sleep(1)
+
 		createFleet(setting, screen, ship, aliens)
+		#Invincibility during 2 sec
+		setting.newStartTime = pg.time.get_ticks()
 		global bgloop
 		if stats.level % 5 == 1:
 			bgloop += 1
@@ -345,7 +345,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
 def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 	"""Check for collisions using collision mask between ship and enemy bullets"""
 	for ebullet in eBullets.sprites():
-		if pg.sprite.collide_mask(ship, ebullet):
+		if pg.sprite.collide_mask(ship, ebullet) and pg.time.get_ticks() - setting.newStartTime >= 1500:
 			shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 			sb.prepShips()
 			eBullets.empty()
@@ -397,7 +397,7 @@ def UltimateDiamondShape(setting, screen, stats, sbullets):
 
 def useUltimate(setting, screen, stats, sbullets, pattern):
 	if stats.ultimateGauge != 100:
-		return 
+		return
 	if pattern == 1:
 		sounds.ult_attack.play()
 		UltimateDiamondShape(setting, screen, stats, sbullets)
@@ -441,6 +441,11 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
 	if rel_x < setting.screenHeight:
 		screen.blit(setting.bg, (0,rel_x))
 	x += 15
+
+	#draw "Dodged!" text if ship is invincibile
+	if pg.time.get_ticks() - setting.newStartTime < 1500:
+		text1 = pg.font.Font('Fonts/Square.ttf', 20).render("Dodged!", True, (255,255,255),)
+		screen.blit(text1,(ship.rect.x + 40, ship.rect.y))
 
 	#draw all the bullets
 	for bullet in bullets.sprites():
