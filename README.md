@@ -13,8 +13,8 @@
 | Jinsung An    | Student    |     |
 | Minwoo Son	| Student    |     |
 | Kim Dain      | Student    |     |
-| Jeongin Lee   | Student.   |     |
-| Minwoo Son.   | Student    |     |
+| Jeongin Lee   | Student.   |     |
+| Minwoo Son.   | Student    |     |
 | Kim Dain      | Student    |     |
 | Jeongin Lee   | Student    |     |
 | YK            | Student    |     |
@@ -34,6 +34,7 @@
 | Jaehun Kim.   | student.   |     |
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
+| Kim Tae Yoon           | Student    |     |
 | KeonWoong Noh | Student    |     |
 | Onyu Park     | Student    |     |
 | TaeWoong Kong | Student    |     |
@@ -55,14 +56,14 @@
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
 | Yerim Hwang	| Student    |     |
-| Kim yong jun  | Student    |     |
+| Kim yong jun  | Student    |     |
 | Yerim Hwang	| Student    |     |
 | Minjun Kim    | Student    |     |
 | JaeHun Lee    | Student    |     |
 | Taewan Park   | Student    |     |
-| HoJin Seo     | Student    |     |
+| HoJin Seo     | Student    |     |
 | Sungho Yun    | Student    |     |
-| Keunmo Koo.   | Genius     |     |
+| Keunmo Koo.   | Genius     |     |
 
 
 # Galtron

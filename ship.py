@@ -39,6 +39,7 @@ class Ship(Sprite):
 		#about shoot
 		self.shoot = False
 		self.timer = 0
+		self.timer2 = 0
 		self.trajectory = 0
 
 		self.chargeGaugeStartTime = 0
@@ -63,9 +64,16 @@ class Ship(Sprite):
 		if self.movingDown and self.rect.bottom < self.screenRect.bottom:
 			self.centery += self.setting.shipSpeed
 		if self.shoot == True:
-			if self.timer > 10:
-				self.image = pg.transform.rotate(self.image,0)
-			if self.timer > 10 and len(bullets) < 6:
+			if self.timer2 > 10:
+				self.image = pg.transform.rotate(self.image, 0)
+				if self.chargeGauge < 100:
+					self.chargeGauge += 2
+				else:
+					self.chargeGauge = 100
+				self.timer2 = 0
+			else:
+				self.timer2 += 1
+			if self.timer > 10 and len(bullets) < 10:
 				sounds.attack.play()
 				newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
 				bullets.add(newBullet)
@@ -73,6 +81,11 @@ class Ship(Sprite):
 				self.timer = 0
 			else:
 				self.timer += 1
+		else:
+			if (self.chargeGauge == 100):
+				newBullet = Bullet(self.setting, self.screen, self, self.trajectory, 2)
+				bullets.add(newBullet)
+				self.chargeGauge = 0
 
 
 		#update rect object from self.center
