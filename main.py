@@ -18,6 +18,7 @@ from button import Button #A button class that can be called for every new butto
 from selector import Selector #Import the main menu selector
 from scoreboard import Scoreboard #Score board for points, high score, lives, level ect.
 from animations import Explosions
+import sounds
 
 
 def runGame():
@@ -65,7 +66,7 @@ def runGame():
 	pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
 
 	#plays bgm
-	pg.mixer.music.load("sounds/galtron.mp3")
+	pg.mixer.music.load("sound_bgms/galtron.mp3")
 	pg.mixer.music.set_volume(0.25)
 	pg.mixer.music.play(-1)
 
@@ -89,7 +90,7 @@ def runGame():
 			if stats.gameActive:
 				gf.updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets) #Update aliens
 				gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets) #Update collisions
-				ship.update(bullets) #update the ship
+				ship.update(bullets,aliens) #update the ship
 			 #Update the screen
 			gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel)
 		while stats.mainAbout:
@@ -97,12 +98,12 @@ def runGame():
 			About.drawMenu(setting, screen, sb, menuBtn, quitBtn, sel)
 
 		while stats.twoPlayer:
-			tp.checkEvents(setting, screen, stats, playBtn, quitBtn, sel, bullets, eBullets, ship1, ship2)
+			tp.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship1, ship2, aliens, bullets, eBullets)
 			if stats.gameActive:
 				ship1.update(bullets)
 				ship2.update(bullets)
-				tp.updateBullets(setting, screen, stats, ship1, ship2, bullets, eBullets)
-			tp.updateScreen(setting, screen, stats, bullets, eBullets, playBtn, menuBtn, quitBtn, sel, ship1, ship2)
+#				tp.updateBullets(setting, screen, stats, ship1, ship2, bullets, eBullets)
+#			tp.updateScreen(setting, screen, stats, bullets, eBullets, playBtn, menuBtn, quitBtn, sel, ship1, ship2)
 		while stats.mainGame:
 			if runGame == True:
 				print("test")
