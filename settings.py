@@ -55,6 +55,7 @@ class Settings():
 		number = number % 3
 		if number == 0:
 				self.image = pg.image.load("gfx/background2.png")
+				self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
 				self.bg = self.image
 		elif number == 1:
 				self.image = pg.image.load("gfx/background3.png")

@@ -1,6 +1,7 @@
 import pygame.font
 from pygame.sprite import Group
 from ship import Ship
+from playMenu import *
 
 class Scoreboard():
 
@@ -42,7 +43,7 @@ class Scoreboard():
 		#Display the score at the top left corner
 		self.scoreRect = self.scoreImg.get_rect()
 		self.scoreRect.right = self.screenRect.right - 20
-		self.scoreRect.top = 30
+		self.scoreRect.top = 10
 
 
 	def prepHighScore(self):
@@ -72,6 +73,7 @@ class Scoreboard():
 		self.ships = Group()
 		for shipNumber in range(self.stats.shipsLeft):
 			ship = Ship(self.setting, self.screen)
+			ship.image = pygame.image.load(checkColor())
 			ship.rect.x = 10 + shipNumber * (ship.rect.width -10)
 			ship.rect.y = self.scoreRect.bottom + 2
 			self.ships.add(ship)

@@ -69,7 +69,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
 			if event.key == 46:
 				setting.shipLimit += 1
 			if event.key == 44 and setting.shipLimit > 1:
-				setting.shipLimit -= 1					
+				setting.shipLimit -= 1
 			if event.key == pg.K_ESCAPE:
 				sounds.button_click_sound.play()
 				pg.time.delay(300)
