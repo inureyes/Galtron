@@ -369,7 +369,7 @@ def useUltimate(setting, screen, stats, sbullets, pattern):
 def updateChargeGauge(ship):
 	gauge = 0
 	if ship.shoot == True:
-		gauge = 10 * ((pg.time.get_ticks() - ship.chargeGaugeStartTime) / ship.fullChargeTime)
+		gauge = 30 * ((pg.time.get_ticks() - ship.chargeGaugeStartTime) / ship.fullChargeTime)
 		if (100 < gauge):
 			gauge = 100
 	ship.chargeGauge = gauge
