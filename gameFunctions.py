@@ -45,6 +45,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 				if pauseBtnState == 1:
 					sounds.select_menu.play()
 					checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets)
+					pg.time.delay(3000)
 				elif pauseBtnState == 2:
 					sounds.select_menu.play()
 					stats.mainGame = False
