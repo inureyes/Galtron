@@ -61,7 +61,7 @@ class Ship(Sprite):
 		if self.movingDown and self.rect.bottom < self.screenRect.bottom:
 			self.centery += self.setting.shipSpeed
 		if self.shoot == True:
-			if self.timer > 10:
+			if self.timer > 10 and len(aliens) < 6:
 				sounds.attack.play()
 				newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
 				bullets.add(newBullet)
