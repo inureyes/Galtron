@@ -6,7 +6,6 @@ from alien import Alien
 from settings import Settings
 import random
 
-
 pauseBtnState = 1
 back = False
 
@@ -56,6 +55,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 				if pauseBtnState == 1:
 					select_menu.play()
 					checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets)
+					pg.time.delay(3000)
 				elif pauseBtnState == 2:
 					select_menu.play()
 					stats.mainGame = False
