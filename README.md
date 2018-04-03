@@ -2,7 +2,8 @@
 
 
 | Participant   | Role       | ETC |
-|---------------|------------|-----|
+|===============|============|=====|
+| Jeongkyu Shin | Instructor |     |
 | Jeongkyu Shin | Instructor |     |
 | Lee jaehee    | student    |     |
 | Minseok  Kang | Student    |     |
@@ -15,6 +16,8 @@
 | Kim Dain      | Student    |     |
 | Jeongin Lee   | Student.   |     |
 | Minwoo Son.   | Student    |     |
+| Jeongin Lee | Student  |     |
+| Minwoo Son	  | Student    |     |
 | Kim Dain      | Student    |     |
 | Jeongin Lee   | Student    |     |
 | YK            | Student    |     |
