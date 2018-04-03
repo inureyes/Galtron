@@ -54,7 +54,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens,
 				elif pauseBtnState == 3:
 					sounds.button_click_sound.play()
 					pg.time.delay(300)
-					sys.exit()	
+					sys.exit()
 		#Check if the key has been released
 		elif event.type == pg.KEYUP:
 			checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
@@ -179,6 +179,7 @@ def getNumberRows(setting, shipHeight, alienHeight):
 
 
 def createAlien(setting, screen, aliens, alienNumber, rowNumber):
+	sounds.stage_clear.play()
 	alien = Alien(setting, screen)
 	alienWidth = alien.rect.width
 	screenRect = alien.screen.get_rect()
