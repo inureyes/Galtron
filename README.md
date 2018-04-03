@@ -1,29 +1,23 @@
 ﻿# Learning OSS development through GitHub
-<<<<<<< HEAD
-=======
 
->>>>>>> upstream/master
 
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
 | Lee jaehee    | student    |     |
 | Minseok  Kang | Student    |     |
-| Jaehun Kim.   | student.   |     |
+| Jaehun Kim.   | student    |     |
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
 | Cho young il  | Student    |     |
 | Jinsung An    | Student    |     |
 | Minwoo Son	| Student    |     |
 | Kim Dain      | Student    |     |
-| Jeongin Lee | Student  |     |
-| Jeongin Lee   | Student.   |     |
-| Minwoo Son.   | Student    |     |
+| Jeongin Lee   | Student.   |     |
+| Minwoo Son.   | Student    |     |
 | Kim Dain      | Student    |     |
 | Jeongin Lee   | Student    |     |
 | YK            | Student    |     |
-| Jeong-A Im     | Student    |     |
-| Kim Tae Yoon           | Student    |     |
 | Jeong-A Im    | Student    |     |
 | Kim Tae Yoon  | Student    |     |
 | Yulim Oh      | Student    |     |
@@ -45,16 +39,6 @@
 | TaeWoong Kong | Student    |     |
 | KeonWoong Noh | Student    |     |
 | ChaeHyun Baek | Student    |     |
-<<<<<<< HEAD
-| JK            | Student    |     |
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-| SeongIn Moon  | Student    |     |
-| JeWoong Moon  | Student    |     |
-| Yushin        | Student    |     |
->>>>>>> 96382483cc1beab60773ca037712a173aa613158
-=======
 | SeongIn Moon  | Student    |     |
 | JeWoong Moon  | Student    |     |
 | Yushin        | Student    |     |
@@ -71,16 +55,15 @@
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
 | Yerim Hwang	| Student    |     |
-| Kim yong jun  | Student    |     |
+| Kim yong jun  | Student    |     |
 | Yerim Hwang	| Student    |     |
 | Minjun Kim    | Student    |     |
 | JaeHun Lee    | Student    |     |
 | Taewan Park   | Student    |     |
-| HoJin Seo     | Student    |     |
+| HoJin Seo     | Student    |     |
 | Sungho Yun    | Student    |     |
-| Keunmo Koo.   | Genius     |     |
+| Keunmo Koo.   | Genius     |     |
 
->>>>>>> upstream/master
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
@@ -92,5 +75,4 @@ To run the game:
 	-Open a terminal and cd to Galtron
 	-Enter python main.py
 
-<<<<<<< HEAD
 By Matt Boan 2017
