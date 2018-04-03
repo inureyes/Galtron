@@ -84,9 +84,6 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 	elif event.key == pg.K_LEFT:
 		#Move the ship left
 		ship.movingLeft = True
-	elif event.key == pg.K_SPACE:
-		newBullet = Bullet(setting, screen, ship,ship.trajectory)
-		bullets.add(newBullet)
 	elif event.key == pg.K_UP:
 		#Move the ship up
 		ship.movingUp = True
@@ -100,11 +97,6 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 		else:
 			ship.trajectory = 0
 	elif event.key == pg.K_SPACE:
-		if (stats.paused == False):
-			attack.play()
-		if len(bullets) <= 6:
-			newBullet = Bullet(setting, screen, ship, ship.trajectory)
-			bullets.add(newBullet)
 		ship.shoot = True
 	elif event.key == pg.K_x:
 		#Ultimate key
