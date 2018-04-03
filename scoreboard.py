@@ -1,6 +1,7 @@
 import pygame.font
 from pygame.sprite import Group
 from ship import Ship
+from playMenu import *
 
 class Scoreboard():
 	"""A class for scorekeeping"""
