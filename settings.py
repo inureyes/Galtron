@@ -1,7 +1,6 @@
 import pygame as pg
 from animations import Explosions
 
-
 class Settings():
 	"""A class to store all settings for game"""
 	def __init__(self):
@@ -11,13 +10,10 @@ class Settings():
 		self.screenHeight = 650
 		self.bgColor = (20, 20, 20)
 		self.bg = pg.image.load("gfx/background.bmp")
-
+                
 		#Ultimate settings
 		self.ultimateGaugeIncrement = 3
-
-		self.image = pg.image.load("gfx/background2.png")
-		self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
-		self.bg = self.image
+                		
 		#Ships speed
 		self.shipLimit = 5
 
@@ -37,6 +33,21 @@ class Settings():
 
 		self.initDynamicSettings()
 
+        #BackGroundChange
+	def bgimg(self,number):
+                if number == 0:
+                        self.image = pg.image.load("gfx/background2.png")
+                        self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
+                        self.bg = self.image
+                elif number == 1:
+                        self.image = pg.image.load("gfx/background3.png")
+                        self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
+                        self.bg = self.image
+                else:
+                        self.image = pg.image.load("gfx/background4.png")
+                        self.image = pg.transform.scale(self.image,(self.screenWidth,self.screenHeight))
+                        self.bg = self.image
+        #        
 	def initDynamicSettings(self):
 		self.shipSpeed = 1.5
 		self.bulletSpeed = 4
@@ -68,11 +79,11 @@ class Settings():
                         self.Limit -= 1
 
 	def doublespeed(self):
-                if self.Limit <= 1:
-                        self.shipSpeed *= 2
-                        self.bulletSpeed *= 2
-                        self.alienSpeed *= 2
-                        self.fleetDropSpeed *= 2
-                        self.fleetDir *= 2
-                        self.alienPoints *= 2
-                        self.Limit += 1
+                
+                self.shipSpeed *= 1.3
+                self.bulletSpeed *= 1.3
+                self.alienSpeed *= 1.3
+                self.fleetDropSpeed *= 1.3
+                self.fleetDir *= 1.3
+                self.alienPoints *= 1.3
+                self.Limit += 1
