@@ -13,7 +13,7 @@ class Bullet(Sprite):
 		self.traj = traj
 
 		#load the bullet image and set its rect attribute
-		self.image = pg.image.load('gfx/bullet2.png')
+		self.image = pg.image.load('gfx/bullet1.png')
 		self.image = pg.transform.rotate(self.image,180)
 		self.rect = self.image.get_rect()
 
