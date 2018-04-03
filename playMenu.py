@@ -1,9 +1,11 @@
 import sys
 import gameFunctions as gf #Event checker and update screen
 import pygame as pg
+import sounds
 
 setBtn = 1
 color = 'grey'
+
 
 def checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
@@ -17,16 +19,20 @@ def checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, q
 			#Check if down, up, enter, esc is pressed
 			if event.key == pg.K_DOWN:
 				if setBtn < 5:
+					sounds.control_menu.play()
 					setBtn += 1
 					sel.rect.y += 50
 			if event.key == pg.K_UP:
 				if setBtn > 1:
+					sounds.control_menu.play()
 					setBtn -= 1
 					sel.rect.y -= 50
 			if event.key == pg.K_RETURN:
 				if setBtn == 1:
 					#default mode
+					sounds.start_game.play()
 					color = 'grey'
+					ship.image = pg.image.load(checkColor())
 					stats.mainMenu = False
 					stats.mainGame = True
 					stats.playMenu = False
@@ -35,7 +41,9 @@ def checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, q
 					setBtn = 1
 					sel.rect.centery = playBtn.rect.centery
 				elif setBtn == 2:
+					sounds.start_game.play()
 					color = 'red'
+					ship.image = pg.image.load(checkColor())
 					stats.mainMenu = False
 					stats.mainGame = True
 					stats.playMenu = False
@@ -44,7 +52,9 @@ def checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, q
 					setBtn = 1
 					sel.rect.centery = playBtn.rect.centery
 				elif setBtn == 3:
+					sounds.start_game.play()
 					color = 'blue'
+					ship.image = pg.image.load(checkColor())
 					stats.mainMenu = False
 					stats.mainGame = True
 					stats.playMenu = False
@@ -54,6 +64,7 @@ def checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, q
 					sel.rect.centery = playBtn.rect.centery
 				elif setBtn == 4:
 					#menu btn
+					sounds.select_menu.play()
 					stats.mainMenu = True
 					stats.mainGame = False
 					stats.playMenu = False

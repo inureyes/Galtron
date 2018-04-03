@@ -4,7 +4,7 @@ from pygame.sprite import Sprite
 
 class Bullet(Sprite):
 	"""A class to manage bullets fired from the ship"""
-	def __init__(self, setting, screen, ship, traj):
+	def __init__(self, setting, screen, ship, traj, charge=0):
 		"""Create a bullet object at the ships current position"""
 		super(Bullet, self).__init__()
 		self.screen = screen
@@ -14,8 +14,12 @@ class Bullet(Sprite):
 
 		#load the bullet image and set its rect attribute
 		self.image = pg.image.load('gfx/bullet2.png')
+		self.image = pg.transform.rotate(self.image,180)
 		self.rect = self.image.get_rect()
-
+		if (charge != 0):
+			bulletSize = (self.rect.width * (charge + 1), self.rect.height * (charge + 1))
+			self.image = pg.transform.scale(self.image, bulletSize)
+			self.rect = self.image.get_rect()
 		#Create a bullet rect at (0,0)
 		##self.rect = pg.Rect(0, 0, setting.bulletWidth, setting.bulletHeight)
 		self.rect.centerx = ship.rect.centerx
