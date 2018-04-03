@@ -14,6 +14,7 @@ x = 0
 clock = pg.time.Clock()
 FPS = 120
 bgloop = 0
+reset = 0
 
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
@@ -104,6 +105,10 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
 			setting.interception = True
 		else:
 			setting.interception = False
+	elif event.key == pg.K_F12:
+		# Reset Game
+		sounds.button_click_sound.play()
+		resetGame()
 	elif event.key == pg.K_ESCAPE:
 		#Quit game
 		sounds.button_click_sound.play()
@@ -132,6 +137,12 @@ def pause(stats):
 	"""Pause the game when the pause button is pressed"""
 	stats.gameActive = False
 	stats.paused = True
+
+def resetGame():
+    global reset
+    reset = 1
+    with open('data-files/highscore.json', 'w') as f_obj:
+        f_obj.write('0')
 
 
 def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets):
