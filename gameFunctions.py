@@ -338,6 +338,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
         eBullets.empty()
         setting.increaseSpeed()  # Speed up game
         stats.level += 1
+        setting.setIncreaseScoreSpeed(stats.level)
         sb.prepLevel()
 
         createFleet(setting, screen, ship, aliens)
