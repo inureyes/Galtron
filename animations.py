@@ -1,9 +1,7 @@
 import pygame as pg
 
 
-
 class AnimatedSprite:
-
     def __init__(self, sprite, item_width, item_height, item_count):
         self.sprite = sprite
         self.item_width = item_width
@@ -17,24 +15,24 @@ class AnimatedSprite:
         num_rows = rect.bottom // item_height
         for idx in range(item_count):
             clip_left = (idx % num_cols) * item_width
-            clip_top  = (idx // num_rows) * item_height
+            clip_top = (idx // num_rows) * item_height
             clip_rect = pg.Rect(clip_left, clip_top, item_width, item_height)
             self.frames.append(self.sprite.subsurface(clip_rect))
 
     def getFrame(self, idx):
         return self.frames[idx]
 
-class Animation:
 
+class Animation:
     __slots__ = ('x', 'y', 'frame')
 
     def __init__(self, x, y, initial_frame=0):
         self.x = x
         self.y = y
         self.frame = initial_frame
-        
-class Explosions:
 
+
+class Explosions:
     def __init__(self):
         self.sprite = AnimatedSprite(
             pg.image.load('gfx/explosion-sheet.png').convert_alpha(),
