@@ -57,7 +57,6 @@ class Bullet(Sprite):
 		"""Draw the bullet to the screen"""
 		#pg.draw.rect(self.screen, self.color, self.rect)
 		self.screen.blit(self.image, self.rect)
-    """A class to manage bullets fired from the ship"""
 
     def __init__(self, setting, screen, ship, traj, charge=0):
         """Create a bullet object at the ships current position"""
