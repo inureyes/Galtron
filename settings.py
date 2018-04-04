@@ -66,8 +66,8 @@ class Settings():
             self.image = pg.transform.scale(self.image, (self.screenWidth, self.screenHeight))
             self.bg = self.image
         else:
-            self.image = pg.image.load("gfx/background4.png")
-            self.image = pg.transform.scale(self.image, (self.screenWidth, self.scresnHeight))
+            self.image = pg.image.load("gfx/background6.jpg")
+            self.image = pg.transform.scale(self.image, (self.screenWidth, self.screenHeight))
             self.bg = self.image
 
     #
