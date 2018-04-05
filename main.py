@@ -2,9 +2,9 @@
 import pygame as pg
 from pygame.sprite import Group
 
-import intro
 import about as About
 import gameFunctions as gf  # Event checker and update screen
+import intro #intro video making
 import mainMenu as mm  # Main menu
 import playMenu as pm  # choosing ship color
 import settingsMenu as sm
@@ -27,7 +27,7 @@ def runGame():
     # creaete a new object from pygame display
     screen = pg.display.set_mode((setting.screenWidth, setting.screenHeight))
 
-    #intro making
+    #intro
     intro.introimages()
 
     # set window caption using settings obj
