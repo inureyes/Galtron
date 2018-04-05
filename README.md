@@ -13,8 +13,8 @@
 | Jinsung An    | Student    |     |
 | Minwoo Son	| Student    |     |
 | Kim Dain      | Student    |     |
-| Jeongin Lee   | Student.   |     |
-| Minwoo Son.   | Student    |     |
+| Jeongin Lee   | Student.   |     |
+| Minwoo Son.   | Student    |     |
 | Kim Dain      | Student    |     |
 | Jeongin Lee   | Student    |     |
 | YK            | Student    |     |
@@ -35,9 +35,13 @@
 | Hansae Ju     | Student    |     |
 | Jaewoo Yang   | Student    |     |
 <<<<<<< HEAD
+<<<<<<< HEAD
 | JK            | Student    |     |
 | ChaeHyun Baek | Student    |     |
 =======
+=======
+| Kim Tae Yoon           | Student    |     |
+>>>>>>> a785b79fd5422e6f83f19dc98c05fbde172c18a5
 | KeonWoong Noh | Student    |     |
 | Onyu Park     | Student    |     |
 | TaeWoong Kong | Student    |     |
@@ -64,9 +68,10 @@
 | Minjun Kim    | Student    |     |
 | JaeHun Lee    | Student    |     |
 | Taewan Park   | Student    |     |
-| HoJin Seo     | Student    |     |
+| HoJin Seo     | Student    |     |
 | Sungho Yun    | Student    |     |
-| Keunmo Koo.   | Genius     |     |
+| Keunmo Koo.   | Genius     |     |
+
 
 >>>>>>> 95e5fd59e03ca0584c0237aafa142f7262a65685
 
