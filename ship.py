@@ -42,7 +42,7 @@ class Ship(Sprite):
         # about shoot
         self.shoot = False
         self.nextShootTime = 0
-        self.fireRate = 1000 / 5 # 5shot pre sec
+        self.fireRate = 1000 / 5 # 5shoots per sec
         self.trajectory = 0
 
         self.chargeGaugeStartTime = 0
