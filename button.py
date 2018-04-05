@@ -1,13 +1,11 @@
 import pygame.font
+import utilityFunctions
 
+
+buttons = []
+getReversedRGB = utilityFunctions.getReversedRGB
 
 class Button():
-    buttonColor = (255, 255, 255)
-    buttonColor1 = (0, 0, 0)
-    emp1 = (0, 0, 0)
-    textColor = (0, 0, 0)
-    textColor1 = (255, 255, 255)
-    emp2 = (0, 0, 0)
     """Button Class"""
 
     def __init__(self, setting, screen, msg, yCord):
@@ -17,8 +15,8 @@ class Button():
 
         # Set the dimensions and properties of the button"""
         self.width, self.height = 100, 30
-        self.buttonColor
-        self.textColor
+        self.buttonColor = (255, 255, 255)
+        self.textColor = (0, 0, 0)
         self.font = pygame.font.Font('Fonts/Square.ttf', 28)
 
         # Buid the button rect object and center it.
@@ -29,16 +27,23 @@ class Button():
         # Set the default state color switch of the button being selected to False
         self.switched = False
 
-        # The button message needs to prepped only once.
+        self.msg = msg
         self.prepMsg(msg)
 
-    def reverseCol():
-        Button.emp1 = Button.buttonColor
-        Button.buttonColor = Button.buttonColor1
-        Button.buttonColor1 = Button.emp1
-        Button.emp2 = Button.textColor
-        Button.textColor = Button.textColor1
-        Button.textColor1 = Button.emp2
+        buttons.append(self)
+
+    def __del__(self):
+        if self in buttons:
+            buttons.remove(self)
+
+    def reverseColAll():
+        for btn in buttons:
+            btn.reverseCol()
+
+    def reverseCol(self):
+        self.buttonColor = getReversedRGB(self.buttonColor)
+        self.textColor = getReversedRGB(self.textColor)
+        self.prepMsg(self.msg)
 
     def prepMsg(self, msg):
         """Turn msg insto a rendered image and center text on the button"""
