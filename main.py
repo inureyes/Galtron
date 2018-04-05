@@ -107,14 +107,9 @@ def runGame():
             if stats.gameActive:
                 ship1.update(bullets, aliens)
                 ship2.update(bullets, aliens)
+                tp.updateAliens(setting, stats, sb, screen, ship1, ship2, aliens, bullets, eBullets)
                 tp.updateBullets(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets)
-            tp.updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, playBtn, menuBtn,
-                            quitBtn, sel)
-
-        #				ship1.update(bullets)
-        #				ship2.update(bullets)
-        #				tp.updateBullets(setting, screen, stats, ship1, ship2, bullets, eBullets)
-        #			tp.updateScreen(setting, screen, stats, bullets, eBullets, playBtn, menuBtn, quitBtn, sel, ship1, ship2)
+            tp.updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel)
         while stats.settingsMenu:
             sm.checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
             sm.drawMenu(setting, screen, sb, menuBtn, quitBtn, bgcrbtn, sel)

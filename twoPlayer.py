@@ -216,8 +216,8 @@ def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship1, ship2, aliens,
         eBullets.empty()
 
         # Create a new fleet and center the ship
+        # createFleet 함수는 단계별로 한번만 해주시면 됩니다.
         createFleet(setting, screen, ship1, aliens)
-        createFleet(setting, screen, ship2, aliens)
         ship1.centerShip()
         ship2.centerShip()
 
@@ -322,10 +322,10 @@ def updateAliens(setting, stats, sb, screen, ship1, ship2, aliens, bullets, eBul
     """Update the aliens"""
     checkFleetEdges(setting, aliens)
     checkFleetBottom(setting, stats, sb, screen, ship1, ship2, aliens, bullets, eBullets)
-    aliens.update(setting, screen, ship, aliens, eBullets)
+    aliens.update(setting, screen, ship1, aliens, eBullets)
 
     # look for alien-ship collision
-    if pg.sprite.spritecollideany(ship1, ship2, aliens):
+    if pg.sprite.spritecollideany(ship1, aliens) or pg.sprite.spritecollideany(ship2, aliens):
         # 74
         shipHit(setting, stats, sb, screen, ship1, ship2, aliens, bullets, eBullets)
         sb.prepShips()
