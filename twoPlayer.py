@@ -77,7 +77,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
     """Response to kepresses"""
     global back
     # Movement of the ship1
-
+    print(event.key)
     if event.key == pg.K_RIGHT:
         ship1.movingRight = True
     elif event.key == pg.K_LEFT:
@@ -103,13 +103,13 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
         else:
             ship1.trajectory = 0
             # Movement of the ship2
-    elif event.key == pg.K_d:
+    elif event.key == pg.K_d or event.key == 100:
         ship2.movingRight = True
-    elif event.key == pg.K_a:
+    elif event.key == pg.K_a or event.key == 97:
         ship2.movingLeft = True
-    elif event.key == pg.K_s:
+    elif event.key == pg.K_s or event.key == 115:
         ship2.movingDown = True
-    elif event.key == pg.K_w:
+    elif event.key == pg.K_w or event.key == 119:
         ship2.movingUp = True
     elif event.key == pg.K_LALT:
         # sounds.attack.play()
@@ -147,13 +147,13 @@ def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, s
                      pauseBtnState2):
     """Response to keyrealeses"""
     global gauge
-    if event.key == pg.K_RIGHT:
+    if event.key == pg.K_RIGHT or event.key == 100:
         ship1.movingRight = False
-    elif event.key == pg.K_LEFT:
+    elif event.key == pg.K_LEFT or event.key == 97:
         ship1.movingLeft = False
-    elif event.key == pg.K_UP:
+    elif event.key == pg.K_UP or event.key == 115:
         ship1.movingUp = False
-    elif event.key == pg.K_DOWN:
+    elif event.key == pg.K_DOWN or event.key == 119:
         ship1.movingDown = False
     elif event.key == pg.K_RALT:
         if not stats.paused:
