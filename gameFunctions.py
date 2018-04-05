@@ -295,7 +295,6 @@ def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 
 
 def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
-
     """update the position of the bullets"""
     # check if we are colliding
     bullets.update()
