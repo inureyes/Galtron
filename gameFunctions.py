@@ -101,19 +101,19 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
                 ship.chargeGaugeStartTime = pg.time.get_ticks()
                 ship.shoot = True
 
-    elif event.key == pg.K_x:
+    elif event.key == pg.K_x or event.key == 167:
         # Ultimate key
         useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
         # Check for pause key
-    elif event.key == pg.K_p:
+    elif event.key == pg.K_p or event.key == 181:
         sounds.paused.play()
         pause(stats)
         # Add speed control key
-    elif event.key == pg.K_q:
+    elif event.key == pg.K_q or event.key == 172:
         setting.halfspeed()
-    elif event.key == pg.K_w:
+    elif event.key == pg.K_w or event.key == 173:
         setting.doublespeed()
-    elif event.key == pg.K_c:
+    elif event.key == pg.K_c or event.key == 168:
         # interception Key
         setting.checkBtnPressed += 1
         if setting.checkBtnPressed % 2 != 0:
