@@ -325,6 +325,7 @@ def updateAliens(setting, stats, sb, screen, ship1, ship2, aliens, bullets, eBul
     aliens.update(setting, screen, ship1, aliens, eBullets)
 
     # look for alien-ship collision
+    # spritecollideany는 인자 두개만 받습니다
     if pg.sprite.spritecollideany(ship1, aliens) or pg.sprite.spritecollideany(ship2, aliens):
         # 74
         shipHit(setting, stats, sb, screen, ship1, ship2, aliens, bullets, eBullets)
