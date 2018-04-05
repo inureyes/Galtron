@@ -77,7 +77,6 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
     """Response to kepresses"""
     global back
     # Movement of the ship1
-    print(event.key)
     if event.key == pg.K_RIGHT:
         ship1.movingRight = True
     elif event.key == pg.K_LEFT:
