@@ -3,12 +3,12 @@ from pygame.sprite import Group
 
 from playMenu import *
 from ship import Ship
+import utilityFunctions
 
+
+getReversedRGB = utilityFunctions.getReversedRGB
 
 class Scoreboard():
-    textColor = (255, 255, 255)
-    textColor1 = (0, 0, 0)
-    emp1 = (0, 0, 0)
     """A class for scorekeeping"""
 
     def __init__(self, setting, screen, stats):
@@ -19,7 +19,7 @@ class Scoreboard():
         self.active = False
 
         # Font settings for scoring information
-        self.textColor
+        self.textColor = (255, 255, 255)
         self.font = pygame.font.Font('Fonts/Square.ttf', 20)
 
         # Prepare the initial score image
@@ -28,10 +28,8 @@ class Scoreboard():
         self.prepLevel()
         self.prepShips()
 
-    def reverseCol():
-        Scoreboard.emp1 = Scoreboard.textColor
-        Scoreboard.textColor = Scoreboard.textColor1
-        Scoreboard.textColor1 = Scoreboard.emp1
+    def reverseCol(self):
+        self.textColor = getReversedRGB(self.textColor)
 
     def prepScore(self):
         """Turn the score into a rendered image"""

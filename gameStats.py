@@ -19,7 +19,7 @@ class GameStats():
         self.score = 0
         self.level = 1
         self.highScore = 0
-        # self.counter = 3
+        self.highScoreSaveFileName = 'data-files/highscore.json'
         self.resetStats()
 
     def resetStats(self):
@@ -30,15 +30,22 @@ class GameStats():
         self.counter = 3
         self.ultimateGauge = 0
         self.ultimatePattern = 1
-        filename = 'data-files/highscore.json'
-        if not os.path.isfile(filename):
-            with open(filename, 'w') as f_obj:
-                f_obj.write('0')
-
-        with open(filename, 'r') as f_obj:
-            self.tempScore = json.load(f_obj)
+        
+        self.tempScore = self.loadHighScore()
         if self.highScore >= self.tempScore:
-            with open(filename, 'w') as f_obj:
-                json.dump(self.highScore, f_obj)
+            self.saveHighScore()
         else:
             self.highScore = self.tempScore
+
+    def loadHighScore(self):
+        score = 0
+        if not os.path.isfile(self.highScoreSaveFileName):
+            with open(self.highScoreSaveFileName, 'w') as f_obj:
+                f_obj.write('0')
+        with open(self.highScoreSaveFileName, 'r') as f_obj:
+            score = json.load(f_obj)
+        return score
+
+    def saveHighScore(self):
+        with open(self.highScoreSaveFileName, 'w') as f_obj:
+            json.dump(self.highScore, f_obj)

@@ -41,8 +41,8 @@ class Ship(Sprite):
 
         # about shoot
         self.shoot = False
-        self.timer = 0
-        self.timer2 = 0
+        self.nextShootTime = 0
+        self.fireRate = 1000 / 5 # 5shoots per sec
         self.trajectory = 0
 
         self.chargeGaugeStartTime = 0
@@ -67,16 +67,8 @@ class Ship(Sprite):
         if self.movingDown and self.rect.bottom < self.screenRect.bottom:
             self.centery += self.setting.shipSpeed
         if self.shoot == True:
-            if self.timer2 > 10:
-                self.image = pg.transform.rotate(self.image, 0)
-                if self.chargeGauge < 100:
-                    self.chargeGauge += 2
-                else:
-                    self.chargeGauge = 100
-                self.timer2 = 0
-            else:
-                self.timer2 += 1
-            if self.timer > 10 and len(bullets) < 10:
+            nowTime = pg.time.get_ticks()
+            if self.checkReadyToShoot() and (len(bullets) < 10):
                 sounds.attack.play()
                 if (self.trajectory == 4):
                     newBullet0 = Bullet(self.setting, self.screen, self, 0)
@@ -88,10 +80,7 @@ class Ship(Sprite):
                 else:
                     newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
                     bullets.add(newBullet)
-                sounds.attack.play()
-                self.timer = 0
-            else:
-                self.timer += 1
+                self.setNextShootTime()
         else:
             if (self.chargeGauge == 100):
                 newBullet = Bullet(self.setting, self.screen, self, self.trajectory, 2)
@@ -101,6 +90,15 @@ class Ship(Sprite):
                 # update rect object from self.center
         self.rect.centerx = self.center
         self.rect.centery = self.centery
+
+    def setNextShootTime(self):
+        nowTime = pg.time.get_ticks()
+        self.nextShootTime = nowTime + (self.fireRate / self.setting.globalGameSpeed)
+
+    def checkReadyToShoot(self):
+        nowTime = pg.time.get_ticks()
+        return self.nextShootTime <= nowTime
+
 
     def blitme(self):
         """Draw the ship at its current location."""
