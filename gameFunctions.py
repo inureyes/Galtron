@@ -223,6 +223,12 @@ def createAlien(setting, screen, aliens, alienNumber, rowNumber):
     alien.rect.y = (alien.rect.height + random.randrange(0, setting.screenHeight - alien.rect.height * 2)) / 1.5
     aliens.add(alien)
 
+def createItem(setting, screen, posx, posy, type, items):
+	"""add item func"""
+	item = Item(setting, screen, type, posx, posy)
+	screenRect = item.screen.get_rect()
+	items.add(item)
+
 
 def createFleet(setting, screen, ship, aliens):
     """Create a fleet of aliens"""
@@ -294,61 +300,97 @@ def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
         sb.prepShips()
 
 
-def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
-    """update the position of the bullets"""
-    # check if we are colliding
-    bullets.update()
-    eBullets.update()
-    checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets)
-    checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets, items):
+	"""update the position of the bullets"""
+	#check if we are colliding
+	bullets.update()
+	eBullets.update()
+	checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, items)
+	checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
 
-    # if bullet goes off screen delete it
-    for bullet in eBullets.copy():
-        screenRect = screen.get_rect()
-        if bullet.rect.top >= screenRect.bottom:
-            eBullets.remove(bullet)
-    for bullet in bullets.copy():
-        if bullet.rect.bottom <= 0:
-            bullets.remove(bullet)
+	#if bullet goes off screen delete it
+	for bullet in eBullets.copy():
+		screenRect = screen.get_rect()
+		if bullet.rect.top >= screenRect.bottom:
+			eBullets.remove(bullet)
+	for bullet in bullets.copy():
+		if bullet.rect.bottom <= 0:
+			bullets.remove(bullet)
 
-    if setting.interception:
-        pg.sprite.groupcollide(bullets, eBullets, bullets, eBullets)
+	if setting.interception:
+		pg.sprite.groupcollide(bullets, eBullets, bullets, eBullets)
 
 
-def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets):
-    """Detect collisions between alien and bullets"""
-    collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
-    if collisions:
-        sounds.enemy_explosion_sound.play()
-        for c in collisions:
-            setting.explosions.add(c.rect.x, c.rect.y)
+def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, items):
+	"""update the position of the bullets"""
+	#check if we are colliding
+	items.update()
+	#checkItemShipCol(setting, stats, sb, screen, ship, aliens, items)
+	#if bullet goes off screen delete it
+	#for item in items.copy():
+	for item in items.sprites():
+		screenRect = screen.get_rect()
+		if item.rect.top >= screenRect.bottom:
+			items.remove(item)
+	#for item in items.copy():
+	for item in items.sprites():
+		if item.rect.bottom <= 0:
+			items.remove(item)
+	#for item in items.copy():
+	for item in items.sprites():
+		if item.rect.centerx -30 < ship.rect.x < item.rect.x +30 and item.rect.centery -20 < ship.rect.centery < item.rect.centery +20:
+			#print("MEET!")
+			if item.type == 1:
+				stats.shipsLeft += 1
+				sb.prepShips()
+				#print("meet 1")
+			if item.type == 2:
+				setting.shipspeedup()
+				#print("meet 2")
+			items.empty()
 
-            # Increase the ultimate gauge, upto 100
-        stats.ultimateGauge += setting.ultimateGaugeIncrement
-        if stats.ultimateGauge > 100:
-            stats.ultimateGauge = 100
-        for aliens in collisions.values():
-            stats.score += setting.alienPoints * len(aliens)
-        checkHighScore(stats, sb)
-    sb.prepScore()
-    # Check if there are no more aliens
-    if len(aliens) == 0:
-        # Destroy exsiting bullets and create new fleet
-        # bullets.empty()
-        eBullets.empty()
-        setting.increaseSpeed()  # Speed up game
-        stats.level += 1
-        sb.prepLevel()
 
-        createFleet(setting, screen, ship, aliens)
-        # Invincibility during 2 sec
-        setting.newStartTime = pg.time.get_ticks()
-        global bgloop
-        if stats.level % 5 == 1:
-            bgloop += 1
-        if bgloop == 3:
-            bgloop -= 3
-        setting.bgimg(bgloop)
+def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, items):
+	"""Detect collisions between alien and bullets"""
+	collisions = pg.sprite.groupcollide(bullets, aliens, True, True)
+	if collisions:
+		sounds.enemy_explosion_sound.play()
+		for c in collisions:
+			setting.explosions.add(c.rect.x, c.rect.y)
+			i = random.randrange(100)
+			if i<=20:
+				if i<=5:
+					createItem(setting, screen, c.rect.x, c.rect.y, 1, items)
+				else:
+					createItem(setting, screen, c.rect.x, c.rect.y, 2, items)
+
+		#Increase the ultimate gauge, upto 100
+		stats.ultimateGauge += setting.ultimateGaugeIncrement
+		if stats.ultimateGauge > 100:
+			stats.ultimateGauge = 100
+		for aliens in collisions.values():
+			stats.score += setting.alienPoints * len(aliens)
+		checkHighScore(stats, sb)
+		#alien drop item by random probability
+
+
+	sb.prepScore()
+	#Check if there are no more aliens
+	if len(aliens) == 0:
+		#Destroy exsiting bullets and create new fleet
+		bullets.empty()
+		eBullets.empty()
+		setting.increaseSpeed() #Speed up game
+		stats.level += 1
+		sb.prepLevel()
+		time.sleep(1)
+		createFleet(setting, screen, ship, aliens)
+		global bgloop
+		if stats.level % 5 == 1:
+			bgloop += 1
+		if bgloop == 3:
+			bgloop -= 3
+		setting.bgimg(bgloop)
 
 
 def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
@@ -358,6 +400,20 @@ def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBull
             shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
             sb.prepShips()
             eBullets.empty()
+
+
+# def checkItemShipCol(setting, stats, sb, screen, ship, aliens, items):
+# 	"""Check for collisions using collision mask between ship and enemy bullets"""
+# 	for item in items.sprites():
+# 		if pg.sprite.collide_mask(ship, item):
+# 			print("MEET!")
+# 			if item.type == 1:
+# 				self.shiplimit += 1
+# 				print("meet 1")
+# 			if item.type == 2:
+# 				self.shipSpeed *= 1.7
+# 				print("meet 2")
+# 			items.empty()
 
 
 def checkHighScore(stats, sb):
@@ -440,71 +496,67 @@ def drawChargeGauge(setting, screen, ship, sb):
     pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
 
 
-def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel):
-    """Update images on the screen and flip to the new screen"""
-    # Redraw the screen during each pass through the loop
-    # Fill the screen with background color
-    # Readjust the quit menu btn position
-    global x, clock, FPS
-    quitBtn.rect.y = 300
-    quitBtn.msgImageRect.y = 300
-    menuBtn.rect.y = 250
-    menuBtn.msgImageRect.y = 250
-    # screen.fill(setting.bgColor)
-    rel_x = x % setting.bg.get_rect().height
-    screen.blit(setting.bg, (0, rel_x - setting.bg.get_rect().height))
-    if rel_x < setting.screenHeight:
-        screen.blit(setting.bg, (0, rel_x))
-    x += 15
+def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel, items):
+	"""Update images on the screen and flip to the new screen"""
+	#Redraw the screen during each pass through the loop
+	#Fill the screen with background color
+	#Readjust the quit menu btn position
+	global x, clock, FPS
+	quitBtn.rect.y = 300
+	quitBtn.msgImageRect.y = 300
+	menuBtn.rect.y = 250
+	menuBtn.msgImageRect.y = 250
+	#screen.fill(setting.bgColor)
+	rel_x = x % setting.bg.get_rect().height
+	screen.blit(setting.bg, (0,rel_x - setting.bg.get_rect().height))
+	if rel_x < setting.screenHeight:
+		screen.blit(setting.bg, (0,rel_x))
+	x += 15
 
-    # draw "Dodged!" text if ship is invincibile
-    if pg.time.get_ticks() - setting.newStartTime < 1500:
-        text1 = pg.font.Font('Fonts/Square.ttf', 20).render("Dodged!", True, (255, 255, 255), )
-        screen.blit(text1, (ship.rect.x + 40, ship.rect.y))
+	#draw all the bullets
+	for bullet in bullets.sprites():
+		bullet.drawBullet()
 
-        # draw all the bullets
-    for bullet in bullets.sprites():
-        bullet.drawBullet()
+	#draw all the enemy bullets
+	for ebull in eBullets.sprites():
+		ebull.drawBullet()
 
-        # draw all the enemy bullets
-    for ebull in eBullets.sprites():
-        ebull.drawBullet()
+	ship.blitme()
+	aliens.draw(screen)
+	for i in items:
+		i.update()
+		i.drawitem()
+	#Update Ultimate Gauge
+	updateUltimateGauge(setting, screen, stats, sb)
 
-    ship.blitme()
-    aliens.draw(screen)
+	updateChargeGauge(ship)
+	drawChargeGauge(setting, screen, ship, sb)
 
-    # Update Ultimate Gauge
-    updateUltimateGauge(setting, screen, stats, sb)
+	#Draw the scoreboard
+	sb.prepScore()
+	sb.showScore()
 
-    updateChargeGauge(ship)
-    drawChargeGauge(setting, screen, ship, sb)
-
-    # Draw the scoreboard
-    sb.prepScore()
-    sb.showScore()
-
-    # Draw the play button if the game is inActive
-    if not stats.gameActive and stats.shipsLeft < 1:
-        retryBtn = Button(setting, screen, "retry", 200)
-        scoreImg = pg.font.Font('Fonts/Square.ttf', 50).render("Score: " + str(stats.score), True, (0, 0, 0),
-                                                               (255, 255, 255))
-        setting.image = pg.image.load("gfx/gameover.png")
-        setting.image = pg.transform.scale(setting.image, (setting.screenWidth - 40, setting.image.get_height()))
-        setting.bg = setting.image
-        screen.fill((0, 0, 0))
-        screen.blit(scoreImg, ((setting.screenWidth - scoreImg.get_width()) / 2, 120))
-        screen.blit(setting.bg, (20, 30))
-        retryBtn.drawBtn()
-        menuBtn.drawBtn()
-        quitBtn.drawBtn()
-        sel.blitme()
-    elif not stats.gameActive:
-        playBtn.drawBtn()
-        menuBtn.drawBtn()
-        quitBtn.drawBtn()
-        sel.blitme()
-    setting.explosions.draw(screen)
-    # Make the most recently drawn screen visable.
-    pg.display.flip()
-    pg.display.update()
-    clock.tick(FPS)
+	#Draw the play button if the game is inActive
+	if not stats.gameActive and stats.shipsLeft < 1:
+		retryBtn = Button(setting, screen, "retry", 200)
+		scoreImg = pg.font.Font('Fonts/Square.ttf', 50).render("Score: " + str(stats.score), True, (0,0,0),(255,255,255))
+		setting.image = pg.image.load("gfx/gameover.png")
+		setting.image = pg.transform.scale(setting.image,(setting.screenWidth-40,setting.image.get_height()))
+		setting.bg = setting.image
+		screen.fill((0,0,0))
+		screen.blit(scoreImg,((setting.screenWidth-scoreImg.get_width())/2,120))
+		screen.blit(setting.bg,(20,30))
+		retryBtn.drawBtn()
+		menuBtn.drawBtn()
+		quitBtn.drawBtn()
+		sel.blitme()
+	elif not stats.gameActive:
+		playBtn.drawBtn()
+		menuBtn.drawBtn()
+		quitBtn.drawBtn()
+		sel.blitme()
+	setting.explosions.draw(screen)
+	#Make the most recently drawn screen visable.
+	pg.display.flip()
+	pg.display.update()
+	clock.tick(FPS)
