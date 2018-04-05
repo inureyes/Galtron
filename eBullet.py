@@ -26,16 +26,16 @@ class EBullet(Sprite):
         self.y = float(self.rect.y)
 
         self.color = setting.bulletColor
-        self.bulletSpeed = setting.bulletSpeed / 2
+        self.setting = setting
 
     def update(self):
         """Move the bullet -y up the screen"""
         # update the decimal position of the bullet
-        self.y += self.bulletSpeed
+        bulletSpeed = self.setting.bulletSpeed / 2
+        self.y += bulletSpeed
         # Update the rect position
         self.rect.y = self.y
 
     def drawBullet(self):
-        """Draw the bullet to the screen"""
         # pg.draw.rect(self.screen, self.color, self.rect)
         self.screen.blit(self.image, self.rect)

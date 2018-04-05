@@ -13,7 +13,6 @@ from button import Button  # A button class that can be called for every new but
 from gameStats import GameStats  # Game stats that are changed during the duration of the game
 from scoreboard import Scoreboard  # Score board for points, high score, lives, level ect.
 from selector import Selector  # Import the main menu selector
-# import self made classes
 from settings import Settings
 from ship import Ship
 
@@ -38,6 +37,7 @@ def runGame():
     greyBtn = Button(setting, screen, "GREY", 200)
     redBtn = Button(setting, screen, "RED", 250)
     blueBtn = Button(setting, screen, "BLUE", 300)
+    retryBtn = Button(setting, screen, "RETRY", 200)
     # make slector for buttons
     sel = Selector(setting, screen)
     sel.rect.x = playBtn.rect.x + playBtn.width + 10
@@ -60,13 +60,13 @@ def runGame():
 
     # Make an alien
     aliens = Group()
-    gf.createFleet(setting, screen, ship, aliens)
+    # gf.createFleet(setting, screen, ship, aliens)
     pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
 
     # plays bgm
     pg.mixer.music.load("sound_bgms/galtron.mp3")
     pg.mixer.music.set_volume(0.25)
-    pg.mixer.music.play(-1)
+    pg.mixer.music.play()
 
     rungame = True
 
@@ -83,6 +83,12 @@ def runGame():
                            aliens, bullets, eBullets)
             pm.drawMenu(setting, screen, sb, greyBtn, redBtn, blueBtn, menuBtn, quitBtn, sel)
 
+            # Change to stage music
+            pg.mixer.music.stop()
+            pg.mixer.music.load("sound_bgms/galtron-stage.mp3")
+            pg.mixer.music.set_volume(0.15)
+            pg.mixer.music.play(-1)
+
         while stats.mainGame:
             # Game functions
             gf.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets,
@@ -96,7 +102,7 @@ def runGame():
                 gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets)  # Update collisions
                 ship.update(bullets, aliens)  # update the ship
                 # Update the screen
-            gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel)
+            gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, retryBtn, sel)
         while stats.mainAbout:
             About.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets,
                               eBullets)
@@ -107,25 +113,13 @@ def runGame():
             if stats.gameActive:
                 ship1.update(bullets, aliens)
                 ship2.update(bullets, aliens)
+                tp.updateAliens(setting, stats, sb, screen, ship1, ship2, aliens, bullets, eBullets)
                 tp.updateBullets(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets)
             tp.updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, playBtn, menuBtn,
                             quitBtn, sel)
-
-        #				ship1.update(bullets)
-        #				ship2.update(bullets)
-        #				tp.updateBullets(setting, screen, stats, ship1, ship2, bullets, eBullets)
-        #			tp.updateScreen(setting, screen, stats, bullets, eBullets, playBtn, menuBtn, quitBtn, sel, ship1, ship2)
         while stats.settingsMenu:
             sm.checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
             sm.drawMenu(setting, screen, sb, menuBtn, quitBtn, bgcrbtn, sel)
 
-        while stats.mainGame:
-            if rungame == True:
-                print("test")
-
-
-# init bgm mixer
-pg.mixer.pre_init(44100, 16, 2, 4096)
-pg.mixer.init(44100, -16, 2, 4096)
 # run the runGame method to run the game
 runGame()

@@ -6,10 +6,6 @@ import sounds
 
 # Create a variable to change current button being selected
 currentBtn = 1
-back = False
-
-pg.joystick.init()
-joystickEnter = False
 
 
 def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, setBtnbtn, sel, ship,
@@ -33,44 +29,29 @@ def checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitB
                     currentBtn -= 1
                     sel.rect.y -= 50
             if event.key == pg.K_RETURN:
+                stats.mainMenu = False
+                stats.mainAbout = False
+                stats.mainGame = False
+                stats.playMenu = False
+                stats.mainAbout = False
+                stats.twoPlayer = False
+                stats.settingsMenu = False
+                sounds.select_menu.play()
                 if currentBtn == 1:
-                    sounds.select_menu.play()
-                    stats.mainMenu = False
-                    stats.mainGame = False
                     stats.playMenu = True
-                    stats.mainAbout = False
-                    stats.twoPlayer = False
-                    stats.settingsMenu = False
-                    currentBtn = 1
                     sel.centery = playBtn.rect.centery
                 elif currentBtn == 2:
-                    sounds.select_menu.play()
-                    stats.mainMenu = False
-                    stats.mainAbout = False
-                    stats.mainGame = False
                     stats.twoPlayer = True
-                    currentBtn = 1
                     sel.rect.centery = playBtn.rect.centery
                 elif currentBtn == 3:
-                    sounds.select_menu.play()
-                    stats.mainMenu = False
                     stats.mainAbout = True
-                    stats.mainGame = False
-                    stats.twoPlayer = False
-                    stats.settingsMenu = False
-                    currentBtn = 1
                     sel.rect.centery = menuBtn.rect.centery
                 elif currentBtn == 4:
-                    sounds.button_click_sound.play()
                     pg.time.delay(300)
                     sys.exit()
                 elif currentBtn == 5:
-                    stats.mainMenu = False
-                    stats.mainAbout = False
-                    stats.mainGame = False
-                    stats.twoPlayer = False
                     stats.settingsMenu = True
-                    currentBtn = 1
+                currentBtn = 1
             if event.key == 46:
                 setting.shipLimit += 1
             if event.key == 44 and setting.shipLimit > 1:
