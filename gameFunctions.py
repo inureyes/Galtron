@@ -15,118 +15,6 @@ x = 0
 clock = pg.time.Clock()
 FPS = 120
 bgloop = 0
-<<<<<<< HEAD
-gauge = 0
-def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
-	"""Respond to keypresses and mouse events."""
-	global pauseBtnState
-	for event in pg.event.get():
-		#Check for quit event
-		if event.type == pg.QUIT:
-			sys.exit()
-
-		#Check for key down has been pressed
-		elif event.type == pg.KEYDOWN:
-			checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
-			if(stats.gameActive):
-				continue
-			if event.key == pg.K_UP:
-				if pauseBtnState > 1:
-					sounds.control_menu.play()
-					pauseBtnState -= 1
-					sel.rect.y -= 50
-			elif event.key == pg.K_DOWN:
-				if pauseBtnState < 3:
-					sounds.control_menu.play()
-					pauseBtnState += 1
-					sel.rect.y += 50
-
-			elif event.key == pg.K_RETURN:
-				if pauseBtnState == 1:
-					sounds.select_menu.play()
-					checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship, aliens, bullets, eBullets)
-				elif pauseBtnState == 2:
-					sounds.select_menu.play()
-					stats.mainGame = False
-					stats.mainAbout = False
-					stats.twoPlay = False
-					stats.mainMenu = True
-					sel.rect.centery = playBtn.rect.centery
-					pauseBtnState = 1
-				elif pauseBtnState == 3:
-					sounds.button_click_sound.play()
-					pg.time.delay(300)
-					sys.exit()	
-		#Check if the key has been released
-		elif event.type == pg.KEYUP:
-			checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState)
-		elif event.type == pg.MOUSEMOTION:
-                        ship.center = event.pos[0]
-                        ship.centery = event.pos[1]
-
-def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
-	"""Response to kepresses"""
-	global back
-	if event.key == pg.K_RIGHT:
-		#Move the ship right
-		ship.movingRight = True
-	elif event.key == pg.K_LEFT:
-		#Move the ship left
-		ship.movingLeft = True
-	elif event.key == pg.K_UP:
-		#Move the ship up
-		ship.movingUp = True
-	elif event.key == pg.K_DOWN:
-		#Move the ship down
-		ship.movingDown = True
-	elif event.key == pg.K_TAB:
-		#Change the style of trajectory of bullet
-		if (ship.trajectory < 5):
-			ship.trajectory += 1
-		else:
-			ship.trajectory = 0
-	elif event.key == pg.K_SPACE:
-		ship.shoot = True
-	elif event.key == pg.K_x:
-		#Ultimate key
-		useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
-	#Check for pause key
-	elif event.key == pg.K_p:
-		sounds.paused.play()
-		pause(stats)
-	#Add speed control key
-	elif event.key == pg.K_q:
-		setting.halfspeed()
-	elif event.key == pg.K_w:
-		setting.doublespeed()
-	elif event.key == pg.K_c:
-		#interception Key
-		setting.checkBtnPressed += 1
-		if setting.checkBtnPressed % 2 != 0:
-			setting.interception = True
-		else:
-			setting.interception = False
-	elif event.key == pg.K_ESCAPE:
-		#Quit game
-		sounds.button_click_sound.play()
-		pg.time.delay(300)
-		sys.exit()
-
-def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets, pauseBtnState):
-	"""Response to keyrealeses"""
-	global gauge
-	print(ship.chargeGauge)
-	if event.key == pg.K_RIGHT:
-		ship.movingRight = False
-	elif event.key == pg.K_LEFT:
-		ship.movingLeft = False
-	elif event.key == pg.K_UP:
-		ship.movingUp = False
-	elif event.key == pg.K_DOWN:
-		ship.movingDown = False
-	elif event.key == pg.K_SPACE:
-		ship.shoot = False
-=======
 reset = 0
 
 
@@ -268,7 +156,6 @@ def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, s
                 bullets.add(newBullet)
         ship.shoot = False
 
->>>>>>> a785b79fd5422e6f83f19dc98c05fbde172c18a5
 
 def pause(stats):
     """Pause the game when the pause button is pressed"""
@@ -531,70 +418,6 @@ def useUltimate(setting, screen, stats, sbullets, pattern):
     stats.ultimateGauge = 0
 
 
-<<<<<<< HEAD
-
-
-def drawChargeGauge(setting, screen, ship):
-	x = 290
-	y = 50
-	color = (50,50,50)
-	if (ship.chargeGauge == 100):
-		color = (255,0,0)
-	elif (50 <= ship.chargeGauge):
-		color = (255,120,0)
-
-	pg.draw.rect(screen, (255, 255, 255), (x, y, 100, 10), 0)
-	pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
-
-def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel):
-	"""Update images on the screen and flip to the new screen"""
-	#Redraw the screen during each pass through the loop
-	#Fill the screen with background color
-	#Readjust the quit menu btn position
-	global x, clock, FPS
-	quitBtn.rect.y = 300
-	quitBtn.msgImageRect.y = 300
-	menuBtn.rect.y = 250
-	menuBtn.msgImageRect.y = 250
-	#screen.fill(setting.bgColor)
-	setting.bgimg(stats.level)
-	rel_x = x % setting.bg.get_rect().height
-	screen.blit(setting.bg, (0,rel_x - setting.bg.get_rect().height))
-	if rel_x < setting.screenHeight:
-		screen.blit(setting.bg, (0,rel_x))
-	x += 3
-
-	#draw all the bullets
-	for bullet in bullets.sprites():
-		bullet.drawBullet()
-
-	#draw all the enemy bullets
-	for ebull in eBullets.sprites():
-		ebull.drawBullet()
-
-	ship.blitme()
-	aliens.draw(screen)
-
-	#Update Ultimate Gauge
-	updateUltimateGauge(setting, screen, stats, sb)
-
-	drawChargeGauge(setting, screen, ship)
-
-	#Draw the scoreboard
-	sb.showScore()
-
-	#Draw the play button if the game is inActive
-	if not stats.gameActive:
-		playBtn.drawBtn()
-		menuBtn.drawBtn()
-		quitBtn.drawBtn()
-		sel.blitme()
-	setting.explosions.draw(screen)
-	#Make the most recently drawn screen visable.
-	pg.display.flip()
-	pg.display.update()
-	clock.tick(FPS)
-=======
 def updateChargeGauge(ship):
     gauge = 0
     if ship.shoot == True:
@@ -685,4 +508,3 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
     pg.display.flip()
     pg.display.update()
     clock.tick(FPS)
->>>>>>> a785b79fd5422e6f83f19dc98c05fbde172c18a5
