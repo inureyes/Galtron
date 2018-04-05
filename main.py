@@ -66,7 +66,7 @@ def runGame():
     # plays bgm
     pg.mixer.music.load("sound_bgms/galtron.mp3")
     pg.mixer.music.set_volume(0.25)
-    pg.mixer.music.play(-1)
+    pg.mixer.music.play()
 
     rungame = True
 
@@ -82,6 +82,12 @@ def runGame():
             pm.checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, quitBtn, menuBtn, sel, ship,
                            aliens, bullets, eBullets)
             pm.drawMenu(setting, screen, sb, greyBtn, redBtn, blueBtn, menuBtn, quitBtn, sel)
+
+            # Change to stage music
+            pg.mixer.music.stop()
+            pg.mixer.music.load("sound_bgms/galtron-stage.mp3")
+            pg.mixer.music.set_volume(0.15)
+            pg.mixer.music.play(-1)
 
         while stats.mainGame:
             # Game functions
@@ -107,10 +113,10 @@ def runGame():
             if stats.gameActive:
                 ship1.update(bullets, aliens)
                 ship2.update(bullets, aliens)
+                tp.updateAliens(setting, stats, sb, screen, ship1, ship2, aliens, bullets, eBullets)
                 tp.updateBullets(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets)
             tp.updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, playBtn, menuBtn,
                             quitBtn, sel)
-
         while stats.settingsMenu:
             sm.checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
             sm.drawMenu(setting, screen, sb, menuBtn, quitBtn, bgcrbtn, sel)

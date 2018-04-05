@@ -55,9 +55,11 @@ class Settings():
         if number == 0:
             self.image = pg.image.load("gfx/background2.png")
         elif number == 1:
-            self.image = pg.image.load("gfx/background3.png")
+            self.image = pg.image.load("gfx/background5.jpg")
+            self.image = pg.transform.scale(self.image, (self.screenWidth, self.screenHeight))
+            self.bg = self.image
         else:
-            self.image = pg.image.load("gfx/background4.png")
+            self.image = pg.image.load("gfx/background6.jpg")
         self.image = pg.transform.scale(self.image, (self.screenWidth, self.screenHeight))
         self.bg = self.image
 
@@ -74,8 +76,7 @@ class Settings():
         if self.alienSpeed <= 1.5:
             self.alienSpeed *= self.speedUp
             self.fleetDropSpeed *= self.speedUp
-
-        self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
+        
         self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
 
     def halfspeed(self):
