@@ -355,6 +355,7 @@ def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBull
     """Check for collisions using collision mask between ship and enemy bullets"""
     for ebullet in eBullets.sprites():
         if pg.sprite.collide_mask(ship, ebullet) and pg.time.get_ticks() - setting.newStartTime >= 1500:
+            setting.explosions.add(ship.rect.x, ship.rect.y)
             shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
             sb.prepShips()
             eBullets.empty()
