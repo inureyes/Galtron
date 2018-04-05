@@ -10,7 +10,7 @@ from button import Button
 
 pauseBtnState = 1
 
-backgroundImageX = 0
+backgroundImageY = 0
 clock = pg.time.Clock()
 FPS = 120
 bgloop = 0
@@ -426,17 +426,17 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, pl
     # Redraw the screen during each pass through the loop
     # Fill the screen with background color
     # Readjust the quit menu btn position
-    global backgroundImageX, clock, FPS
+    global backgroundImageY, clock, FPS
     quitBtn.rect.y = 300
     quitBtn.msgImageRect.y = 300
     menuBtn.rect.y = 250
     menuBtn.msgImageRect.y = 250
     # screen.fill(setting.bgColor)
-    rel_x = backgroundImageX % setting.bg.get_rect().height
-    screen.blit(setting.bg, (0, rel_x - setting.bg.get_rect().height))
-    if rel_x < setting.screenHeight:
-        screen.blit(setting.bg, (0, rel_x))
-    backgroundImageX += 15
+    rel_y = backgroundImageY % setting.bg.get_rect().height
+    screen.blit(setting.bg, (0, rel_y - setting.bg.get_rect().height))
+    if rel_y < setting.screenHeight:
+        screen.blit(setting.bg, (0, rel_y))
+    backgroundImageY += 15
 
     # draw "Dodged!" text if ship is invincibile
     if pg.time.get_ticks() - setting.newStartTime < 1500:
