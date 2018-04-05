@@ -16,6 +16,7 @@ class Alien(Sprite):
 
         # load the alien image and set its rect attribute
         self.image = pg.image.load('gfx/spaceship4.png')
+        self.image = pg.transform.rotate(self.image,180)
         self.rect = self.image.get_rect()
 
         # start each new alien near the top left of the screen
