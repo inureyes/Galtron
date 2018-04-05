@@ -2,13 +2,13 @@ import sys
 
 import pygame as pg
 
+import sounds
 from button import Button  # A button class that can be called for every new button
 from scoreboard import Scoreboard  # Score board for points, high score, lives, level ect.
 from settings import Settings
 
 # Create a variable to change current button being selected
 SmBtn = 1
-back = False
 
 
 def checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
@@ -23,34 +23,33 @@ def checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, shi
             # Check if down, up, enter, esc is pressed
             if event.key == pg.K_DOWN:
                 if SmBtn < 3:
+                    sounds.control_menu.play()
                     SmBtn += 1
                     sel.rect.y += 50
             if event.key == pg.K_UP:
                 if SmBtn > 1:
+                    sounds.control_menu.play()
                     SmBtn -= 1
                     sel.rect.y -= 50
             if event.key == pg.K_RETURN:
+                stats.mainMenu = False
+                stats.mainGame = False
+                stats.twoPlayer = False
+                stats.mainAbout = False
+                stats.settingsMenu = False
+                sounds.select_menu.play()
                 if SmBtn == 1:
                     stats.mainMenu = True
-                    stats.mainGame = False
-                    stats.twoPlayer = False
-                    stats.mainAbout = False
-                    stats.settingsMenu = False
-                    SmBtn = 1
                     sel.rect.centery = playBtn.rect.centery
                 elif SmBtn == 2:
                     sys.exit()
                 elif SmBtn == 3:
-                    Button.reverseCol()
-                    Settings.reverseCol()
-                    Scoreboard.reverseCol()
+                    Button.reverseColAll()
+                    setting.reverseCol()
+                    sb.reverseCol()
                     stats.mainMenu = True
-                    stats.mainGame = False
-                    stats.twoPlayer = False
-                    stats.mainAbout = False
-                    stats.settingsMenu = False
-                    SmBtn = 1
                     sel.rect.centery = playBtn.rect.centery
+                SmBtn = 1
             if event.key == pg.K_ESCAPE:
                 sys.exit()
     prepSm(setting, screen)

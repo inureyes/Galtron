@@ -6,12 +6,10 @@ import sounds
 
 # Create a variable to change current button being selected
 aboutBtn = 1
-back = False
 
 
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
     """Respond to keypresses and mouse events."""
-    # add button_sound (case quit)
     global aboutBtn
     for event in pg.event.get():
         # Check for quit event
@@ -69,6 +67,5 @@ def drawMenu(setting, screen, sb, menuBtn, quitBtn, sel):
     screen.blit(image, rect)
     menuBtn.drawBtn()
     quitBtn.drawBtn()
-    # screen.blit(image, rect)
     sel.blitme()
     pg.display.flip()
