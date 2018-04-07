@@ -99,12 +99,6 @@ def runGame():
             pm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             pm.drawMenu(setting, screen, sb, bMenu)
 
-            # Change to stage music
-            pg.mixer.music.stop()
-            pg.mixer.music.load("sound_bgms/galtron-stage.mp3")
-            pg.mixer.music.set_volume(0.15)
-            pg.mixer.music.play(-1)
-
         bMenu.setMenuButtons(mainGameButtons)
 
         while stats.mainGame:

@@ -211,7 +211,6 @@ def getNumberRows(setting, shipHeight, alienHeight):
 
 
 def createAlien(setting, screen, aliens, alienNumber, rowNumber):
-    sounds.stage_clear.play()
     alien = Alien(setting, screen)
     alienWidth = alien.rect.width
     screenRect = alien.screen.get_rect()
@@ -321,6 +320,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
     # Check if there are no more aliens
     if len(aliens) == 0:
         # Destroy exsiting bullets and create new fleet
+        sounds.stage_clear.play()
         # bullets.empty()
         eBullets.empty()
         setting.increaseSpeed()  # Speed up game
