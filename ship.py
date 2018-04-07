@@ -16,7 +16,7 @@ class Ship(Sprite):
         self.setting = setting
 
         # Load the ship image and its rect.
-        self.image = pg.image.load(checkColor())  # 'gfx/player.bmp'
+        self.image = pg.image.load('gfx/player.bmp')  # 'gfx/player.bmp'
         self.rect = self.image.get_rect()
         self.screenRect = screen.get_rect()
 

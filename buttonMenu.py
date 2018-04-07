@@ -78,6 +78,7 @@ class ButtonMenu():
 
     def setMargin(self, margin):
         self.margin = margin
+        self.updateButtonsPos()
 
     def select(self, idx):
         if (0 <= idx < len(self.menuButtons)):
