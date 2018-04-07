@@ -1,7 +1,6 @@
 import pygame as pg
 from pygame.sprite import *
 
-import sounds
 from bullet import Bullet
 from playMenu import *
 
@@ -16,7 +15,7 @@ class Ship(Sprite):
         self.setting = setting
 
         # Load the ship image and its rect.
-        self.image = pg.image.load(checkColor())  # 'gfx/player.bmp'
+        self.image = pg.image.load('gfx/player.bmp')  # 'gfx/player.bmp'
         self.rect = self.image.get_rect()
         self.screenRect = screen.get_rect()
 
@@ -42,22 +41,22 @@ class Ship(Sprite):
         # about shoot
         self.shoot = False
         self.nextShootTime = 0
-        self.fireRate = 1000 / 5 # 5shoots per sec
+        self.fireRate = 1000 / 5  # 5shoots per sec
         self.trajectory = 0
 
         self.chargeGaugeStartTime = 0
         self.fullChargeTime = 2500
         self.chargeGauge = 0
 
-    def update(self, bullets, aliens):
-        self.image = pg.image.load(checkColor())
+    def update(self, bullets, aliens, ):
+        # self.image = pg.image.load(checkColor())
         """Update the ships position"""
         if self.movingRight and self.rect.right < self.screenRect.right:
             self.center += self.setting.shipSpeed
-            self.image = pg.transform.rotate(self.image, -45)
+            # self.image = pg.transform.rotate(self.image, -45)
         if self.movingLeft and self.rect.left > 1:
             self.center -= self.setting.shipSpeed
-            self.image = pg.transform.rotate(self.image, 45)
+            # self.image = pg.transform.rotate(self.image, 45)
         if self.movingRight and self.rect.right >= self.screenRect.right:
             self.center = 1.0
         if self.movingLeft and self.rect.left <= 1:
@@ -98,7 +97,6 @@ class Ship(Sprite):
     def checkReadyToShoot(self):
         nowTime = pg.time.get_ticks()
         return self.nextShootTime <= nowTime
-
 
     def blitme(self):
         """Draw the ship at its current location."""
