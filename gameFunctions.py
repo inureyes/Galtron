@@ -469,7 +469,6 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, bM
     sb.prepScore()
     sb.prepHighScore()
     sb.prepLevel()
-    sb.prepShips()
     sb.showScore()
 
     # Draw the play button if the game is inActive
