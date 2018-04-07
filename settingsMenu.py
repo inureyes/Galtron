@@ -8,12 +8,12 @@ from scoreboard import Scoreboard  # Score board for points, high score, lives, 
 from settings import Settings
 
 # Create a variable to change current button being selected
-SmBtn = 1
 
+image = pg.image.load('gfx/fixsettings.png')
+rect = image.get_rect()
 
-def checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
+def checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
     """Respond to keypresses and mouse events."""
-    global SmBtn
     for event in pg.event.get():
         # Check for quit event
         if event.type == pg.QUIT:
@@ -22,59 +22,54 @@ def checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, shi
         elif event.type == pg.KEYDOWN:
             # Check if down, up, enter, esc is pressed
             if event.key == pg.K_DOWN:
-                if SmBtn < 3:
-                    sounds.control_menu.play()
-                    SmBtn += 1
-                    sel.rect.y += 50
+                sounds.control_menu.play()
+                bMenu.down()
             if event.key == pg.K_UP:
-                if SmBtn > 1:
-                    sounds.control_menu.play()
-                    SmBtn -= 1
-                    sel.rect.y -= 50
+                sounds.control_menu.play()
+                bMenu.up()
             if event.key == pg.K_RETURN:
-                stats.mainMenu = False
-                stats.mainGame = False
-                stats.twoPlayer = False
-                stats.mainAbout = False
-                stats.settingsMenu = False
                 sounds.select_menu.play()
-                if SmBtn == 1:
-                    stats.mainMenu = True
-                    sel.rect.centery = playBtn.rect.centery
-                elif SmBtn == 2:
-                    sys.exit()
-                elif SmBtn == 3:
-                    Button.reverseColAll()
-                    setting.reverseCol()
-                    sb.reverseCol()
-                    stats.mainMenu = True
-                    sel.rect.centery = playBtn.rect.centery
-                SmBtn = 1
+                selectedName, selectedBtn = bMenu.getSelectedButton()
+                if selectedBtn:
+                    buttonAction(stats, selectedName, bMenu, setting, sb)
             if event.key == pg.K_ESCAPE:
                 sys.exit()
-    prepSm(setting, screen)
+
+        elif event.type == pg.MOUSEMOTION:
+            mouseBtnName, mouseBtn = bMenu.mouseCheck(event.pos[0], event.pos[1])
+            if mouseBtn is not None:
+                selectedName, selectedBtn = bMenu.getSelectedButton()
+                if mouseBtn is not selectedBtn:
+                    sounds.control_menu.play()
+                    bMenu.selectByName(mouseBtnName)
+
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            pressed = pg.mouse.get_pressed()
+            if (pressed[0]):
+                pos = pg.mouse.get_pos()
+                mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
+                if mouseBtn is not None:
+                    sounds.select_menu.play()
+                    buttonAction(stats, mouseBtnName, bMenu, setting, sb)
 
 
-def prepSm(setting, screen):
-    # Font settings for scoring information
-    global image, rect
-    image = pg.image.load('gfx/fixsettings.png')
-    rect = image.get_rect()
+def buttonAction(stats, selectedName, bMenu, setting, sb):
+    if selectedName == 'menu':
+        stats.setGameLoop('mainMenu')
+    if selectedName == 'invert':
+        bMenu.invertColorAll()
+        setting.invertColor()
+        sb.invertColor()
+        stats.setGameLoop('mainMenu')
+    elif selectedName == 'quit':
+        pg.time.delay(300)
+        sys.exit()
 
 
-def drawMenu(setting, screen, sb, menuBtn, quitBtn, bgcrbtn, sel):
+def drawMenu(setting, screen, sb, bMenu):
     """Draw the menu and all of its elements"""
     global image, rect
-    quitBtn.rect.y = 450
-    quitBtn.msgImageRect.y = 450
-    menuBtn.rect.y = 400
-    menuBtn.msgImageRect.y = 400
-    bgcrbtn.rect.y = 500
-    bgcrbtn.msgImageRect.y = 500
     screen.fill(setting.bgColor)
-    menuBtn.drawBtn()
-    quitBtn.drawBtn()
-    bgcrbtn.drawBtn()
     screen.blit(image, rect)
-    sel.blitme()
+    bMenu.drawMenu()
     pg.display.flip()

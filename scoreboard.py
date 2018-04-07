@@ -6,7 +6,7 @@ from ship import Ship
 import utilityFunctions
 
 
-getReversedRGB = utilityFunctions.getReversedRGB
+getInvertedRGB = utilityFunctions.getInvertedRGB
 
 class Scoreboard():
     """A class for scorekeeping"""
@@ -28,8 +28,8 @@ class Scoreboard():
         self.prepLevel()
         self.prepShips()
 
-    def reverseCol(self):
-        self.textColor = getReversedRGB(self.textColor)
+    def invertColor(self):
+        self.textColor = getInvertedRGB(self.textColor)
 
     def prepScore(self):
         """Turn the score into a rendered image"""

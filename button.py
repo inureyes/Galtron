@@ -3,7 +3,7 @@ import utilityFunctions
 
 
 buttons = []
-getReversedRGB = utilityFunctions.getReversedRGB
+getInvertedRGB = utilityFunctions.getInvertedRGB
 
 class Button():
     """Button Class"""
@@ -36,13 +36,13 @@ class Button():
         if self in buttons:
             buttons.remove(self)
 
-    def reverseColAll():
+    def invertColorAll():
         for btn in buttons:
-            btn.reverseCol()
+            btn.invertColor()
 
-    def reverseCol(self):
-        self.buttonColor = getReversedRGB(self.buttonColor)
-        self.textColor = getReversedRGB(self.textColor)
+    def invertColor(self):
+        self.buttonColor = getInvertedRGB(self.buttonColor)
+        self.textColor = getInvertedRGB(self.textColor)
         self.prepMsg(self.msg)
 
     def prepMsg(self, msg):

@@ -4,7 +4,6 @@ import os
 
 class GameStats():
     """Track stats for alien shooter"""
-
     def __init__(self, setting):
         """initialize statistics"""
         self.setting = setting
@@ -15,12 +14,35 @@ class GameStats():
         self.mainAbout = False
         self.playMenu = False
         self.twoPlayer = False
+        self.settingsMenu = False
         self.paused = False
         self.score = 0
         self.level = 1
         self.highScore = 0
         self.highScoreSaveFileName = 'data-files/highscore.json'
         self.resetStats()
+
+
+    def setGameLoop(self, loop):
+        self.mainMenu = False
+        self.mainGame = False
+        self.mainAbout = False
+        self.playMenu = False
+        self.twoPlayer = False
+        self.settingsMenu = False
+
+        if loop == 'mainMenu':
+            self.mainMenu = True
+        elif loop == 'mainGame':
+            self.mainGame = True
+        elif loop == 'mainAbout':
+            self.mainAbout = True
+        elif loop == 'playMenu':
+            self.playMenu = True
+        elif loop == 'twoPlayer':
+            self.twoPlayer = True
+        elif loop == 'settingsMenu':
+            self.settingsMenu = True
 
     def resetStats(self):
         """initialize statistics that can change during the game"""

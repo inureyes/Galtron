@@ -5,12 +5,10 @@ import pygame as pg
 import sounds
 
 # Create a variable to change current button being selected
-aboutBtn = 1
 
 
-def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
+def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
     """Respond to keypresses and mouse events."""
-    global aboutBtn
     for event in pg.event.get():
         # Check for quit event
         if event.type == pg.QUIT:
@@ -19,53 +17,50 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship
         elif event.type == pg.KEYDOWN:
             # Check if down, up, enter, esc is pressed
             if event.key == pg.K_DOWN:
-                if aboutBtn < 2:
-                    sounds.control_menu.play()
-                    aboutBtn += 1
-                    sel.rect.y += 50
+                sounds.control_menu.play()
+                bMenu.down()
             if event.key == pg.K_UP:
-                if aboutBtn > 1:
-                    sounds.control_menu.play()
-                    aboutBtn -= 1
-                    sel.rect.y -= 50
+                sounds.control_menu.play()
+                bMenu.up()
             if event.key == pg.K_RETURN:
-                if aboutBtn == 1:
-                    sounds.select_menu.play()
-                    stats.mainMenu = True
-                    stats.mainGame = False
-                    stats.twoPlayer = False
-                    stats.mainAbout = False
-                    aboutBtn = 1
-                    sel.rect.centery = playBtn.rect.centery
-                elif aboutBtn == 2:
-                    sounds.button_click_sound.play()
-                    pg.time.delay(300)
-                    sys.exit()
+                sounds.select_menu.play()
+                selectedName, selectedBtn = bMenu.getSelectedButton()
+                if selectedBtn:
+                    buttonAction(stats, selectedName)
             if event.key == pg.K_ESCAPE:
                 sounds.button_click_sound.play()
                 pg.time.delay(300)
                 sys.exit()
-    prepAbout(setting, screen)
+
+        elif event.type == pg.MOUSEMOTION:
+            mouseBtnName, mouseBtn = bMenu.mouseCheck(event.pos[0], event.pos[1])
+            if mouseBtn is not None:
+                selectedName, selectedBtn = bMenu.getSelectedButton()
+                if mouseBtn is not selectedBtn:
+                    sounds.control_menu.play()
+                    bMenu.selectByName(mouseBtnName)
+
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            pressed = pg.mouse.get_pressed()
+            if (pressed[0]):
+                pos = pg.mouse.get_pos()
+                mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
+                if mouseBtn is not None:
+                    sounds.select_menu.play()
+                    buttonAction(stats, mouseBtnName)
 
 
-def prepAbout(setting, screen):
-    # Font settings for scoring information
-    global image, rect
-    image = pg.image.load('gfx/About_modify2.png')
-    image = pg.transform.scale(image, (setting.screenWidth, setting.screenHeight))
-    rect = image.get_rect()
+def buttonAction(stats, selectedName):
+    if selectedName == 'menu':
+        stats.setGameLoop('mainMenu')
+    elif selectedName == 'quit':
+        pg.time.delay(300)
+        sys.exit()
 
 
-def drawMenu(setting, screen, sb, menuBtn, quitBtn, sel):
+def drawMenu(setting, screen, sb, bMenu, abautImage, abautImageRect):
     """Draw the menu and all of its elements"""
-    global image, rect
-    quitBtn.rect.y = 500
-    quitBtn.msgImageRect.y = 500
-    menuBtn.rect.y = 450
-    menuBtn.msgImageRect.y = 450
     screen.fill(setting.bgColor)
-    screen.blit(image, rect)
-    menuBtn.drawBtn()
-    quitBtn.drawBtn()
-    sel.blitme()
+    screen.blit(abautImage, abautImageRect)
+    bMenu.drawMenu()
     pg.display.flip()

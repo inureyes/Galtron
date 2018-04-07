@@ -10,19 +10,17 @@ import sounds
 from alien import Alien
 from bullet import Bullet, SpecialBullet
 
-pauseBtnState2 = 1
-back = False
-
-x = 0
+backgroundImageY = 0
 clock = pg.time.Clock()
 FPS = 120
 bgloop = 0
 reset = 0
 
+gameOverButtons = ["retry", "menu", "quit"]
+pauseButtons = ["play", "menu", "quit"]
 
-def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, bullets, aliens, eBullets, ship1, ship2):
+def checkEvents(setting, screen, stats, sb, bMenu, bullets, aliens, eBullets, ship1, ship2):
     """Respond to keypresses and mouse events."""
-    global pauseBtnState2
     for event in pg.event.get():
         # Check for quit event
         if event.type == pg.QUIT:
@@ -30,50 +28,58 @@ def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, bullets, alie
 
             # Check for key down has been pressed
         elif event.type == pg.KEYDOWN:
-            checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship1, ship2, aliens, bullets,
-                               eBullets, pauseBtnState2)
+            checkKeydownEvents(event, setting, screen, stats, ship1, ship2, aliens, bullets,eBullets)
             if (stats.gameActive):
                 continue
             if event.key == pg.K_UP:
-                if pauseBtnState2 > 1:
-                    sounds.control_menu.play()
-                    pauseBtnState2 -= 1
-                    sel.rect.y -= 50
+                sounds.control_menu.play()
+                bMenu.up()
             elif event.key == pg.K_DOWN:
-                if pauseBtnState2 < 3:
-                    sounds.control_menu.play()
-                    pauseBtnState2 += 1
-                    sel.rect.y += 50
+                sounds.control_menu.play()
+                bMenu.down()
 
             elif event.key == pg.K_RETURN:
-                if pauseBtnState2 == 1:
-                    sounds.select_menu.play()
-
-                    checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship1, ship2, aliens, bullets, eBullets)
-                elif pauseBtnState2 == 2:
-                    sounds.select_menu.play()
-                    stats.twoPlay = False
-                    stats.mainMenu = True
-                    stats.resetStats()
-                    sel.rect.centery = playBtn.rect.centery
-                    pauseBtnState2 = 1
-                elif pauseBtnState2 == 3:
-                    sounds.button_click_sound.play()
-                    pg.time.delay(300)
-                    sys.exit()
+                sounds.select_menu.play()
+                selectedName, selectedBtn = bMenu.getSelectedButton()
+                if selectedBtn:
+                    buttonAction(stats, selectedName, setting, screen, ship1, ship2, aliens, bullets, eBullets, sb)
                     # Check if the key has been released
         elif event.type == pg.KEYUP:
-            checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship1, ship2, aliens, bullets,
-                             eBullets, pauseBtnState2)
-            # elif event.type == pg.MOUSEMOTION:
-        #	ship1.center = event.pos[0]
-        #	ship1.centery = event.pos[1]
-        #	ship2.center = event.pos[0]
-        #	ship2.centery = event.pos[1]
+            checkKeyupEvents(event, setting, screen, stats, ship1, ship2, aliens, bullets, eBullets)
 
 
-def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship1, ship2, aliens, bullets,
-                       eBullets, pauseBtnState2):
+        elif event.type == pg.MOUSEMOTION:
+            if not stats.gameActive:
+                mouseBtnName, mouseBtn = bMenu.mouseCheck(event.pos[0], event.pos[1])
+                if mouseBtn is not None:
+                    selectedName, selectedBtn = bMenu.getSelectedButton()
+                    if mouseBtn is not selectedBtn:
+                        sounds.control_menu.play()
+                        bMenu.selectByName(mouseBtnName)
+
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            if not stats.gameActive:
+                pressed = pg.mouse.get_pressed()
+                if (pressed[0]):
+                    pos = pg.mouse.get_pos()
+                    mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
+                    if mouseBtn is not None:
+                        sounds.select_menu.play()
+                        buttonAction(stats, mouseBtnName, setting, screen, ship1, ship2, aliens, bullets, eBullets, sb)
+
+
+def buttonAction(stats, selectedName, setting, screen, ship1, ship2, aliens, bullets, eBullets, sb):
+    if selectedName == 'play':
+        checkPlayBtn(setting, screen, stats, ship1, ship2, aliens, bullets, eBullets, sb)
+    elif selectedName == 'menu':
+        stats.setGameLoop('mainMenu')
+        stats.resetStats()
+    elif selectedName == 'quit':
+        pg.time.delay(300)
+        sys.exit()
+
+
+def checkKeydownEvents(event, setting, screen, stats, ship1, ship2, aliens, bullets,eBullets):
     """Response to kepresses"""
     global back
     # Movement of the ship1
@@ -142,8 +148,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel,
         sys.exit()
 
 
-def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, ship1, ship2, aliens, bullets, eBullets,
-                     pauseBtnState2):
+def checkKeyupEvents(event, setting, screen, stats, ship1, ship2, aliens, bullets, eBullets):
     """Response to keyrealeses"""
     global gauge
     if event.key == pg.K_RIGHT or event.key == 100:
@@ -202,7 +207,7 @@ def resetGame():
         f_obj.write('0')
 
 
-def checkPlayBtn(setting, screen, stats, sb, playBtn, sel, ship1, ship2, aliens, bullets, eBullets):
+def checkPlayBtn(setting, screen, stats, ship1, ship2, aliens, bullets, eBullets, sb):
     """Start new game if playbutton is pressed"""
     if not stats.gameActive and not stats.paused:
         setting.initDynamicSettings()
@@ -502,27 +507,19 @@ def drawChargeGauge(setting, screen, ship1, ship2):
     pg.draw.rect(screen, color, (x2, y2, ship2.chargeGauge, 10), 0)
 
 
-def updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel):
+def updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, bMenu):
     """Update images on the screen and flip to the new screen"""
     # Redraw the screen during each pass through the loop
     # Fill the screen with background color
     # Readjust the quit menu btn position
-    global x, clock, FPS
-    #	playBtn.rect.y = 200
-    #	playBtn.msgImageRect.y = 200
-
-    quitBtn.rect.y = 300
-    quitBtn.msgImageRect.y = 300
-
-    menuBtn.rect.y = 250
-    menuBtn.msgImageRect.y = 250
+    global backgroundImageY, clock, FPS, gameOverButtons, pauseButtons
+    bMenu.drawMenu()
     # screen.fill(setting.bgColor)
-    setting.bgimg(stats.level)
-    rel_x = x % setting.bg.get_rect().height
-    screen.blit(setting.bg, (0, rel_x - setting.bg.get_rect().height))
-    if rel_x < setting.screenHeight:
-        screen.blit(setting.bg, (0, rel_x))
-    x += 15
+    rel_y = backgroundImageY % setting.bg.get_rect().height
+    screen.blit(setting.bg, (0, rel_y - setting.bg.get_rect().height))
+    if rel_y < setting.screenHeight:
+        screen.blit(setting.bg, (0, rel_y))
+    backgroundImageY += 15
 
     # draw all the bullets
     for bullet in bullets.sprites():
@@ -548,10 +545,16 @@ def updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBul
 
     # Draw the play button if the game is inActive
     if not stats.gameActive:
-        playBtn.drawBtn()
-        menuBtn.drawBtn()
-        quitBtn.drawBtn()
-        sel.blitme()
+        if (stats.shipsLeft < 1):
+            bMenu.setMenuButtons(gameOverButtons)
+            scoreImg = pg.font.Font('Fonts/Square.ttf', 50).render("Score: " + str(stats.score), True, (0, 0, 0),
+                                                                   (255, 255, 255))
+            screen.fill(0, 0, 0)
+            screen.blit(scoreImg, ((setting.screenWidth - scoreImg.get_width()) / 2, 120))
+            screen.blit(setting.gameOverImage, (20, 30))
+        else:
+            bMenu.setMenuButtons(pauseButtons)
+        bMenu.drawMenu()
     setting.explosions.draw(screen)
     # Make the most recently drawn screen visable.
     pg.display.flip()
