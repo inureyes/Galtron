@@ -68,7 +68,7 @@ def runGame():
 
     # Make an alien
     aliens = Group()
-    gf.createFleet(setting, screen, ship, aliens)
+    gf.createFleet(setting, stats, screen, ship, aliens)
     pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
 
     bgImage = pg.image.load('gfx/title_c.png')
