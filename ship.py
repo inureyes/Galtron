@@ -50,7 +50,7 @@ class Ship(Sprite):
         self.chargeGauge = 0
 
     def update(self, bullets, aliens):
-        self.image = pg.image.load(checkColor())
+        #self.image = pg.image.load(checkColor())
         """Update the ships position"""
         if self.movingRight and self.rect.right < self.screenRect.right:
             self.center += self.setting.shipSpeed
