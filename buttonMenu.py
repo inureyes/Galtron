@@ -64,6 +64,18 @@ class ButtonMenu():
         self.y = self.screenRect.centery - (rectHeight / 2)
         self.updateButtonsPos()
 
+    def setButtonSizeAll(self, width=None, height=None):
+        if width is None:
+            width = self.width
+        if height is None:
+            height = self.height
+
+        self.btnWidth = width
+        self.btnHeight = height
+        for name in self.buttons:
+            self.buttons[name].setSize(width, height)
+        self.updateButtonsPos()
+
     def setButtonPos(self, name, x, y):
         if name in self.buttons:
             self.buttons[name].setPos(x, y)
@@ -133,8 +145,7 @@ class ButtonMenu():
 
     def invertColorAll(self):
         for name in self.buttons:
-            btn = self.buttons[name]
-            btn.invertColor()
+            self.buttons[name].invertColor()
 
 
 class Button():
@@ -146,7 +157,7 @@ class Button():
         self.textColor = (0, 0, 0)
         self.font = pygame.font.Font('Fonts/Square.ttf', 28)
 
-        self.prepMsg(msg)
+        self.setText(msg)
 
     def setPos(self, x, y):
         self.rect.x = x
@@ -156,11 +167,16 @@ class Button():
     def invertColor(self):
         self.buttonColor = getInvertedRGB(self.buttonColor)
         self.textColor = getInvertedRGB(self.textColor)
-        self.prepMsg(self.msg)
+        self.setText(self.msg)
 
-    def prepMsg(self, msg):
+    def setText(self, msg):
         self.msgImage = self.font.render(msg, True, self.textColor, self.buttonColor)
         self.msgImageRect = self.msgImage.get_rect()
+        self.msgImageRect.center = self.rect.center
+
+    def setSize(self, width, height):
+        self.rect.width = width
+        self.rect.height = height
         self.msgImageRect.center = self.rect.center
 
     def updateBtn(self, selected):
