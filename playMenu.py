@@ -63,3 +63,11 @@ def drawMenu(setting, screen, sb, bMenu):
     screen.fill(setting.bgColor)
     bMenu.drawMenu()
     pg.display.flip()
+
+    
+def checkColor():
+	return 'gfx/player_'+color+'.bmp'
+
+def drawimg():
+	img = pygame.image.load('gfx/player_blue.bmp')
+	return 0

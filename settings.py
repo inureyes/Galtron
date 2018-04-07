@@ -78,8 +78,12 @@ class Settings():
         if self.alienSpeed <= 1.5:
             self.alienSpeed *= self.speedUp
             self.fleetDropSpeed *= self.speedUp
-        
-        self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
+
+        # self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
+        # self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
+
+    def setIncreaseScoreSpeed(self, level):
+        self.alienPoints = int(self.alienPoints + ((level - 1) * 10))
 
     def halfspeed(self):
         if self.Limit >= -1 and self.shipSpeed > 0 and self.bulletSpeed > 0 and self.alienSpeed > 0 and self.fleetDropSpeed > 0:

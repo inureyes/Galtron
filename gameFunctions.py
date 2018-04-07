@@ -212,14 +212,16 @@ def getNumberRows(setting, shipHeight, alienHeight):
 
 
 def createAlien(setting, screen, aliens, alienNumber, rowNumber):
-    alien = Alien(setting, screen)
-    alienWidth = alien.rect.width
-    screenRect = alien.screen.get_rect()
-    alien.x = alienWidth + 2 * alienWidth * alienNumber
-    """ random position of enemy will be created in game window"""
-    alien.rect.x = random.randrange(0, setting.screenWidth - alien.x / 2)
-    alien.rect.y = (alien.rect.height + random.randrange(0, setting.screenHeight - alien.rect.height * 2)) / 1.5
-    aliens.add(alien)
+
+	sounds.stage_clear.play()
+	alien = Alien(setting, screen)
+	alienWidth = alien.rect.width
+	screenRect = alien.screen.get_rect()
+	alien.x = alienWidth + 2 * alienWidth * alienNumber
+	""" random position of enemy will be created in game window"""
+	alien.rect.x =  random.randrange(0,setting.screenWidth-alien.x/2)
+	alien.rect.y = (alien.rect.height + random.randrange(0,setting.screenHeight-alien.rect.height*2))/1.5
+	aliens.add(alien)
 
 
 def createFleet(setting, screen, ship, aliens):
@@ -325,6 +327,8 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
         eBullets.empty()
         setting.increaseSpeed()  # Speed up game
         stats.level += 1
+        setting.setIncreaseScoreSpeed(stats.level)
+        sb.prepLevel()
 
         createFleet(setting, screen, ship, aliens)
         # Invincibility during 2 sec
