@@ -5,8 +5,6 @@ import pygame as pg
 import sounds
 
 
-color = 'grey'
-
 def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
     """Respond to keypresses and mouse events."""
     for event in pg.event.get():
@@ -48,10 +46,10 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                     buttonAction(stats, mouseBtnName, ship)
 
 def buttonAction(stats, selectedName, ship):
-    global color
     if selectedName in ('grey', 'red', 'blue'):
         color = selectedName
-        ship.image = pg.image.load(checkColor())
+        shipImageFile = 'gfx/player_' + color + '.bmp'
+        ship.image = pg.image.load(shipImageFile)
         stats.setGameLoop('mainGame')
     elif selectedName == 'menu':
         stats.setGameLoop('mainMenu')
@@ -65,7 +63,3 @@ def drawMenu(setting, screen, sb, bMenu):
     screen.fill(setting.bgColor)
     bMenu.drawMenu()
     pg.display.flip()
-
-
-def checkColor():
-    return 'gfx/player_' + color + '.bmp'
