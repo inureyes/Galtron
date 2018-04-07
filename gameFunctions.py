@@ -7,10 +7,8 @@ import sounds
 from alien import Alien
 from bullet import Bullet, SpecialBullet
 
-backgroundImageY = 0
 clock = pg.time.Clock()
 FPS = 120
-bgloop = 0
 reset = 0
 
 gameOverButtons = ["retry", "menu", "quit"]
@@ -188,8 +186,6 @@ def checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets):
         createFleet(setting, screen, ship, aliens)
         ship.centerShip()
 
-        # Reset BackGround
-        setting.bgimg(0)
     elif not stats.gameActive and stats.paused:
         # IF the game is not running and game is paused unpause the game
         stats.gameActive = True
@@ -331,12 +327,6 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
         createFleet(setting, screen, ship, aliens)
         # Invincibility during 2 sec
         setting.newStartTime = pg.time.get_ticks()
-        global bgloop
-        if stats.level % 5 == 1:
-            bgloop += 1
-        if bgloop == 3:
-            bgloop -= 3
-        setting.bgimg(bgloop)
 
 
 def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
@@ -428,19 +418,15 @@ def drawChargeGauge(setting, screen, ship, sb):
     pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
 
 
-def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, bMenu):
+def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, bMenu, bgManager):
     """Update images on the screen and flip to the new screen"""
     # Redraw the screen during each pass through the loop
     # Fill the screen with background color
     # Readjust the quit menu btn position
-    global backgroundImageY, clock, FPS, gameOverButtons, pauseButtons
+    global clock, FPS, gameOverButtons, pauseButtons
     bMenu.drawMenu()
-    # screen.fill(setting.bgColor)
-    rel_y = backgroundImageY % setting.bg.get_rect().height
-    screen.blit(setting.bg, (0, rel_y - setting.bg.get_rect().height))
-    if rel_y < setting.screenHeight:
-        screen.blit(setting.bg, (0, rel_y))
-    backgroundImageY += 15
+    bgManager.update()
+    bgManager.draw()
 
     # draw "Dodged!" text if ship is invincibile
     if pg.time.get_ticks() - setting.newStartTime < 1500:

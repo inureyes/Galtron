@@ -14,9 +14,7 @@ class Settings():
         self.screenWidth = 550
         self.screenHeight = 650
         self.bgColor = (20, 20, 20)
-        self.image = pg.image.load("gfx/background.bmp")
-        self.image = pg.transform.scale(self.image, (self.screenWidth, self.screenHeight))
-        self.bg = self.image
+
         self.gameOverImage = pg.image.load("gfx/gameover.png")
         self.gameOverImage = pg.transform.scale(self.gameOverImage,
                                                 (self.screenWidth - 40, self.gameOverImage.get_height()))
@@ -53,19 +51,6 @@ class Settings():
     def invertColor(self):
         self.bgColor = getInvertedRGB(self.bgColor)
         self.bulletColor = getInvertedRGB(self.bulletColor)
-
-    def bgimg(self, number):
-        number = number % 3
-        if number == 0:
-            self.image = pg.image.load("gfx/background2.png")
-        elif number == 1:
-            self.image = pg.image.load("gfx/background5.jpg")
-            self.image = pg.transform.scale(self.image, (self.screenWidth, self.screenHeight))
-            self.bg = self.image
-        else:
-            self.image = pg.image.load("gfx/background6.jpg")
-        self.image = pg.transform.scale(self.image, (self.screenWidth, self.screenHeight))
-        self.bg = self.image
 
     def initDynamicSettings(self):
         self.shipSpeed = 1.5
