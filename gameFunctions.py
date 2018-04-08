@@ -327,6 +327,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
     # Check if there are no more aliens
     if len(aliens) == 0:
         # Destroy exsiting bullets and create new fleet
+        sounds.stage_clear.play()
         # bullets.empty()
         eBullets.empty()
         setting.increaseSpeed()  # Speed up game
@@ -475,7 +476,6 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, bM
     sb.prepScore()
     sb.prepHighScore()
     sb.prepLevel()
-    sb.prepShips()
     sb.showScore()
 
     # Draw the play button if the game is inActive
