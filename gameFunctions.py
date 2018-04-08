@@ -220,6 +220,10 @@ def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
 
 def createItem(setting, screen, posx, posy, type, items):
     """add item func"""
+    # item number is 1 per type
+    for itype in items:
+        if itype.type == type:
+            return
     item = Item(setting, screen, type, posx, posy)
     screenRect = item.screen.get_rect()
     items.add(item)
@@ -321,9 +325,9 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
             items.remove(item)
     for item in items.sprites():
         if item.rect.centerx -30 < ship.rect.x < item.rect.x +30 and item.rect.centery -20 < ship.rect.centery < item.rect.centery +20:
-            if item.type == 1:
+            if item.type == 1 and stats.shipsLeft < setting.shipLimit:
                 stats.shipsLeft += 1
-            items.empty()
+            items.remove(item)
 
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items):
@@ -333,14 +337,6 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
     if collisions:
         sounds.enemy_explosion_sound.play()
 
-
-        for c in collisions:
-            setting.explosions.add(c.rect.x, c.rect.y)
-            i = random.randrange(100)
-            if i<=10:
-                createItem(setting, screen, c.rect.x, c.rect.y, 1, items)
-
-
         for alien in collisions :
             for bullet in collisions[alien] :
                 alien.hitPoint -= bullet.damage
@@ -348,6 +344,10 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
             if alien.hitPoint <= 0 :
                 setting.explosions.add(alien.rect.x, alien.rect.y)
                 sounds.enemy_explosion_sound.play()
+                #if an enemy dies, it falls down an item randomly.
+                i = random.randrange(100)
+                if i<=setting.probabilityHeal:
+                    createItem(setting, screen, alien.rect.x, alien.rect.y, 1, items)
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100
