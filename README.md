@@ -1,6 +1,7 @@
 ﻿# Learning OSS development through GitHub
 
 
+
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
@@ -33,7 +34,7 @@
 | Minseok  Kang | Student    |     |
 | Jaehun Kim.   | student.   |     |
 | Hansae Ju     | Student    |     |
-| Jaewoo Yang   | Student    |     |
+| ChaeHyun Baek | Student    |     |
 | Kim Tae Yoon           | Student    |     |
 | KeonWoong Noh | Student    |     |
 | Onyu Park     | Student    |     |
