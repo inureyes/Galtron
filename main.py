@@ -68,6 +68,9 @@ def runGame():
     ship1 = Ship(setting, screen)
     ship2 = Ship(setting, screen)
 
+    #make a group of items to store
+    items = Group()
+
     # make a group of bullets to store
     bullets = Group()
     charged_bullets = Group()
@@ -118,10 +121,11 @@ def runGame():
                 pg.register_quit(runGame())
             if stats.gameActive:
                 gf.updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets)  # Update aliens
-                gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets)  # Update collisions
+                gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items) # Update collisions
+                gf.updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, items)
                 ship.update(bullets, aliens)  # update the ship
                 # Update the screen
-            gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, bMenu, bgManager)
+            gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, bMenu, bgManager, items)
 
         bMenu.setMenuButtons(aboutButtons)
         bMenu.setPos(None, 500)
@@ -135,8 +139,8 @@ def runGame():
             if stats.gameActive:
                 ship1.update(bullets, aliens)
                 ship2.update(bullets, aliens)
-                tp.updateBullets(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets)
-            tp.updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, bMenu)
+                tp.updateBullets(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, items)
+            tp.updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, bMenu, items)
 
         bMenu.setMenuButtons(settingsMenuButtons)
 
