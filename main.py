@@ -10,7 +10,8 @@ import playMenu as pm  # choosing ship color
 import settingsMenu as sm
 import twoPlayer as tp  # two player mode
 from animations import Explosions
-from buttonMenu import ButtonMenu  # A button class that can be called for every new button
+from buttonMenu import ButtonMenu
+from background import BackgroundManager
 from gameStats import GameStats  # Game stats that are changed during the duration of the game
 from scoreboard import Scoreboard  # Score board for points, high score, lives, level ect.
 # import self made classes
@@ -45,11 +46,17 @@ def runGame():
     bMenu.addButton("blue", "BLUE")
     bMenu.addButton("retry", "RETRY")
 
-    mainMenuButtons = ["play", "twoPlay", "about", "settings", "quit"]
+    mainMenuButtons = ["play", "about", "settings", "quit"] # delete "twoPlay"
     playMenuButtons = ["grey", "red", "blue", "menu", "quit"]
     mainGameButtons = ["play", "menu", "quit"]
     aboutButtons = ["menu", "quit"]
     settingsMenuButtons = ["menu", "invert", "quit"]
+
+    bgManager = BackgroundManager(screen)
+    bgManager.setFillColor((0, 0, 0))
+    bgManager.addBackground("universe_1", "gfx/backgrounds/stars_back.png", 0, 1)
+    bgManager.addBackground("universe_1", "gfx/backgrounds/stars_front.png", 0, 1.5)
+    bgManager.selectBackground("universe_1")
 
     # Create an instance to stor game stats
     stats = GameStats(setting)
@@ -69,7 +76,7 @@ def runGame():
 
     # Make an alien
     aliens = Group()
-    gf.createFleet(setting, screen, ship, aliens)
+    gf.createFleet(setting, stats, screen, ship, aliens)
     pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
 
     bgImage = pg.image.load('gfx/title_c.png')
@@ -99,12 +106,6 @@ def runGame():
         while stats.playMenu:
             pm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             pm.drawMenu(setting, screen, sb, bMenu)
-
-            # Change to stage music
-            pg.mixer.music.stop()
-            pg.mixer.music.load("sound_bgms/galtron-stage.mp3")
-            pg.mixer.music.set_volume(0.15)
-            pg.mixer.music.play(-1)
 
         bMenu.setMenuButtons(mainGameButtons)
 
