@@ -23,7 +23,7 @@ class Settings():
         self.ultimateGaugeIncrement = 3
 
         # Ships speed
-        self.shipLimit = 5
+        self.shipLimit = 3
 
         # Bullet settings
         self.bulletWidth = 3
@@ -47,13 +47,19 @@ class Settings():
         # New Level Starts at this time
         self.newStartTime = 0
 
+        #item probability %
+        self.probabilityHeal = 10
+
+        #invincibile time
+        self.invincibileTime = 2000
+
     def invertColor(self):
         self.bgColor = getInvertedRGB(self.bgColor)
         self.bulletColor = getInvertedRGB(self.bulletColor)
 
 
     def initDynamicSettings(self):
-        self.shipSpeed = 1.5
+        self.shipSpeed = 2.5
         self.bulletSpeed = 4
         self.alienSpeed = 1
         self.fleetDropSpeed = 5
