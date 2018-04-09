@@ -351,7 +351,8 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100
-        stats.ultimateGauge += setting.ultimateGaugeIncrement
+        if not collisions[alien][0].isUltimate:
+            stats.ultimateGauge += setting.ultimateGaugeIncrement
         if stats.ultimateGauge > 100:
             stats.ultimateGauge = 100
         for aliens in collisions.values():
@@ -365,7 +366,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
     if len(aliens) == 0:
         # Destroy exsiting bullets and create new fleet
         sounds.stage_clear.play()
-        # bullets.empty()
+        bullets.empty()
         eBullets.empty()
         setting.increaseSpeed() #Speed up game
         stats.level += 1
