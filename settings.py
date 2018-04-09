@@ -23,7 +23,7 @@ class Settings():
         self.ultimateGaugeIncrement = 3
 
         # Ships speed
-        self.shipLimit = 5
+        self.shipLimit = 3
 
         # Bullet settings
         self.bulletWidth = 3
@@ -59,7 +59,7 @@ class Settings():
 
 
     def initDynamicSettings(self):
-        self.shipSpeed = 1.5
+        self.shipSpeed = 2.5
         self.bulletSpeed = 4
         self.alienSpeed = 1
         self.fleetDropSpeed = 5

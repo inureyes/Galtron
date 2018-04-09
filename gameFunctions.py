@@ -337,8 +337,11 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
             items.remove(item)
     for item in items.sprites():
         if item.rect.centerx -30 < ship.rect.x < item.rect.x +30 and item.rect.centery -20 < ship.rect.centery < item.rect.centery +20:
-            if item.type == 1 and stats.shipsLeft < setting.shipLimit:
-                stats.shipsLeft += 1
+            if item.type == 1:
+                if stats.shipsLeft < setting.shipLimit:
+                    stats.shipsLeft += 1
+                else:
+                    stats.score += setting.alienPoints * 3
             items.remove(item)
 
 
