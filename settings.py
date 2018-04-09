@@ -23,7 +23,7 @@ class Settings():
         self.ultimateGaugeIncrement = 3
 
         # Ships speed
-        self.shipLimit = 5
+        self.shipLimit = 3
 
         # Bullet settings
         self.bulletWidth = 3
