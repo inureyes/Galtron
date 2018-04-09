@@ -24,14 +24,8 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                 sounds.select_menu.play()
                 selectedName, selectedBtn = bMenu.getSelectedButton()
                 if selectedBtn:
-                    buttonAction(stats, selectedName)
-            elif event.key == 46:
-                setting.shipLimit += 1
-            elif event.key == 44 and setting.shipLimit > 1:
-                setting.shipLimit -= 1
+                    buttonAction(stats, selectedName, setting)
             elif event.key == pg.K_ESCAPE:
-                sounds.button_click_sound.play()
-                pg.time.delay(300)
                 sys.exit()
 
         elif event.type == pg.MOUSEMOTION:
@@ -49,19 +43,16 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                 mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
                 if mouseBtn is not None:
                     sounds.select_menu.play()
-                    buttonAction(stats, mouseBtnName)
+                    buttonAction(stats, mouseBtnName, setting)
 
 
-def buttonAction(stats, selectedName):
-    if selectedName == 'play':
-        # stats.setGameLoop('playMenu')
-        stats.setGameLoop('levelMenu')
-    elif selectedName == 'twoPlay':
-        stats.setGameLoop('twoPlayer')
-    elif selectedName == 'about':
-        stats.setGameLoop('mainAbout')
-    elif selectedName == 'settings':
-        stats.setGameLoop('settingsMenu')
+def buttonAction(stats, selectedName, setting):
+    if selectedName == 'hard':
+        setting.gameLevel = 'hard'
+        stats.setGameLoop('playMenu')
+    elif selectedName == 'normal':
+        setting.gameLevel = 'normal'
+        stats.setGameLoop('playMenu')
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
