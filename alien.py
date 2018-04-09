@@ -86,3 +86,4 @@ class Alien(Sprite):
         """draw hte alien"""
         self.screen.blit(self.image, self.rect)
 
+

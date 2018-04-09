@@ -92,6 +92,7 @@ class SpecialBullet(Sprite):
 
         # damage of SpecialBullet
         self.damage = 10
+        
 
     def update(self):
         """Move the bullet -y up the screen"""
