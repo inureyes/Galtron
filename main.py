@@ -4,15 +4,17 @@ from pygame.sprite import Group
 
 import about as About
 import gameFunctions as gf  # Event checker and update screen
+import intro  # intro video making
 import mainMenu as mm  # Main menu
 import playMenu as pm  # choosing ship color
 import settingsMenu as sm
 import twoPlayer as tp  # two player mode
 from animations import Explosions
-from button import Button  # A button class that can be called for every new button
+from buttonMenu import ButtonMenu
+from background import BackgroundManager
 from gameStats import GameStats  # Game stats that are changed during the duration of the game
 from scoreboard import Scoreboard  # Score board for points, high score, lives, level ect.
-from selector import Selector  # Import the main menu selector
+# import self made classes
 from settings import Settings
 from ship import Ship
 
@@ -24,24 +26,37 @@ def runGame():
     setting = Settings()
     # creaete a new object from pygame display
     screen = pg.display.set_mode((setting.screenWidth, setting.screenHeight))
+
+    # intro
+    intro.introimages()
+
     # set window caption using settings obj
     pg.display.set_caption(setting.windowCaption)
 
-    playBtn = Button(setting, screen, "PLAY", 200)
-    menuBtn = Button(setting, screen, "MENU", 250)
-    twoPlayBtn = Button(setting, screen, "2PVS", 250)
-    setBtnbtn = Button(setting, screen, "SETTING", 400)
-    bgcrbtn = Button(setting, screen, "CL REV", 500)
-    aboutBtn = Button(setting, screen, "ABOUT", 300)
-    quitBtn = Button(setting, screen, "QUIT", 400)
-    greyBtn = Button(setting, screen, "GREY", 200)
-    redBtn = Button(setting, screen, "RED", 250)
-    blueBtn = Button(setting, screen, "BLUE", 300)
-    retryBtn = Button(setting, screen, "RETRY", 200)
-    # make slector for buttons
-    sel = Selector(setting, screen)
-    sel.rect.x = playBtn.rect.x + playBtn.width + 10
-    sel.rect.centery = playBtn.rect.centery
+    bMenu = ButtonMenu(screen)
+    bMenu.addButton("play", "PLAY")
+    bMenu.addButton("menu", "MENU")
+    bMenu.addButton("twoPlay", "2PVS")
+    bMenu.addButton("settings", "SETTINGS")
+    bMenu.addButton("invert", "INVERT")
+    bMenu.addButton("about", "ABOUT")
+    bMenu.addButton("quit", "QUIT")
+    bMenu.addButton("grey", "GREY")
+    bMenu.addButton("red", "RED")
+    bMenu.addButton("blue", "BLUE")
+    bMenu.addButton("retry", "RETRY")
+
+    mainMenuButtons = ["play", "about", "settings", "quit"] # delete "twoPlay"
+    playMenuButtons = ["grey", "red", "blue", "menu", "quit"]
+    mainGameButtons = ["play", "menu", "quit"]
+    aboutButtons = ["menu", "quit"]
+    settingsMenuButtons = ["menu", "invert", "quit"]
+
+    bgManager = BackgroundManager(screen)
+    bgManager.setFillColor((0, 0, 0))
+    bgManager.addBackground("universe_1", "gfx/backgrounds/stars_back.png", 0, 1)
+    bgManager.addBackground("universe_1", "gfx/backgrounds/stars_front.png", 0, 1.5)
+    bgManager.selectBackground("universe_1")
 
     # Create an instance to stor game stats
     stats = GameStats(setting)
@@ -53,73 +68,94 @@ def runGame():
     ship1 = Ship(setting, screen)
     ship2 = Ship(setting, screen)
 
+    #make a group of items to store
+    items = Group()
+
     # make a group of bullets to store
     bullets = Group()
+    charged_bullets = Group()
     eBullets = Group()
     setting.explosions = Explosions()
 
     # Make an alien
     aliens = Group()
-    # gf.createFleet(setting, screen, ship, aliens)
+    gf.createFleet(setting, stats, screen, ship, aliens)
     pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
+
+    bgImage = pg.image.load('gfx/title_c.png')
+    bgImage = pg.transform.scale(bgImage, (setting.screenWidth, setting.screenHeight))
+    bgImageRect = bgImage.get_rect()
+
+    aboutImage = pg.image.load('gfx/About_modify2.png')
+    aboutImage = pg.transform.scale(aboutImage, (setting.screenWidth, setting.screenHeight))
+    aboutImageRect = aboutImage.get_rect()
 
     # plays bgm
     pg.mixer.music.load("sound_bgms/galtron.mp3")
     pg.mixer.music.set_volume(0.25)
-    pg.mixer.music.play()
+    pg.mixer.music.play(-1)
 
     rungame = True
 
     # Set the two while loops to start mainMenu first
     while rungame:
         # Set to true to run main game loop
+        bMenu.setMenuButtons(mainMenuButtons)
         while stats.mainMenu:
-            mm.checkEvents(setting, screen, stats, sb, playBtn, twoPlayBtn, aboutBtn, quitBtn, menuBtn, setBtnbtn, sel,
-                           ship, aliens, bullets, eBullets)
-            mm.drawMenu(setting, screen, sb, playBtn, menuBtn, twoPlayBtn, aboutBtn, quitBtn, setBtnbtn, sel)
+            mm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
+            mm.drawMenu(setting, screen, sb, bMenu, bgImage, bgImageRect)
 
+        bMenu.setMenuButtons(playMenuButtons)
         while stats.playMenu:
-            pm.checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, quitBtn, menuBtn, sel, ship,
-                           aliens, bullets, eBullets)
-            pm.drawMenu(setting, screen, sb, greyBtn, redBtn, blueBtn, menuBtn, quitBtn, sel)
+            pm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
+            pm.drawMenu(setting, screen, sb, bMenu)
 
-            # Change to stage music
-            pg.mixer.music.stop()
-            pg.mixer.music.load("sound_bgms/galtron-stage.mp3")
-            pg.mixer.music.set_volume(0.15)
-            pg.mixer.music.play(-1)
+        bMenu.setMenuButtons(mainGameButtons)
 
         while stats.mainGame:
             # Game functions
-            gf.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets,
-                           eBullets)  # Check for events
+            gf.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets, charged_bullets)  # Check for events
             # Reset Game
             if gf.reset == 1:
                 gf.reset = 0
                 pg.register_quit(runGame())
             if stats.gameActive:
                 gf.updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets)  # Update aliens
-                gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets)  # Update collisions
+                gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items) # Update collisions
+                gf.updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, items)
                 ship.update(bullets, aliens)  # update the ship
                 # Update the screen
-            gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, retryBtn, sel)
+            gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, bMenu, bgManager, items)
+
+        bMenu.setMenuButtons(aboutButtons)
+        bMenu.setPos(None, 500)
+
         while stats.mainAbout:
-            About.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets,
-                              eBullets)
-            About.drawMenu(setting, screen, sb, menuBtn, quitBtn, sel)
+            About.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
+            About.drawMenu(setting, screen, sb, bMenu, aboutImage, aboutImageRect)
 
         while stats.twoPlayer:
-            tp.checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, bullets, aliens, eBullets, ship1, ship2)
+            tp.checkEvents(setting, screen, stats, sb, bMenu, bullets, aliens, eBullets, ship1, ship2)
             if stats.gameActive:
                 ship1.update(bullets, aliens)
                 ship2.update(bullets, aliens)
-                tp.updateAliens(setting, stats, sb, screen, ship1, ship2, aliens, bullets, eBullets)
-                tp.updateBullets(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets)
-            tp.updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, playBtn, menuBtn,
-                            quitBtn, sel)
-        while stats.settingsMenu:
-            sm.checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets)
-            sm.drawMenu(setting, screen, sb, menuBtn, quitBtn, bgcrbtn, sel)
+                tp.updateBullets(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, items)
+            tp.updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, bMenu, items)
 
+        bMenu.setMenuButtons(settingsMenuButtons)
+
+        while stats.settingsMenu:
+            sm.checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
+            sm.drawMenu(setting, screen, sb, bMenu)
+
+        while stats.mainGame:
+            if rungame == True:
+                print("test")
+
+
+# init bgm mixer
+pg.mixer.pre_init(44100, 16, 2, 4096)
+pg.mixer.init(44100, -16, 2, 4096)
 # run the runGame method to run the game
+
 runGame()

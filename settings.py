@@ -1,10 +1,12 @@
 import pygame as pg
+
 import utilityFunctions
 
+getInvertedRGB = utilityFunctions.getInvertedRGB
 
-getReversedRGB = utilityFunctions.getReversedRGB
 
 class Settings():
+
     """A class to store all settings for game"""
 
     def __init__(self):
@@ -13,9 +15,10 @@ class Settings():
         self.screenWidth = 550
         self.screenHeight = 650
         self.bgColor = (20, 20, 20)
-        self.image = pg.image.load("gfx/background.bmp")
-        self.image = pg.transform.scale(self.image, (self.screenWidth, self.screenHeight))
-        self.bg = self.image
+
+        self.gameOverImage = pg.image.load("gfx/gameover.png")
+        self.gameOverImage = pg.transform.scale(self.gameOverImage,
+                                                (self.screenWidth - 40, self.gameOverImage.get_height()))
         # Ultimate settings
         self.ultimateGaugeIncrement = 3
 
@@ -35,33 +38,19 @@ class Settings():
 
         # GameSpeedLimit
         self.Limit = 0
-
         self.globalGameSpeed = 1
 
         self.initDynamicSettings()
         # Interception settings
         self.checkBtnPressed = 0
         self.interception = False
-
         # New Level Starts at this time
         self.newStartTime = 0
 
-    def reverseCol(self):
-        self.bgColor = getReversedRGB(self.bgColor)
-        self.bulletColor = getReversedRGB(self.bulletColor)
+    def invertColor(self):
+        self.bgColor = getInvertedRGB(self.bgColor)
+        self.bulletColor = getInvertedRGB(self.bulletColor)
 
-    def bgimg(self, number):
-        number = number % 3
-        if number == 0:
-            self.image = pg.image.load("gfx/background2.png")
-        elif number == 1:
-            self.image = pg.image.load("gfx/background5.jpg")
-            self.image = pg.transform.scale(self.image, (self.screenWidth, self.screenHeight))
-            self.bg = self.image
-        else:
-            self.image = pg.image.load("gfx/background6.jpg")
-        self.image = pg.transform.scale(self.image, (self.screenWidth, self.screenHeight))
-        self.bg = self.image
 
     def initDynamicSettings(self):
         self.shipSpeed = 1.5
@@ -76,8 +65,16 @@ class Settings():
         if self.alienSpeed <= 1.5:
             self.alienSpeed *= self.speedUp
             self.fleetDropSpeed *= self.speedUp
-        
+
+
+            # self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
+            # self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
+
+    def setIncreaseScoreSpeed(self, level):
+        self.alienPoints = int(self.alienPoints + ((level - 1) * 10))
+
         self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
+
 
     def halfspeed(self):
         if self.Limit >= -1 and self.shipSpeed > 0 and self.bulletSpeed > 0 and self.alienSpeed > 0 and self.fleetDropSpeed > 0:
