@@ -41,6 +41,7 @@ class Scoreboard():
         self.scoreImg = self.font.render(scoreStr, True, self.textColor,
                                          self.setting.bgColor)
 
+
         # Display the score at the top left corner
         self.scoreRect = self.scoreImg.get_rect()
         self.scoreRect.right = self.screenRect.right - 20

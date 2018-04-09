@@ -23,7 +23,7 @@ class Bullet(Sprite):
             bulletSize = (self.rect.width * (charge + 1), self.rect.height * (charge + 1))
             self.image = pg.transform.scale(self.image, bulletSize)
             self.rect = self.image.get_rect()
-            
+
             # Create a bullet rect at (0,0)
         ##self.rect = pg.Rect(0, 0, setting.bulletWidth, setting.bulletHeight)
         self.rect.centerx = ship.rect.centerx
@@ -37,7 +37,7 @@ class Bullet(Sprite):
 
         # damage of basic bullet (default : 1)
         self.damage = damage
-        
+
 
     def update(self):
         """Move the bullet -y up the screen"""
