@@ -14,6 +14,8 @@ class Bullet(Sprite):
 
         # decide the trajectory of bullets
         self.traj = traj
+        # To specify the bullet is ultimate
+        self.isUltimate = False
 
         # load the bullet image and set its rect attribute
         self.image = pg.image.load('gfx/bullet2.png')
@@ -72,6 +74,9 @@ class SpecialBullet(Sprite):
         """Create the bullet object at the some position"""
         super(SpecialBullet, self).__init__()
         self.screen = screen
+
+        # To specify the bullet is ultimate
+        self.isUltimate = True
 
         # load the bullet image and set its rect attribute
         self.image = pg.image.load('gfx/bullet.png')
