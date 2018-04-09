@@ -24,7 +24,7 @@ class ButtonMenu():
     def addButton(self, name, msg):
         self.buttons[name] = Button(self.screen, msg, self.btnWidth, self.btnHeight)
 
-    ###############
+    
     def removeButton(self, name):
         if name in self.buttons:
             del self.buttons[name]
@@ -121,11 +121,11 @@ class ButtonMenu():
         for name in self.menuButtons:
             self.setButtonPos(name, self.x, btnY)
             btnY += offsetY
-    ################
+    
     def drawButton(self, name):
         if name in self.buttons:
             self.buttons[name].drawBtn()
-    ##################
+    
     def drawMenuButtons(self):
         for name in self.menuButtons:
             self.drawButton(name)
