@@ -50,6 +50,9 @@ class Settings():
         #item probability %
         self.probabilityHeal = 10
 
+        #invincibile time
+        self.invincibileTime = 2000
+
     def invertColor(self):
         self.bgColor = getInvertedRGB(self.bgColor)
         self.bulletColor = getInvertedRGB(self.bulletColor)

@@ -148,12 +148,12 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
         if not stats.paused:
             if (ship.chargeGauge == 100):
                 sounds.charge_shot.play()
-                newBullet = Bullet(setting, screen, ship, ship.trajectory, 2, 5)
-                bullets.add(newBullet)
+                newBullet = Bullet(setting, screen, ship, ship.trajectory, 3)
+                charged_bullets.add(newBullet)
                 ship.chargeGauge = 0
             elif (50 <= ship.chargeGauge):
                 sounds.charge_shot.play()
-                newBullet = Bullet(setting, screen, ship, ship.trajectory, 3)
+                newBullet = Bullet(setting, screen, ship, ship.trajectory, 2)
                 charged_bullets.add(newBullet)
         ship.shoot = False
 
@@ -266,15 +266,23 @@ def changeFleetDir(setting, aliens):
 def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Respond to ship being hit"""
     if stats.shipsLeft > 0:
-        sounds.explosion_sound.play()
-        stats.shipsLeft -= 1
-        stats.ultimateGauge = 0
-        ship.centerShip()
-        setting.newStartTime = pg.time.get_ticks()
+
+        if pg.time.get_ticks() - setting.newStartTime > setting.invincibileTime:
+            sounds.explosion_sound.play()
+            stats.shipsLeft -= 1
+            stats.ultimateGauge = 0
+            ship.chargeGauge = 0
+            ship.chargeGaugeStartTime = pg.time.get_ticks()
+            # ship.centerShip()
+            setting.newStartTime = pg.time.get_ticks()
     else:
         stats.gameActive = False
         checkHighScore(stats, sb)
 
+def updateInvincibility(setting, screen, ship):
+    if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
+        text1 = pg.font.Font('Fonts/Square.ttf', 20).render("SHIELD", True, (255, 255, 255), )
+        screen.blit(text1, (ship.rect.x, ship.rect.y -20))
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
@@ -307,6 +315,10 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets, c
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
 
+    for charged_bullet in charged_bullets.copy():
+        if charged_bullet.rect.bottom <= 0:
+            charged_bullets.remove(charged_bullet)
+
     if setting.interception:
         pg.sprite.groupcollide(bullets, eBullets, bullets, eBullets)
 
@@ -333,11 +345,14 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items):
     """Detect collisions between alien and bullets"""
     collisions = pg.sprite.groupcollide(aliens, bullets, False, False)
-    collisions.update(pg.sprite.groupcollide(aliens, charged_bullets, False, True))
+    collisions.update(pg.sprite.groupcollide(aliens, charged_bullets, False, False))
     if collisions:
         sounds.enemy_explosion_sound.play()
 
         for alien in collisions :
+            #charged_bullet bgManager
+            for charged_bullet in charged_bullets:
+                alien.hitPoint -= charged_bullet.damage
             for bullet in collisions[alien] :
                 alien.hitPoint -= bullet.damage
                 bullets.remove(bullet)
@@ -357,7 +372,6 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
         for aliens in collisions.values():
             stats.score += setting.alienPoints * len(aliens)
         checkHighScore(stats, sb)
-        #alien drop item by random probability
 
 
     sb.prepScore()
@@ -383,7 +397,7 @@ def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBull
         if pg.sprite.collide_mask(ship, ebullet):
             shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
             #sb.prepShips()
-            eBullets.empty()
+            eBullets.remove(ebullet)
 
 
 def checkHighScore(stats, sb):
@@ -476,10 +490,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     bgManager.update()
     bgManager.draw()
 
-    # draw "Dodged!" text if ship is invincibile
-    if pg.time.get_ticks() - setting.newStartTime < 1500:
-        text1 = pg.font.Font('Fonts/Square.ttf', 20).render("Dodged!", True, (255, 255, 255), )
-        screen.blit(text1, (ship.rect.x + 40, ship.rect.y))
+
 
     # draw all the bullets
     for bullet in bullets.sprites():
@@ -498,6 +509,8 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     for i in items:
         i.update()
         i.drawitem()
+    #Dodge if ship is invincibile
+    updateInvincibility(setting, screen, ship)
 
     # Update Ultimate Gauge
     updateUltimateGauge(setting, screen, stats, sb)
