@@ -30,8 +30,6 @@ class Settings():
         self.bulletHeight = 15
         self.bulletColor = (60, 60, 60)
 
-        # Alien settings
-
         # How quickly the game speeds up
         self.speedUp = 1.1
         self.scoreSpeedUp = 5
@@ -46,6 +44,12 @@ class Settings():
         self.interception = False
         # New Level Starts at this time
         self.newStartTime = 0
+
+        # Game Level
+        self.gameLevel = 'normal'
+
+        # Alien shoot speed
+        self.shootTimer = 50
 
     def invertColor(self):
         self.bgColor = getInvertedRGB(self.bgColor)

@@ -31,7 +31,11 @@ class EBullet(Sprite):
     def update(self):
         """Move the bullet -y up the screen"""
         # update the decimal position of the bullet
-        bulletSpeed = self.setting.bulletSpeed / 2
+        ####################
+        if self.setting.gameLevel == 'normal':
+            bulletSpeed = self.setting.bulletSpeed / 2
+        elif self.setting.gameLevel == 'hard':
+            bulletSpeed = self.setting.bulletSpeed
         self.y += bulletSpeed
         # Update the rect position
         self.rect.y = self.y

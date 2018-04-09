@@ -38,6 +38,7 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                 sounds.select_menu.play()
                 selectedName, selectedBtn = bMenu.getSelectedButton()
                 if selectedBtn:
+                    #######################
                     buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets)
         elif event.type == pg.KEYUP:
             checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bullets)
@@ -192,7 +193,6 @@ def checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets):
         stats.gameActive = True
         stats.paused = False
 
-
 def getNumberAliens(setting, alienWidth):
     """Determine the number of aliens that fit in a row"""
     availableSpaceX = setting.screenWidth - 2 * alienWidth
@@ -255,7 +255,11 @@ def checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets
 def changeFleetDir(setting, aliens):
     """Change the direction of aliens"""
     for alien in aliens.sprites():
-        alien.rect.y += setting.fleetDropSpeed
+        ##############
+        if setting.gameLevel == 'normal':
+            alien.rect.y += setting.fleetDropSpeed
+        elif setting.gameLevel == 'hard':
+            alien.rect.y += (setting.fleetDropSpeed + 3)
     setting.fleetDir *= -1
 
 
@@ -351,7 +355,11 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100
-        stats.ultimateGauge += setting.ultimateGaugeIncrement
+        ######################
+        if setting.gameLevel == 'normal':
+            stats.ultimateGauge += setting.ultimateGaugeIncrement   # ultimateGaugeIncrement = 3
+        elif setting.gameLevel == 'hard':
+            stats.ultimateGauge += 1
         if stats.ultimateGauge > 100:
             stats.ultimateGauge = 100
         for aliens in collisions.values():

@@ -71,5 +71,5 @@ def checkColor():
 
 
 def drawimg():
-    img = pygame.image.load('gfx/player_blue.bmp')
+    img = pg.image.load('gfx/player_blue.bmp')
     return 0
