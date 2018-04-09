@@ -351,7 +351,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100
-        if not collisions[alien][0].isUltimate:
+        if notcollisions[alien][0].isUltimate:
             stats.ultimateGauge += setting.ultimateGaugeIncrement
         if stats.ultimateGauge > 100:
             stats.ultimateGauge = 100
