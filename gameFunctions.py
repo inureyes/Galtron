@@ -209,7 +209,7 @@ def getNumberRows(setting, shipHeight, alienHeight):
 
 def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
     sounds.stage_clear.play()
-    alien = Alien(setting, screen, stats.level*3)
+    alien = Alien(setting, screen, 1 + stats.level // 2)
     alienWidth = alien.rect.width
     screenRect = alien.screen.get_rect()
     alien.x = alienWidth + 2 * alienWidth * alienNumber
