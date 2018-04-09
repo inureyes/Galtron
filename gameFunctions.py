@@ -266,7 +266,6 @@ def changeFleetDir(setting, aliens):
 def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Respond to ship being hit"""
     if stats.shipsLeft > 0:
-
         if pg.time.get_ticks() - setting.newStartTime > setting.invincibileTime:
             sounds.explosion_sound.play()
             stats.shipsLeft -= 1
@@ -275,6 +274,15 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
             ship.chargeGaugeStartTime = pg.time.get_ticks()
             # ship.centerShip()
             setting.newStartTime = pg.time.get_ticks()
+    elif stats.shipsLeft == 0:
+        if pg.time.get_ticks() - setting.newStartTime > setting.invincibileTime:
+            sounds.explosion_sound.play()
+            stats.ultimateGauge = 0
+            ship.chargeGauge = 0
+            ship.chargeGaugeStartTime = pg.time.get_ticks()
+            setting.newStartTime = pg.time.get_ticks()
+            stats.gameActive = False
+            checkHighScore(stats, sb)
     else:
         stats.gameActive = False
         checkHighScore(stats, sb)
@@ -512,7 +520,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     for i in items:
         i.update()
         i.drawitem()
-    #Dodge if ship is invincibile
+    #Shield if ship is invincibile
     updateInvincibility(setting, screen, ship)
 
     # Update Ultimate Gauge
