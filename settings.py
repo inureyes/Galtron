@@ -47,6 +47,12 @@ class Settings():
         # New Level Starts at this time
         self.newStartTime = 0
 
+        #item probability %
+        self.probabilityHeal = 10
+
+        #invincibile time
+        self.invincibileTime = 2000
+
     def invertColor(self):
         self.bgColor = getInvertedRGB(self.bgColor)
         self.bulletColor = getInvertedRGB(self.bulletColor)
