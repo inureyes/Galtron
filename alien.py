@@ -30,7 +30,14 @@ class Alien(Sprite):
         self.timer = 0
 
         # hitpoint for a basic alien (default : 3)
+<<<<<<< HEAD
         self.hitPoint = hitPoint
+=======
+        if setting.gameLevel == 'normal':
+            self.hitPoint = hitPoint
+        elif setting.gameLevel == 'hard':
+            self.hitPoint = 5
+>>>>>>> trace_up
 
     def checkEdges(self):
         """Returns True if alien is at the edge of screen"""
@@ -56,8 +63,10 @@ class Alien(Sprite):
         self.shoot(setting, screen, self.ship, self.aliens, self.eBullets)
 
     def shoot(self, setting, screen, ship, aliens, eBullets):
-        if self.rect.centerx >= self.ship.rect.centerx and len(eBullets) <= 4:
-            if self.timer >= 50:
+        if setting.gameLevel == 'hard':
+            setting.shootTimer = 10     # default = 50
+        if len(eBullets) <= 4:
+            if self.timer >= setting.shootTimer:
                 sounds.enemy_shoot_sound.play()
                 self.timer = 0
                 newBullet = EBullet(setting, screen, self)
