@@ -149,11 +149,7 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
         if not stats.paused:
             if (ship.chargeGauge == 100):
                 sounds.charge_shot.play()
-<<<<<<< HEAD
-                newBullet = Bullet(setting, screen, ship, ship.trajectory, 2, 5)
-=======
                 newBullet = Bullet(setting, screen, ship, ship.trajectory, 3, 5)
->>>>>>> trace_up
                 bullets.add(newBullet)
                 ship.chargeGauge = 0
             elif (50 <= ship.chargeGauge):
@@ -274,7 +270,6 @@ def changeFleetDir(setting, aliens):
 def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Respond to ship being hit"""
     if stats.shipsLeft > 0:
-
         if pg.time.get_ticks() - setting.newStartTime > setting.invincibileTime:
             sounds.explosion_sound.play()
             stats.shipsLeft -= 1
@@ -283,6 +278,15 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
             ship.chargeGaugeStartTime = pg.time.get_ticks()
             # ship.centerShip()
             setting.newStartTime = pg.time.get_ticks()
+    elif stats.shipsLeft == 0:
+        if pg.time.get_ticks() - setting.newStartTime > setting.invincibileTime:
+            sounds.explosion_sound.play()
+            stats.ultimateGauge = 0
+            ship.chargeGauge = 0
+            ship.chargeGaugeStartTime = pg.time.get_ticks()
+            setting.newStartTime = pg.time.get_ticks()
+            stats.gameActive = False
+            checkHighScore(stats, sb)
     else:
         stats.gameActive = False
         checkHighScore(stats, sb)
@@ -356,32 +360,22 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items):
     """Detect collisions between alien and bullets"""
     collisions = pg.sprite.groupcollide(aliens, bullets, False, False)
-<<<<<<< HEAD
-    if collisions:  
-        for alien in collisions :
-=======
     collisions.update(pg.sprite.groupcollide(aliens, charged_bullets, False, False))
     if collisions:
         sounds.enemy_explosion_sound.play()
 
         for alien in collisions :
             #charged_bullet bgManager
+            if alien.animationState == 0 :
+                alien.animationState = 1
             for charged_bullet in charged_bullets:
                 alien.hitPoint -= charged_bullet.damage
->>>>>>> trace_up
             for bullet in collisions[alien] :
                 alien.hitPoint -= bullet.damage
                 bullets.remove(bullet)
             if alien.hitPoint <= 0 :
                 setting.explosions.add(alien.rect.x, alien.rect.y)
                 sounds.enemy_explosion_sound.play()
-<<<<<<< HEAD
-                aliens.remove(alien)
-            
-
-        # Increase the ultimate gauge, upto 100
-        stats.ultimateGauge += setting.ultimateGaugeIncrement
-=======
                 #if an enemy dies, it falls down an item randomly.
                 i = random.randrange(100)
                 if i<=setting.probabilityHeal:
@@ -389,12 +383,11 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100
-        ######################
-        if setting.gameLevel == 'normal':
-            stats.ultimateGauge += setting.ultimateGaugeIncrement   # ultimateGaugeIncrement = 3
-        elif setting.gameLevel == 'hard':
-            stats.ultimateGauge += 1
->>>>>>> trace_up
+        if not collisions[alien][0].isUltimate:
+            if setting.gameLevel == 'normal':
+                stats.ultimateGauge += setting.ultimateGaugeIncrement   # ultimateGaugeIncrement = 3
+            elif setting.gameLevel == 'hard':
+                stats.ultimateGauge += 1
         if stats.ultimateGauge > 100:
             stats.ultimateGauge = 100
         for aliens in collisions.values():
@@ -407,7 +400,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
     if len(aliens) == 0:
         # Destroy exsiting bullets and create new fleet
         sounds.stage_clear.play()
-        # bullets.empty()
+        bullets.empty()
         eBullets.empty()
         setting.increaseSpeed() #Speed up game
         stats.level += 1
@@ -537,7 +530,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     for i in items:
         i.update()
         i.drawitem()
-    #Dodge if ship is invincibile
+    #Shield if ship is invincibile
     updateInvincibility(setting, screen, ship)
 
     # Update Ultimate Gauge

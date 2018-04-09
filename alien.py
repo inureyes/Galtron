@@ -1,5 +1,6 @@
 import pygame as pg
 from pygame.sprite import Sprite
+from animations import AnimatedSprite
 
 import sounds
 from eBullet import EBullet
@@ -13,9 +14,14 @@ class Alien(Sprite):
         super(Alien, self).__init__()
         self.screen = screen
         self.setting = setting
+        
 
         # load the alien image and set its rect attribute
-        self.image = pg.image.load('gfx/spaceship4.png')
+        self.animationState = 0
+        self.sprite = AnimatedSprite(
+            pg.image.load('gfx/spaceship4_sprite.png').convert_alpha(),
+            40, 40, 13)
+        self.image = self.sprite.getFrame(0)
         self.image = pg.transform.rotate(self.image, 180)
         self.rect = self.image.get_rect()
 
@@ -30,14 +36,10 @@ class Alien(Sprite):
         self.timer = 0
 
         # hitpoint for a basic alien (default : 3)
-<<<<<<< HEAD
-        self.hitPoint = hitPoint
-=======
         if setting.gameLevel == 'normal':
             self.hitPoint = hitPoint
         elif setting.gameLevel == 'hard':
             self.hitPoint = 5
->>>>>>> trace_up
 
     def checkEdges(self):
         """Returns True if alien is at the edge of screen"""
@@ -61,6 +63,13 @@ class Alien(Sprite):
         self.x += (self.setting.alienSpeed * self.setting.fleetDir)
         self.rect.x = self.x
         self.shoot(setting, screen, self.ship, self.aliens, self.eBullets)
+        """Animation"""
+        self.image = self.sprite.getFrame(self.animationState)
+        self.image = pg.transform.rotate(self.image, 180)
+        if self.animationState != 0:
+            self.animationState += 1
+            if self.animationState == 13:
+                self.animationState = 0
 
     def shoot(self, setting, screen, ship, aliens, eBullets):
         if setting.gameLevel == 'hard':
@@ -76,5 +85,4 @@ class Alien(Sprite):
     def blitme(self):
         """draw hte alien"""
         self.screen.blit(self.image, self.rect)
-
 
