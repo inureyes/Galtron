@@ -209,13 +209,27 @@ def getNumberRows(setting, shipHeight, alienHeight):
 
 def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
     sounds.stage_clear.play()
-    alien = Alien(setting, screen, stats.level*3)
+    if setting.gameLevel == "normal":
+        alien = Alien(setting, screen, 1 + stats.level // 4)
+    else:
+        alien = Alien(setting, screen, 1 + stats.level // 2)        
     alienWidth = alien.rect.width
     screenRect = alien.screen.get_rect()
     alien.x = alienWidth + 2 * alienWidth * alienNumber
     """ random position of enemy will be created in game window"""
     alien.rect.x = random.randrange(0, setting.screenWidth - alien.x / 2)
     alien.rect.y = (alien.rect.height + random.randrange(0, setting.screenHeight - alien.rect.height * 2)) / 1.5
+    aliens.add(alien)
+
+def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
+    sounds.stage_clear.play()
+    alien = Alien(setting, screen, stats.level*30, True)
+    alienWidth = alien.rect.width
+    screenRect = alien.screen.get_rect()
+    alien.x = alienWidth + 2 * alienWidth * alienNumber
+    """ random position of enemy will be created in game window"""
+    alien.rect.x = setting.screenWidth / 2
+    alien.rect.y = 30
     aliens.add(alien)
 
 def createItem(setting, screen, posx, posy, type, items):
@@ -241,6 +255,15 @@ def createFleet(setting, stats, screen, ship, aliens):
             createAlien(setting, stats, screen, aliens, alienNumber, rowNumber)
 
 
+def createFleetBoss(setting, stats, screen, ship, aliens):
+    """Create a fleet of aliens"""
+    alien = Alien(setting, screen, stats.level*3)
+    numberAliensX = 1
+    numberRows = 1
+
+    # create the first row of aliens
+    createBoss(setting, stats, screen, aliens, numberAliensX, numberRows)
+            
 def checkFleetEdges(setting, aliens):
     """Respond if any aliens have reached an edge"""
     for alien in aliens.sprites():
@@ -313,7 +336,8 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets, c
     """update the position of the bullets"""
     #check if we are colliding
     bullets.update()
-    eBullets.update()
+    for eBullet in eBullets:
+        eBullet.update()
     charged_bullets.update()
     checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items)
     checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
@@ -406,8 +430,10 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
         stats.level += 1
         setting.setIncreaseScoreSpeed(stats.level)
         sb.prepLevel()
-
-        createFleet(setting, stats, screen, ship, aliens)
+        if stats.level % 5 != 0:
+            createFleet(setting, stats, screen, ship, aliens)
+        else:
+            createFleetBoss(setting, stats, screen, ship, aliens)
         # Invincibility during 2 sec
         setting.newStartTime = pg.time.get_ticks()
 
