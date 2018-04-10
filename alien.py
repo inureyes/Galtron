@@ -32,7 +32,7 @@ class Alien(Sprite):
         self.timer = 0
 
         # hitpoint for a basic alien (default : 3)
-        if setting.gameLevel == 'normal':
+        if setting.gameLevel == 'normal' or self.isboss:
             self.hitPoint = hitPoint
         elif setting.gameLevel == 'hard':
             self.hitPoint = 5
