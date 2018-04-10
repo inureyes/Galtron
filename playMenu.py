@@ -1,101 +1,75 @@
 import sys
-import gameFunctions as gf #Event checker and update screen
+
 import pygame as pg
 
-setBtn = 1
-color = 'grey'
+import sounds
 
-#Init and load sound effects
-pg.mixer.init(44100, -16, 2, 4096)
-control_menu = pg.mixer.Sound("sounds/control_menu.wav")
-control_menu.set_volume(0.22)
-select_menu = pg.mixer.Sound("sounds/select_menu.wav")
-select_menu.set_volume(0.18)
-start_game = pg.mixer.Sound("sounds/start_game.wav")
-start_game.set_volume(0.3)
 
-def checkEvents(setting, screen, stats, sb, playBtn, greyBtn, redBtn, blueBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
-	"""Respond to keypresses and mouse events."""
-	global setBtn , color
-	for event in pg.event.get():
-		#Check for quit event
-		if event.type == pg.QUIT:
-			sys.exit()
-		#Check for key down has been pressed
-		elif event.type == pg.KEYDOWN:
-			#Check if down, up, enter, esc is pressed
-			if event.key == pg.K_DOWN:
-				if setBtn < 5:
-					control_menu.play()
-					setBtn += 1
-					sel.rect.y += 50
-			if event.key == pg.K_UP:
-				if setBtn > 1:
-					control_menu.play()
-					setBtn -= 1
-					sel.rect.y -= 50
-			if event.key == pg.K_RETURN:
-				if setBtn == 1:
-					#default mode
-					start_game.play()
-					color = 'grey'
-					stats.mainMenu = False
-					stats.mainGame = True
-					stats.playMenu = False
-					stats.twoPlayer = False
-					stats.mainAbout = False
-					setBtn = 1
-					sel.rect.centery = playBtn.rect.centery
-				elif setBtn == 2:
-					start_game.play()
-					color = 'red'
-					stats.mainMenu = False
-					stats.mainGame = True
-					stats.playMenu = False
-					stats.twoPlayer = False
-					stats.mainAbout = False
-					setBtn = 1
-					sel.rect.centery = playBtn.rect.centery
-				elif setBtn == 3:
-					start_game.play()
-					color = 'blue'
-					stats.mainMenu = False
-					stats.mainGame = True
-					stats.playMenu = False
-					stats.twoPlayer = False
-					stats.mainAbout = False
-					setBtn = 1
-					sel.rect.centery = playBtn.rect.centery
-				elif setBtn == 4:
-					#menu btn
-					select_menu.play()
-					stats.mainMenu = True
-					stats.mainGame = False
-					stats.playMenu = False
-					stats.twoPlayer = False
-					stats.mainAbout = False
-					setBtn = 1
-					sel.rect.centery = playBtn.rect.centery
-				elif setBtn == 5:
-					sys.exit()
-			if event.key == pg.K_ESCAPE:
-				sys.exit()
+def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
+    """Respond to keypresses and mouse events."""
+    for event in pg.event.get():
+        # Check for quit event
+        if event.type == pg.QUIT:
+            sys.exit()
+            # Check for key down has been pressed
+        elif event.type == pg.KEYDOWN:
+            # Check if down, up, enter, esc is pressed
+            if event.key == pg.K_DOWN:
+                sounds.control_menu.play()
+                bMenu.down()
+            if event.key == pg.K_UP:
+                sounds.control_menu.play()
+                bMenu.up()
+            if event.key == pg.K_RETURN:
+                sounds.select_menu.play()
+                selectedName, selectedBtn = bMenu.getSelectedButton()
+                if selectedBtn:
+                    buttonAction(stats, selectedName, ship)
+            if event.key == pg.K_ESCAPE:
+                sys.exit()
 
-def drawMenu(setting, screen, sb, greyBtn, redBtn, blueBtn, menuBtn, quitBtn, sel):
+        elif event.type == pg.MOUSEMOTION:
+            mouseBtnName, mouseBtn = bMenu.mouseCheck(event.pos[0], event.pos[1])
+            if mouseBtn is not None:
+                selectedName, selectedBtn = bMenu.getSelectedButton()
+                if mouseBtn is not selectedBtn:
+                    sounds.control_menu.play()
+                    bMenu.selectByName(mouseBtnName)
+
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            pressed = pg.mouse.get_pressed()
+            if (pressed[0]):
+                pos = pg.mouse.get_pos()
+                mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
+                if mouseBtn is not None:
+                    sounds.select_menu.play()
+                    buttonAction(stats, mouseBtnName, ship)
+
+
+def buttonAction(stats, selectedName, ship):
+    if selectedName in ('grey', 'red', 'blue'):
+        color = selectedName
+        shipImageFile = 'gfx/player_' + color + '.bmp'
+        ship.image = pg.image.load(shipImageFile)
+        stats.setGameLoop('mainGame')
+    elif selectedName == 'menu':
+        stats.setGameLoop('mainMenu')
+    elif selectedName == 'quit':
+        pg.time.delay(300)
+        sys.exit()
+
+
+def drawMenu(setting, screen, sb, bMenu):
     """Draw the menu and all of its elements"""
-    global image, rect
     screen.fill(setting.bgColor)
-    menuBtn.rect.y = 350
-    menuBtn.msgImageRect.y = 350
-    quitBtn.rect.y = 400
-    quitBtn.msgImageRect.y = 400
-    menuBtn.drawBtn()
-    quitBtn.drawBtn()
-    greyBtn.drawBtn()
-    redBtn.drawBtn()
-    blueBtn.drawBtn()
-    sel.blitme()
+    bMenu.drawMenu()
     pg.display.flip()
 
+
 def checkColor():
-	return 'gfx/player_'+color+'.bmp'
+    return 'gfx/player_' + color + '.bmp'
+
+
+def drawimg():
+    img = pg.image.load('gfx/player_blue.bmp')
+    return 0
