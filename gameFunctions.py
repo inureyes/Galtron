@@ -208,7 +208,6 @@ def getNumberRows(setting, shipHeight, alienHeight):
 
 
 def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
-    sounds.stage_clear.play()
     if setting.gameLevel == "normal":
         alien = Alien(setting, screen, 1 + stats.level // 4)
     else:
