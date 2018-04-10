@@ -64,6 +64,7 @@ class Ship(Sprite):
         self.nextShootTime = 0
         self.fireRate = 1000 / 5  # 5shoots per sec
         self.trajectory = 0
+        self.damage = 1
 
         self.chargeGaugeStartTime = 0
         self.fullChargeTime = 2500
@@ -97,14 +98,14 @@ class Ship(Sprite):
             if self.checkReadyToShoot() and (len(bullets) < 10):
                 sounds.attack.play()
                 if (self.trajectory == 4):
-                    newBullet0 = Bullet(self.setting, self.screen, self, 0)
-                    newBullet1 = Bullet(self.setting, self.screen, self, 1)
-                    newBullet2 = Bullet(self.setting, self.screen, self, 2)
+                    newBullet0 = Bullet(self.setting, self.screen, self, 0, self.damage)
+                    newBullet1 = Bullet(self.setting, self.screen, self, 1, self.damage)
+                    newBullet2 = Bullet(self.setting, self.screen, self, 2, self.damage)
                     bullets.add(newBullet0)
                     bullets.add(newBullet1)
                     bullets.add(newBullet2)
                 else:
-                    newBullet = Bullet(self.setting, self.screen, self, self.trajectory)
+                    newBullet = Bullet(self.setting, self.screen, self, self.trajectory, self.damage)
                     bullets.add(newBullet)
                 self.setNextShootTime()
         else:
