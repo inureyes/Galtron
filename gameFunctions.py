@@ -257,7 +257,7 @@ def createFleet(setting, stats, screen, ship, aliens):
 
 def createFleetBoss(setting, stats, screen, ship, aliens):
     """Create a fleet of aliens"""
-    alien = Alien(setting, screen, stats.level*3)
+    alien = Alien(setting, screen, stats.level*20)
     numberAliensX = 1
     numberRows = 1
 
@@ -439,7 +439,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
         stats.level += 1
         setting.setIncreaseScoreSpeed(stats.level)
         sb.prepLevel()
-        if stats.level % 2 != 0:
+        if stats.level % 5 != 0:
             createFleet(setting, stats, screen, ship, aliens)
         else:
             createFleetBoss(setting, stats, screen, ship, aliens)
