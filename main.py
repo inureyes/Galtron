@@ -19,7 +19,6 @@ from scoreboard import Scoreboard  # Score board for points, high score, lives, 
 from settings import Settings
 from ship import Ship
 
-
 def runGame():
     # Initialize game and create a window
     pg.init()
@@ -95,7 +94,7 @@ def runGame():
     aboutImageRect = aboutImage.get_rect()
 
     # plays bgm
-    pg.mixer.music.load("sound_bgms/galtron.mp3")
+    pg.mixer.music.load('sound_bgms/galtron.mp3')
     pg.mixer.music.set_volume(0.25)
     pg.mixer.music.play(-1)
 
@@ -106,6 +105,20 @@ def runGame():
         # Set to true to run main game loop
         bMenu.setMenuButtons(mainMenuButtons)
         while stats.mainMenu:
+            if not stats.gameActive and stats.paused:
+                setting.initDynamicSettings()
+                stats.resetStats()
+                ##stats.gameActive = True
+
+                # Reset the alien and the bullets
+                aliens.empty()
+                bullets.empty()
+                eBullets.empty()
+
+                # Create a new fleet and center the ship
+                gf.createFleet(setting, stats, screen, ship, aliens)
+                ship.centerShip()
+
             mm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             mm.drawMenu(setting, screen, sb, bMenu, bgImage, bgImageRect)
 
