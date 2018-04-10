@@ -4,14 +4,18 @@ from pygame.sprite import *
 
 class Item(Sprite):
     """A class to manage speed item droped from the alien"""
-    def __init__(self, setting, screen, type, posx, posy):
+    def __init__(self, setting, screen, stats, type, posx, posy):
         """Create a item object at the aliens current position"""
         super(Item, self).__init__()
         self.screen = screen
+        self.stats = stats
 
         #add item types if you want
         if(type==1):
             self.image = pg.image.load('gfx/item_heal.png')
+
+        if(type==2):
+            self.image = pg.image.load('gfx/item_shield.png')
 
         self.type = type
 
@@ -34,9 +38,10 @@ class Item(Sprite):
     def update(self):
         """Move the item -y up the screen"""
         #update the decimal position of the item
-        self.y += self.itemSpeed
-        #Update the rect position
-        self.rect.y = self.y
+        if not self.stats.paused:
+            self.y += self.itemSpeed
+            #Update the rect position
+            self.rect.y = self.y
 
 
     def drawitem(self):
