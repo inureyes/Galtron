@@ -24,7 +24,8 @@ class ButtonMenu():
     def addButton(self, name, msg):
         self.buttons[name] = Button(self.screen, msg, self.btnWidth, self.btnHeight)
 
-    def removeBuutton(self, name):
+    
+    def removeButton(self, name):
         if name in self.buttons:
             del self.buttons[name]
         if name in self.menuButtons:
@@ -120,14 +121,14 @@ class ButtonMenu():
         for name in self.menuButtons:
             self.setButtonPos(name, self.x, btnY)
             btnY += offsetY
-
-    def drawBuutton(self, name):
+    
+    def drawButton(self, name):
         if name in self.buttons:
             self.buttons[name].drawBtn()
-
-    def drawMenuBuuttons(self):
+    
+    def drawMenuButtons(self):
         for name in self.menuButtons:
-            self.drawBuutton(name)
+            self.drawButton(name)
 
     def drawSelector(self):
         name, btn = self.getSelectedButton()
@@ -135,7 +136,7 @@ class ButtonMenu():
         self.sel.draw()
 
     def drawMenu(self):
-        self.drawMenuBuuttons()
+        self.drawMenuButtons()
         self.drawSelector()
 
     def mouseCheck(self, mouseX, mouseY):

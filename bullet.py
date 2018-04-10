@@ -14,6 +14,8 @@ class Bullet(Sprite):
 
         # decide the trajectory of bullets
         self.traj = traj
+        # To specify the bullet is ultimate
+        self.isUltimate = False
 
         # load the bullet image and set its rect attribute
         self.image = pg.image.load('gfx/bullet2.png')
@@ -23,7 +25,7 @@ class Bullet(Sprite):
             bulletSize = (self.rect.width * (charge + 1), self.rect.height * (charge + 1))
             self.image = pg.transform.scale(self.image, bulletSize)
             self.rect = self.image.get_rect()
-            
+
             # Create a bullet rect at (0,0)
         ##self.rect = pg.Rect(0, 0, setting.bulletWidth, setting.bulletHeight)
         self.rect.centerx = ship.rect.centerx
@@ -37,7 +39,7 @@ class Bullet(Sprite):
 
         # damage of basic bullet (default : 1)
         self.damage = damage
-        
+
 
     def update(self):
         """Move the bullet -y up the screen"""
@@ -72,6 +74,9 @@ class SpecialBullet(Sprite):
         """Create the bullet object at the some position"""
         super(SpecialBullet, self).__init__()
         self.screen = screen
+
+        # To specify the bullet is ultimate
+        self.isUltimate = True
 
         # load the bullet image and set its rect attribute
         self.image = pg.image.load('gfx/bullet.png')

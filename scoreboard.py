@@ -22,7 +22,8 @@ class Scoreboard():
         self.textColor = (255, 255, 255)
         self.font = pygame.font.Font('Fonts/Square.ttf', 20)
 
-        self.lifeImage = pg.image.load('gfx/life.png')
+        self.lifeImage = pg.image.load('gfx/player_ship/player_ship.png')
+        self.lifeImage = pg.transform.scale(self.lifeImage,(30,30))
         self.lifeImageRect = self.lifeImage.get_rect()
 
         # Prepare the initial score image
@@ -40,6 +41,7 @@ class Scoreboard():
         scoreStr += "{:,}".format(roundedScore)
         self.scoreImg = self.font.render(scoreStr, True, self.textColor,
                                          self.setting.bgColor)
+
 
         # Display the score at the top left corner
         self.scoreRect = self.scoreImg.get_rect()
