@@ -7,13 +7,15 @@ from pygame.sprite import Sprite
 class Bullet(Sprite):
     """A class to manage bullets fired from the ship"""
 
-    def __init__(self, setting, screen, ship, traj, charge=0):
+    def __init__(self, setting, screen, ship, traj, charge=0, damage=1):
         """Create a bullet object at the ships current position"""
         super(Bullet, self).__init__()
         self.screen = screen
 
         # decide the trajectory of bullets
         self.traj = traj
+        # To specify the bullet is ultimate
+        self.isUltimate = False
 
         # load the bullet image and set its rect attribute
         self.image = pg.image.load('gfx/bullet2.png')
@@ -23,6 +25,7 @@ class Bullet(Sprite):
             bulletSize = (self.rect.width * (charge + 1), self.rect.height * (charge + 1))
             self.image = pg.transform.scale(self.image, bulletSize)
             self.rect = self.image.get_rect()
+
             # Create a bullet rect at (0,0)
         ##self.rect = pg.Rect(0, 0, setting.bulletWidth, setting.bulletHeight)
         self.rect.centerx = ship.rect.centerx
@@ -32,22 +35,27 @@ class Bullet(Sprite):
         self.x = float(self.rect.centerx)
         self.y = float(self.rect.y)
         self.color = setting.bulletColor
-        self.bulletSpeed = setting.bulletSpeed
+        self.setting = setting
+
+        # damage of basic bullet (default : 1)
+        self.damage = damage
+
 
     def update(self):
         """Move the bullet -y up the screen"""
         # update the decimal position of the bullet
+        bulletSpeed = self.setting.bulletSpeed
         if (self.traj == 0):
-            self.y -= 1.5 * self.bulletSpeed
+            self.y -= 1.5 * bulletSpeed
         elif (self.traj == 1):
-            self.x += 0.5 * self.bulletSpeed
-            self.y -= 0.5 * 2.0 * self.bulletSpeed
+            self.x += 0.5 * bulletSpeed
+            self.y -= 0.5 * 2.0 * bulletSpeed
         elif (self.traj == 2):
-            self.x -= 0.5 * self.bulletSpeed
-            self.y -= 0.5 * 2.0 * self.bulletSpeed
+            self.x -= 0.5 * bulletSpeed
+            self.y -= 0.5 * 2.0 * bulletSpeed
         else:
             self.x -= 0.8 * math.sin(0.05 * self.y)
-            self.y -= 0.8 * self.bulletSpeed
+            self.y -= 0.8 * bulletSpeed
 
             # Update the rect position899
         self.rect.centerx = self.x
@@ -67,6 +75,9 @@ class SpecialBullet(Sprite):
         super(SpecialBullet, self).__init__()
         self.screen = screen
 
+        # To specify the bullet is ultimate
+        self.isUltimate = True
+
         # load the bullet image and set its rect attribute
         self.image = pg.image.load('gfx/bullet.png')
         self.rect = self.image.get_rect()
@@ -78,12 +89,16 @@ class SpecialBullet(Sprite):
 
         # store the bullets position as a decimal value
         self.y = float(self.rect.y)
-        self.bulletSpeed = setting.bulletSpeed
+        self.setting = setting
+
+        # damage of SpecialBullet
+        self.damage = 10
 
     def update(self):
         """Move the bullet -y up the screen"""
         # update the decimal position of the bullet
-        self.y -= self.bulletSpeed
+        bulletSpeed = self.setting.bulletSpeed
+        self.y -= bulletSpeed
         self.rect.y = self.y
 
     def drawBullet(self):
