@@ -27,39 +27,51 @@ class EBullet(Sprite):
         elif self.boss_bullet == 2:
             self.rect.centerx = alien.rect.centerx + setting.screenWidth // 16
         elif self.boss_bullet == 3:
-            self.rect.centerx = alien.rect.centerx + setting.screenWidth // 16
-            self.rect.centery = alien.rect.centery
+            self.rect.centerx = alien.rect.centerx - setting.screenWidth // 32
         elif self.boss_bullet == 4:
-            self.rect.centerx = alien.rect.centerx - setting.screenWidth // 16
-            self.rect.centery = alien.rect.centery
+            self.rect.centerx = alien.rect.centerx + setting.screenWidth // 32
         elif self.boss_bullet == 5:
-            self.rect.centerx = alien.rect.centerx - setting.screenWidth // 16
-            self.rect.centery = alien.rect.top
+            self.rect.centerx = alien.rect.centerx - setting.screenWidth // 16 - setting.screenWidth // 32
         elif self.boss_bullet == 6:
-            self.rect.centerx = alien.rect.centerx + setting.screenWidth // 16
-            self.rect.centery = alien.rect.top
-        elif self.boss_bullet == 7:
-            self.rect.centerx = alien.rect.centerx
-            self.rect.centery = alien.rect.top
+            self.rect.centerx = alien.rect.centerx + setting.screenWidth // 16 + setting.screenWidth // 32
         # store the bullets position as a decimal value
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
         self.color = setting.bulletColor
         self.setting = setting
 
-    def update(self):
+    def update(self, alien):
         """Move the bullet -y up the screen"""
         # update the decimal position of the bullet
         ####################
-        if self.setting.gameLevel == 'normal':
-            bulletSpeed = self.setting.bulletSpeed / 2
-        elif self.setting.gameLevel == 'hard':
-            bulletSpeed = self.setting.bulletSpeed
-        self.y += bulletSpeed
-        if self.boss_bullet == 1:
-            self.x -= 1
+        bulletSpeed = self.setting.bulletSpeed
+        if self.boss_bullet == 0:
+            if self.setting.gameLevel == 'normal':
+                if alien.isboss == False:
+                    bulletSpeed = self.setting.bulletSpeed / 2
+                else:
+                    bulletSpeed = self.setting.bulletSpeed
+            elif self.setting.gameLevel == 'hard':
+                bulletSpeed = self.setting.bulletSpeed
+            self.y += bulletSpeed
+        elif self.boss_bullet == 1:
+            self.x -= bulletSpeed
+            self.y += bulletSpeed
         elif self.boss_bullet == 2:
-            self.x += 1
+            self.x += bulletSpeed
+            self.y += bulletSpeed
+        elif self.boss_bullet == 3:
+            self.x -= bulletSpeed / 2
+            self.y += bulletSpeed
+        elif self.boss_bullet == 4:
+            self.x += bulletSpeed / 2
+            self.y += bulletSpeed
+        elif self.boss_bullet == 5:
+            self.y += bulletSpeed
+            self.x -= bulletSpeed * 1.5
+        elif self.boss_bullet == 6:
+            self.y += bulletSpeed
+            self.x += bulletSpeed * 1.5
         # Update the rect position
         self.rect.y = self.y
         self.rect.x = self.x
