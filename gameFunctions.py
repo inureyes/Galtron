@@ -232,13 +232,13 @@ def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
     alien.rect.y = 30
     aliens.add(alien)
 
-def createItem(setting, screen, stats, posx, posy, type, items):
+def createItem(setting, screen, posx, posy, type, items):
     """add item func"""
     # item number is 1 per type
     for itype in items:
         if itype.type == type:
             return
-    item = Item(setting, screen, stats, type, posx, posy)
+    item = Item(setting, screen, type, posx, posy)
     screenRect = item.screen.get_rect()
     items.add(item)
 
@@ -378,10 +378,7 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
                     stats.shipsLeft += 1
                 else:
                     stats.score += setting.alienPoints * 3
-            elif item.type == 2:
-                setting.newStartTime = pg.time.get_ticks()
             items.remove(item)
-
 
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items):
@@ -404,9 +401,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 #if an enemy dies, it falls down an item randomly.
                 i = random.randrange(100)
                 if i<=setting.probabilityHeal:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1, items)
-                elif i<=setting.probabilityShield:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2, items)
+                    createItem(setting, screen, alien.rect.x, alien.rect.y, 1, items)
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100

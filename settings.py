@@ -53,7 +53,6 @@ class Settings():
 
         #item probability %
         self.probabilityHeal = 10
-        self.probabilityShield = 15
 
         #invincibile time
         self.invincibileTime = 2000
