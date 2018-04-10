@@ -212,13 +212,15 @@ def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
     if setting.gameLevel == "normal":
         alien = Alien(setting, screen, 1 + stats.level // 4)
     else:
-        alien = Alien(setting, screen, 1 + stats.level // 2)        
+        alien = Alien(setting, screen, 1 + stats.level // 2)
     alienWidth = alien.rect.width
     screenRect = alien.screen.get_rect()
     alien.x = alienWidth + 2 * alienWidth * alienNumber
     """ random position of enemy will be created in game window"""
     alien.rect.x = random.randrange(0, setting.screenWidth - alien.x / 2)
     alien.rect.y = (alien.rect.height + random.randrange(0, setting.screenHeight - alien.rect.height * 2)) / 1.5
+    if(stats.level % 5 == 0):
+        alien.hitPoint += stats.level / 5
     aliens.add(alien)
 
 def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
@@ -263,7 +265,7 @@ def createFleetBoss(setting, stats, screen, ship, aliens):
 
     # create the first row of aliens
     createBoss(setting, stats, screen, aliens, numberAliensX, numberRows)
-            
+
 def checkFleetEdges(setting, aliens):
     """Respond if any aliens have reached an edge"""
     for alien in aliens.sprites():
