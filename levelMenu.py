@@ -6,12 +6,9 @@ import sounds
 
 
 # Create a variable to change current button being selected
-
-
 def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
     """Respond to keypresses and mouse events."""
     for event in pg.event.get():
-        # Check for quit event
         if event.type == pg.QUIT:
             sys.exit()
             # Check for key down has been pressed
@@ -20,17 +17,15 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
             if event.key == pg.K_DOWN:
                 sounds.control_menu.play()
                 bMenu.down()
-            if event.key == pg.K_UP:
+            elif event.key == pg.K_UP:
                 sounds.control_menu.play()
                 bMenu.up()
-            if event.key == pg.K_RETURN:
+            elif event.key == pg.K_RETURN:
                 sounds.select_menu.play()
                 selectedName, selectedBtn = bMenu.getSelectedButton()
                 if selectedBtn:
-                    buttonAction(stats, selectedName)
-            if event.key == pg.K_ESCAPE:
-                sounds.button_click_sound.play()
-                pg.time.delay(300)
+                    buttonAction(stats, selectedName, setting)
+            elif event.key == pg.K_ESCAPE:
                 sys.exit()
 
         elif event.type == pg.MOUSEMOTION:
@@ -48,20 +43,24 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                 mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
                 if mouseBtn is not None:
                     sounds.select_menu.play()
-                    buttonAction(stats, mouseBtnName)
+                    buttonAction(stats, mouseBtnName, setting)
 
 
-def buttonAction(stats, selectedName):
-    if selectedName == 'menu':
-        stats.setGameLoop('mainMenu')
+def buttonAction(stats, selectedName, setting):
+    if selectedName == 'hard':
+        setting.gameLevel = 'hard'
+        stats.setGameLoop('playMenu')
+    elif selectedName == 'normal':
+        setting.gameLevel = 'normal'
+        stats.setGameLoop('playMenu')
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
 
 
-def drawMenu(setting, screen, sb, bMenu, abautImage, abautImageRect):
+def drawMenu(setting, screen, sb, bMenu, bgImage, bgImageRect):
     """Draw the menu and all of its elements"""
     screen.fill(setting.bgColor)
-    screen.blit(abautImage, abautImageRect)
+    screen.blit(bgImage, bgImageRect)
     bMenu.drawMenu()
     pg.display.flip()
