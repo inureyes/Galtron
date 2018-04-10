@@ -150,7 +150,7 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
             if (ship.chargeGauge == 100):
                 sounds.charge_shot.play()
                 newBullet = Bullet(setting, screen, ship, ship.trajectory, 3, 5)
-                charge_bullets.add(newBullet)
+                charged_bullets.add(newBullet)
                 ship.chargeGauge = 0
             elif (50 <= ship.chargeGauge):
                 sounds.charge_shot.play()
