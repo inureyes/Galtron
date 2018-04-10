@@ -83,6 +83,16 @@ class Alien(Sprite):
                     eBullets.add(newBullet2)
                     newBullet3 = EBullet(setting, screen, self, 2)
                     eBullets.add(newBullet3)
+                    newBullet4 = EBullet(setting, screen, self, 3)
+                    eBullets.add(newBullet4)
+                    newBullet5 = EBullet(setting, screen, self, 4)
+                    eBullets.add(newBullet5)
+                    newBullet6 = EBullet(setting, screen, self, 5)
+                    eBullets.add(newBullet6)
+                    newBullet7 = EBullet(setting, screen, self, 6)
+                    eBullets.add(newBullet7)
+                    newBullet8 = EBullet(setting, screen, self, 7)
+                    eBullets.add(newBullet8)
                 self.timer += 1
 
     def blitme(self):
