@@ -4,6 +4,10 @@ import pygame as pg
 
 import sounds
 
+
+# Create a variable to change current button being selected
+
+
 def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
     """Respond to keypresses and mouse events."""
     for event in pg.event.get():
