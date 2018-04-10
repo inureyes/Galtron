@@ -23,9 +23,24 @@ class EBullet(Sprite):
         if self.boss_bullet == 0:
             self.rect.centerx = alien.rect.centerx
         elif self.boss_bullet == 1:
-            self.rect.centerx = alien.rect.centerx - 10
+            self.rect.centerx = alien.rect.centerx - setting.screenWidth // 16
         elif self.boss_bullet == 2:
-            self.rect.centerx = alien.rect.centerx + 10
+            self.rect.centerx = alien.rect.centerx + setting.screenWidth // 16
+        elif self.boss_bullet == 3:
+            self.rect.centerx = alien.rect.centerx + setting.screenWidth // 16
+            self.rect.centery = alien.rect.centery
+        elif self.boss_bullet == 4:
+            self.rect.centerx = alien.rect.centerx - setting.screenWidth // 16
+            self.rect.centery = alien.rect.centery
+        elif self.boss_bullet == 5:
+            self.rect.centerx = alien.rect.centerx - setting.screenWidth // 16
+            self.rect.centery = alien.rect.top
+        elif self.boss_bullet == 6:
+            self.rect.centerx = alien.rect.centerx + setting.screenWidth // 16
+            self.rect.centery = alien.rect.top
+        elif self.boss_bullet == 7:
+            self.rect.centerx = alien.rect.centerx
+            self.rect.centery = alien.rect.top
         # store the bullets position as a decimal value
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
