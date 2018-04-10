@@ -37,6 +37,8 @@ class Alien(Sprite):
         elif setting.gameLevel == 'hard':
             self.hitPoint = 5
 
+        self.maxHitPoint = hitPoint
+
     def checkEdges(self):
         """Returns True if alien is at the edge of screen"""
         screenRect = self.screen.get_rect()

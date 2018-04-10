@@ -11,6 +11,7 @@ from item import Item
 clock = pg.time.Clock()
 FPS = 120
 reset = 0
+boss = None
 
 gameOverButtons = ["retry", "menu", "quit"]
 pauseButtons = ["play", "menu", "quit"]
@@ -222,6 +223,7 @@ def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
     aliens.add(alien)
 
 def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
+    global boss
     sounds.stage_clear.play()
     alien = Alien(setting, screen, stats.level*30, True)
     alienWidth = alien.rect.width
@@ -229,8 +231,9 @@ def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
     alien.x = alienWidth + 2 * alienWidth * alienNumber
     """ random position of enemy will be created in game window"""
     alien.rect.x = setting.screenWidth / 2
-    alien.rect.y = 30
+    alien.rect.y = 80
     aliens.add(alien)
+    boss = alien
 
 def createItem(setting, screen, posx, posy, type, items):
     """add item func"""
@@ -383,6 +386,7 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items):
     """Detect collisions between alien and bullets"""
+    global boss
     collisions = pg.sprite.groupcollide(aliens, bullets, False, False)
     collisions.update(pg.sprite.groupcollide(aliens, charged_bullets, False, False))
     if collisions:
@@ -430,6 +434,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
         sb.prepLevel()
         if stats.level % 5 != 0:
             createFleet(setting, stats, screen, ship, aliens)
+            boss = None
         else:
             createFleetBoss(setting, stats, screen, ship, aliens)
         # Invincibility during 2 sec
@@ -525,12 +530,32 @@ def drawChargeGauge(setting, screen, ship, sb):
     pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
 
 
+
+def drawBossHP(setting, screen):
+    global boss
+    margin = 20
+    x = margin
+    y = 70
+    w = setting.screenWidth - (margin * 2)
+    h = 10
+    mul = (boss.hitPoint / boss.maxHitPoint)
+    hpBar = w * mul
+
+    if (0.6 < mul):
+        color = (0, 255, 0)
+    elif (0.3 < mul):
+        color = (255, 100, 0)
+    else:
+        color = (255, 0, 0)
+    pg.draw.rect(screen, (255, 255, 255), (x, y, w, h), 0)
+    pg.draw.rect(screen, color, (x, y, hpBar, h), 0)
+
 def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, bMenu, bgManager, items):
     """Update images on the screen and flip to the new screen"""
     # Redraw the screen during each pass through the loop
     # Fill the screen with background color
     # Readjust the quit menu btn position
-    global clock, FPS, gameOverButtons, pauseButtons
+    global clock, FPS, gameOverButtons, pauseButtons, boss
     bMenu.drawMenu()
     bgManager.update()
     bgManager.draw()
@@ -563,6 +588,9 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     # Update and draw Charge Gauge
     updateChargeGauge(ship)
     drawChargeGauge(setting, screen, ship, sb)
+
+    if boss is not None:
+        drawBossHP(setting, screen)
 
     # Draw the scoreboard
     sb.prepScore()
