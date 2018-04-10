@@ -212,7 +212,7 @@ def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
     if setting.gameLevel == "normal":
         alien = Alien(setting, screen, 1 + stats.level // 4)
     else:
-        alien = Alien(setting, screen, 1 + stats.level // 2)        
+        alien = Alien(setting, screen, 1 + stats.level // 2)
     alienWidth = alien.rect.width
     screenRect = alien.screen.get_rect()
     alien.x = alienWidth + 2 * alienWidth * alienNumber
@@ -263,7 +263,7 @@ def createFleetBoss(setting, stats, screen, ship, aliens):
 
     # create the first row of aliens
     createBoss(setting, stats, screen, aliens, numberAliensX, numberRows)
-            
+
 def checkFleetEdges(setting, aliens):
     """Respond if any aliens have reached an edge"""
     for alien in aliens.sprites():
@@ -283,10 +283,13 @@ def changeFleetDir(setting, aliens):
     """Change the direction of aliens"""
     for alien in aliens.sprites():
         ##############
-        if setting.gameLevel == 'normal':
-            alien.rect.y += setting.fleetDropSpeed
-        elif setting.gameLevel == 'hard':
-            alien.rect.y += (setting.fleetDropSpeed + 3)
+        if alien.isboss == False:
+            if setting.gameLevel == 'normal':
+                alien.rect.y += setting.fleetDropSpeed
+            elif setting.gameLevel == 'hard':
+                alien.rect.y += (setting.fleetDropSpeed + 3)
+        else:
+            alien.rect.y += setting.fleetDropSpeed * 2
     setting.fleetDir *= -1
 
 
