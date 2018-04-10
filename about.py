@@ -4,17 +4,6 @@ import pygame as pg
 
 import sounds
 
-
-# Create a variable to change current button being selected
-
-#Init and load sound effects
-pg.mixer.init(44100, -16, 2, 4096)
-control_menu = pg.mixer.Sound("sounds/control_menu.wav")
-control_menu.set_volume(0.22)
-select_menu = pg.mixer.Sound("sounds/select_menu.wav")
-select_menu.set_volume(0.22)
-
-
 def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
     """Respond to keypresses and mouse events."""
     for event in pg.event.get():
