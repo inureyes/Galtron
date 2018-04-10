@@ -37,9 +37,9 @@ class EBullet(Sprite):
         # update the decimal position of the bullet
         ####################
         if self.setting.gameLevel == 'normal':
-            bulletSpeed = self.setting.bulletSpeed / 2
+            bulletSpeed = self.setting.alienbulletSpeed / 2
         elif self.setting.gameLevel == 'hard':
-            bulletSpeed = self.setting.bulletSpeed
+            bulletSpeed = self.setting.alienbulletSpeed
         self.y += bulletSpeed
         if self.boss_bullet == 1:
             self.x -= 1

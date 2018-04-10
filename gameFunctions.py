@@ -378,7 +378,22 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
                     stats.shipsLeft += 1
                 else:
                     stats.score += setting.alienPoints * 3
+            if item.type == 2:
+                setting.newItemSlowTime = pg.time.get_ticks()                
+                setting.alienSpeed *= 0.5
+                setting.alienbulletSpeed *= 0.5
+                setting.fleetDropSpeed *= 0.5
+                
             items.remove(item)
+
+def updateSlowtime(setting):
+    if setting.newItemSlowTime !=0:
+        if pg.time.get_ticks() - setting.newItemSlowTime > setting.slowTime:
+            setting.alienSpeed *= 2
+            setting.alienbulletSpeed *= 2
+            setting.fleetDropSpeed *= 2
+            setting.newItemSlowTime = 0
+    
 
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items):
@@ -402,6 +417,8 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 i = random.randrange(100)
                 if i<=setting.probabilityHeal:
                     createItem(setting, screen, alien.rect.x, alien.rect.y, 1, items)
+                if i>10 and i<=setting.probabilityTime:  # didn't make situation that 2 items drop together
+                    createItem(setting, screen, alien.rect.x, alien.rect.y, 2, items)
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100
@@ -556,6 +573,9 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
         i.drawitem()
     #Shield if ship is invincibile
     updateInvincibility(setting, screen, ship)
+
+    # Update Item_time
+    updateSlowtime(setting)
 
     # Update Ultimate Gauge
     updateUltimateGauge(setting, screen, stats, sb)
