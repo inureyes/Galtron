@@ -47,16 +47,17 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 
 
 def buttonAction(stats, selectedName, setting):
-    if selectedName == 'hard':
+    if selectedName == 'hard': 
         setting.gameLevel = 'hard'
         stats.setGameLoop('playMenu')
     elif selectedName == 'normal':
         setting.gameLevel = 'normal'
         stats.setGameLoop('playMenu')
+    elif selectedName == 'menu':
+        stats.setGameLoop('mainMenu')
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
-
 
 def drawMenu(setting, screen, sb, bMenu, bgImage, bgImageRect):
     """Draw the menu and all of its elements"""
