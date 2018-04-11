@@ -44,6 +44,8 @@ class Settings():
         self.interception = False
         # New Level Starts at this time
         self.newStartTime = 0
+        # The start time for item_time
+        self.newItemSlowTime = 0
 
         # Game Level
         self.gameLevel = 'normal'
@@ -53,10 +55,14 @@ class Settings():
 
         #item probability %
         self.probabilityHeal = 10
-        self.probabilityShield = 15
+        self.probabilityTime = 20
+        self.probabilityShield = 25
 
         #invincibile time
         self.invincibileTime = 2000
+
+        #item_time Slow time
+        self.slowTime = 3000
 
         
     def invertColor(self):
@@ -68,6 +74,7 @@ class Settings():
         self.shipSpeed = 2.5
         self.bulletSpeed = 4
         self.alienSpeed = 1
+        self.alienbulletSpeed = 4
         self.fleetDropSpeed = 5
         self.fleetDir = 1
         self.alienPoints = 10
@@ -93,6 +100,7 @@ class Settings():
             self.shipSpeed *= 0.5
             self.bulletSpeed *= 0.5
             self.alienSpeed *= 0.5
+            self.alienbulletSpeed *= 0.5
             self.fleetDropSpeed *= 0.5
             self.alienPoints *= 0.5  # nerf earning points in lower speed
             self.globalGameSpeed *= 0.5
@@ -102,6 +110,7 @@ class Settings():
         self.shipSpeed *= 1.3
         self.bulletSpeed *= 1.3
         self.alienSpeed *= 1.3
+        self.alienbulletSpeed *= 1.3
         self.fleetDropSpeed *= 1.3
         self.alienPoints *= 1.3
         self.globalGameSpeed *= 1.3
