@@ -4,11 +4,13 @@ import pygame as pg
 
 import sounds
 
-
 # Create a variable to change current button being selected
 
+image = pg.image.load('gfx/fixsettings.png')
+rect = image.get_rect()
 
-def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
+
+def checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
     """Respond to keypresses and mouse events."""
     for event in pg.event.get():
         # Check for quit event
@@ -27,10 +29,8 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                 sounds.select_menu.play()
                 selectedName, selectedBtn = bMenu.getSelectedButton()
                 if selectedBtn:
-                    buttonAction(stats, selectedName)
+                    buttonAction(stats, selectedName, bMenu, setting, sb)
             if event.key == pg.K_ESCAPE:
-                sounds.button_click_sound.play()
-                pg.time.delay(300)
                 sys.exit()
 
         elif event.type == pg.MOUSEMOTION:
@@ -48,20 +48,26 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                 mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
                 if mouseBtn is not None:
                     sounds.select_menu.play()
-                    buttonAction(stats, mouseBtnName)
+                    buttonAction(stats, mouseBtnName, bMenu, setting, sb)
 
 
-def buttonAction(stats, selectedName):
+def buttonAction(stats, selectedName, bMenu, setting, sb):
     if selectedName == 'menu':
+        stats.setGameLoop('mainMenu')
+    if selectedName == 'invert':
+        bMenu.invertColorAll()
+        setting.invertColor()
+        sb.invertColor()
         stats.setGameLoop('mainMenu')
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
 
 
-def drawMenu(setting, screen, sb, bMenu, abautImage, abautImageRect):
+def drawMenu(setting, screen, sb, bMenu):
     """Draw the menu and all of its elements"""
+    global image, rect
     screen.fill(setting.bgColor)
-    screen.blit(abautImage, abautImageRect)
+    screen.blit(image, rect)
     bMenu.drawMenu()
     pg.display.flip()
