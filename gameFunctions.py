@@ -390,7 +390,7 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
     for item in items.sprites():
         disX = (ship.rect.centerx - ship.rect.x) + (item.rect.centerx - item.rect.x)#전투기의 가로 픽셀의 절반+아이템의 가로 픽셀의 절반
         disY = (ship.rect.centery - ship.rect.y) + (item.rect.centery - item.rect.y)#전투기의 세로 픽셀의 절반+#아이템의 세로 픽셀의 절반
-        if item.rect.centerx -disX/1.7 < ship.rect.centerx < item.rect.centerx +disX/1.7 and item.rect.centery -disY/1.7 < ship.rect.centery < item.rect.centery +disY/1.7:
+        if item.rect.centerx -disX/1.5 < ship.rect.centerx < item.rect.centerx +disX/1.5 and item.rect.centery -disY/1.5 < ship.rect.centery < item.rect.centery +disY/1.5:
             if item.type == 1:
                 if stats.shipsLeft < setting.shipLimit:
                     stats.shipsLeft += 1
