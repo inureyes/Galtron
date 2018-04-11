@@ -11,6 +11,7 @@ from item import Item
 clock = pg.time.Clock()
 FPS = 120
 reset = 0
+boss = None
 
 gameOverButtons = ["retry", "menu", "quit"]
 pauseButtons = ["play", "menu", "quit"]
@@ -151,6 +152,7 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
                 sounds.charge_shot.play()
                 newBullet = Bullet(setting, screen, ship, ship.trajectory, 3, ship.damage * 5)
                 bullets.add(newBullet)
+                #charged_bullets.add(newBullet)
                 ship.chargeGauge = 0
             elif (50 <= ship.chargeGauge):
                 sounds.charge_shot.play()
@@ -208,20 +210,22 @@ def getNumberRows(setting, shipHeight, alienHeight):
 
 
 def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
-    sounds.stage_clear.play()
     if setting.gameLevel == "normal":
         alien = Alien(setting, screen, 1 + stats.level // 4)
     else:
-        alien = Alien(setting, screen, 1 + stats.level // 2)        
+        alien = Alien(setting, screen, 1 + stats.level // 2)
     alienWidth = alien.rect.width
     screenRect = alien.screen.get_rect()
     alien.x = alienWidth + 2 * alienWidth * alienNumber
     """ random position of enemy will be created in game window"""
     alien.rect.x = random.randrange(0, setting.screenWidth - alien.x / 2)
     alien.rect.y = (alien.rect.height + random.randrange(0, setting.screenHeight - alien.rect.height * 2)) / 1.5
+    if(stats.level % 5 == 0):
+        alien.hitPoint += stats.level / 5
     aliens.add(alien)
 
 def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
+    global boss
     sounds.stage_clear.play()
     alien = Alien(setting, screen, stats.level*30, True)
     alienWidth = alien.rect.width
@@ -229,8 +233,9 @@ def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
     alien.x = alienWidth + 2 * alienWidth * alienNumber
     """ random position of enemy will be created in game window"""
     alien.rect.x = setting.screenWidth / 2
-    alien.rect.y = 30
+    alien.rect.y = 80
     aliens.add(alien)
+    boss = alien
 
 def createItem(setting, screen, posx, posy, type, items):
     """add item func"""
@@ -257,13 +262,13 @@ def createFleet(setting, stats, screen, ship, aliens):
 
 def createFleetBoss(setting, stats, screen, ship, aliens):
     """Create a fleet of aliens"""
-    alien = Alien(setting, screen, stats.level*3)
+    alien = Alien(setting, screen, stats.level*20)
     numberAliensX = 1
     numberRows = 1
 
     # create the first row of aliens
     createBoss(setting, stats, screen, aliens, numberAliensX, numberRows)
-            
+
 def checkFleetEdges(setting, aliens):
     """Respond if any aliens have reached an edge"""
     for alien in aliens.sprites():
@@ -276,17 +281,26 @@ def checkFleetBottom(setting, stats, sb, screen, ship, aliens, bullets, eBullets
     """Respond if any aliens have reached an bottom of screen"""
     for alien in aliens.sprites():
         if alien.checkBottom():
-            shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+            if alien.isboss == False:
+                shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+            else:
+                alien.rect.y -= 20
 
 
 def changeFleetDir(setting, aliens):
     """Change the direction of aliens"""
     for alien in aliens.sprites():
         ##############
-        if setting.gameLevel == 'normal':
-            alien.rect.y += setting.fleetDropSpeed
-        elif setting.gameLevel == 'hard':
-            alien.rect.y += (setting.fleetDropSpeed + 3)
+        if alien.isboss == False:
+            if setting.gameLevel == 'normal':
+                alien.rect.y += setting.fleetDropSpeed
+            elif setting.gameLevel == 'hard':
+                alien.rect.y += (setting.fleetDropSpeed + 3)
+        else:
+            if alien.rect.y < int(setting.screenHeight * 0.8):
+                alien.rect.y += 50
+            else:
+                alien.rect.y -= 50
     setting.fleetDir *= -1
 
 
@@ -337,7 +351,9 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets, c
     #check if we are colliding
     bullets.update()
     for eBullet in eBullets:
-        eBullet.update()
+        for alien in aliens:
+            eBullet.update(alien)
+            break
     charged_bullets.update()
     checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items)
     checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
@@ -398,6 +414,7 @@ def updateSlowtime(setting):
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items):
     """Detect collisions between alien and bullets"""
+    global boss
     collisions = pg.sprite.groupcollide(aliens, bullets, False, False)
     collisions.update(pg.sprite.groupcollide(aliens, charged_bullets, False, False))
     if collisions:
@@ -405,6 +422,8 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
 
         for alien in collisions :
             #charged_bullet bgManager
+            if alien.animationState == 0 :
+                alien.animationState = 1
             for charged_bullet in charged_bullets:
                 alien.hitPoint -= charged_bullet.damage
             for bullet in collisions[alien] :
@@ -447,6 +466,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
         sb.prepLevel()
         if stats.level % 5 != 0:
             createFleet(setting, stats, screen, ship, aliens)
+            boss = None
         else:
             createFleetBoss(setting, stats, screen, ship, aliens)
         # Invincibility during 2 sec
@@ -542,12 +562,32 @@ def drawChargeGauge(setting, screen, ship, sb):
     pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
 
 
+
+def drawBossHP(setting, screen):
+    global boss
+    margin = 20
+    x = margin
+    y = 70
+    w = setting.screenWidth - (margin * 2)
+    h = 10
+    mul = (boss.hitPoint / boss.maxHitPoint)
+    hpBar = w * mul
+
+    if (0.6 < mul):
+        color = (0, 255, 0)
+    elif (0.3 < mul):
+        color = (255, 100, 0)
+    else:
+        color = (255, 0, 0)
+    pg.draw.rect(screen, (255, 255, 255), (x, y, w, h), 0)
+    pg.draw.rect(screen, color, (x, y, hpBar, h), 0)
+
 def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, bMenu, bgManager, items):
     """Update images on the screen and flip to the new screen"""
     # Redraw the screen during each pass through the loop
     # Fill the screen with background color
     # Readjust the quit menu btn position
-    global clock, FPS, gameOverButtons, pauseButtons
+    global clock, FPS, gameOverButtons, pauseButtons, boss
     bMenu.drawMenu()
     bgManager.update()
     bgManager.draw()
@@ -583,6 +623,9 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     # Update and draw Charge Gauge
     updateChargeGauge(ship)
     drawChargeGauge(setting, screen, ship, sb)
+
+    if boss is not None:
+        drawBossHP(setting, screen)
 
     # Draw the scoreboard
     sb.prepScore()
