@@ -388,8 +388,8 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
         if item.rect.bottom <= 0:
             items.remove(item)
     for item in items.sprites():
-        disX = int((ship.rect.centerx - ship.rect.x) + (item.rect.centerx - item.rect.x)*0.63)
-        disY = int((ship.rect.centery - ship.rect.y) + (item.rect.centery - item.rect.y)*0.63)
+        disX = int((ship.rect.centerx - ship.rect.x) + (item.rect.centerx - item.rect.x)*0.67)
+        disY = int((ship.rect.centery - ship.rect.y) + (item.rect.centery - item.rect.y)*0.67)
         if abs(item.rect.centerx - ship.rect.centerx) < disX and abs(item.rect.centery-ship.rect.centery) < disY:
             if item.type == 1:
                 if stats.shipsLeft < setting.shipLimit:
