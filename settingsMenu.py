@@ -6,7 +6,7 @@ import sounds
 
 # Create a variable to change current button being selected
 
-image = pg.image.load('gfx/fixsettings.png')
+image = pg.image.load('gfx/fixsetting4.png')
 rect = image.get_rect()
 
 
