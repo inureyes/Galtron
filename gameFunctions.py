@@ -158,7 +158,6 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets):
                 bullets.add(newBullet)
         ship.shoot = False
 
-<<<<<<< HEAD
 def checkEvents(setting, screen, stats, sb, playBtn, quitBtn, sel, ship, aliens, bullets, eBullets):
 	"""Respond to keypresses and mouse events."""
 	global pauseBtnState
@@ -271,8 +270,7 @@ def checkKeyupEvents(event, setting, screen, stats, sb, playBtn, quitBtn, sel, s
 			bullets.add(newBullet)
 			ship.chargeGauge = 0
 		ship.shoot = False
-=======
->>>>>>> 680715a2841b571424a13107d9077d9d96c2738e
+
 
 def pause(stats):
     """Pause the game when the pause button is pressed"""
@@ -326,7 +324,7 @@ def getNumberRows(setting, shipHeight, alienHeight):
 
 
 def createAlien(setting, screen, aliens, alienNumber, rowNumber):
-<<<<<<< HEAD
+
 	sounds.stage_clear.play()
 	alien = Alien(setting, screen)
 	alienWidth = alien.rect.width
@@ -336,17 +334,7 @@ def createAlien(setting, screen, aliens, alienNumber, rowNumber):
 	alien.rect.x =  random.randrange(0,setting.screenWidth-alien.x/2)
 	alien.rect.y = (alien.rect.height + random.randrange(0,setting.screenHeight-alien.rect.height*2))/1.5
 	aliens.add(alien)
-=======
-    sounds.stage_clear.play()
-    alien = Alien(setting, screen)
-    alienWidth = alien.rect.width
-    screenRect = alien.screen.get_rect()
-    alien.x = alienWidth + 2 * alienWidth * alienNumber
-    """ random position of enemy will be created in game window"""
-    alien.rect.x = random.randrange(0, setting.screenWidth - alien.x / 2)
-    alien.rect.y = (alien.rect.height + random.randrange(0, setting.screenHeight - alien.rect.height * 2)) / 1.5
-    aliens.add(alien)
->>>>>>> 680715a2841b571424a13107d9077d9d96c2738e
+
 
 
 def createFleet(setting, screen, ship, aliens):

@@ -67,19 +67,11 @@ def drawMenu(setting, screen, sb, bMenu):
 
 
 def checkColor():
-<<<<<<< HEAD
-	return 'gfx/player_'+color+'.bmp'
 
-
-
-def drawimg():
-	img = pygame.image.load('gfx/player_blue.bmp')
-	return 0
-=======
     return 'gfx/player_' + color + '.bmp'
 
 
 def drawimg():
     img = pygame.image.load('gfx/player_blue.bmp')
     return 0
->>>>>>> 680715a2841b571424a13107d9077d9d96c2738e
+

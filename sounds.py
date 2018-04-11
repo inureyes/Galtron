@@ -27,10 +27,7 @@ enemy_shoot_sound.set_volume(0.15)
 charge_shot = pg.mixer.Sound("sound_effects/charge_shot.wav")
 charge_shot.set_volume(0.4)
 stage_clear = pg.mixer.Sound("sound_effects/stage_clear.wav")
-<<<<<<< HEAD
 
-=======
->>>>>>> 680715a2841b571424a13107d9077d9d96c2738e
 
 button_click_sound = pg.mixer.Sound('sound_effects/button_clicked.wav')
 
