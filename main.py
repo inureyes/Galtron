@@ -10,6 +10,7 @@ import levelMenu as lm  # select game level(hard/easy)
 import playMenu as pm  # choosing ship color
 import settingsMenu as sm
 import twoPlayer as tp  # two player mode
+import sounds
 from animations import Explosions
 from buttonMenu import ButtonMenu
 from background import BackgroundManager
@@ -18,7 +19,6 @@ from scoreboard import Scoreboard  # Score board for points, high score, lives, 
 # import self made classes
 from settings import Settings
 from ship import Ship
-
 
 def runGame():
     # Initialize game and create a window
@@ -95,17 +95,32 @@ def runGame():
     aboutImageRect = aboutImage.get_rect()
 
     # plays bgm
-    pg.mixer.music.load("sound_bgms/galtron.mp3")
+    pg.mixer.music.load('sound_bgms/galtron.mp3')
     pg.mixer.music.set_volume(0.25)
     pg.mixer.music.play(-1)
 
     rungame = True
 
+    sounds.stage_clear.play()
     # Set the two while loops to start mainMenu first
     while rungame:
         # Set to true to run main game loop
         bMenu.setMenuButtons(mainMenuButtons)
         while stats.mainMenu:
+            if not stats.gameActive and stats.paused:
+                setting.initDynamicSettings()
+                stats.resetStats()
+                ##stats.gameActive = True
+
+                # Reset the alien and the bullets
+                aliens.empty()
+                bullets.empty()
+                eBullets.empty()
+
+                # Create a new fleet and center the ship
+                gf.createFleet(setting, stats, screen, ship, aliens)
+                ship.centerShip()
+
             mm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             mm.drawMenu(setting, screen, sb, bMenu, bgImage, bgImageRect)
 
