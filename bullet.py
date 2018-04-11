@@ -7,13 +7,15 @@ from pygame.sprite import Sprite
 class Bullet(Sprite):
     """A class to manage bullets fired from the ship"""
 
-    def __init__(self, setting, screen, ship, traj, charge=0, damage=1):
+    def __init__(self, setting, screen, ship, traj, damage, charge=0):
         """Create a bullet object at the ships current position"""
         super(Bullet, self).__init__()
         self.screen = screen
 
         # decide the trajectory of bullets
         self.traj = traj
+        # To specify the bullet is ultimate
+        self.isUltimate = False
 
         # load the bullet image and set its rect attribute
         self.image = pg.image.load('gfx/bullet2.png')
@@ -23,7 +25,7 @@ class Bullet(Sprite):
             bulletSize = (self.rect.width * (charge + 1), self.rect.height * (charge + 1))
             self.image = pg.transform.scale(self.image, bulletSize)
             self.rect = self.image.get_rect()
-            
+
             # Create a bullet rect at (0,0)
         ##self.rect = pg.Rect(0, 0, setting.bulletWidth, setting.bulletHeight)
         self.rect.centerx = ship.rect.centerx
@@ -37,7 +39,6 @@ class Bullet(Sprite):
 
         # damage of basic bullet (default : 1)
         self.damage = damage
-        
 
     def update(self):
         """Move the bullet -y up the screen"""
@@ -68,10 +69,13 @@ class Bullet(Sprite):
 class SpecialBullet(Sprite):
     """A class to manage special bullet which can be fired only by the ultimate"""
 
-    def __init__(self, setting, screen, pos):
+    def __init__(self, setting, screen, pos, damage):
         """Create the bullet object at the some position"""
         super(SpecialBullet, self).__init__()
         self.screen = screen
+
+        # To specify the bullet is ultimate
+        self.isUltimate = True
 
         # load the bullet image and set its rect attribute
         self.image = pg.image.load('gfx/bullet.png')
@@ -87,7 +91,8 @@ class SpecialBullet(Sprite):
         self.setting = setting
 
         # damage of SpecialBullet
-        self.damage = 10
+        self.damage = damage * 10
+
 
     def update(self):
         """Move the bullet -y up the screen"""
