@@ -388,9 +388,9 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
         if item.rect.bottom <= 0:
             items.remove(item)
     for item in items.sprites():
-        disX = int((ship.rect.centerx - ship.rect.x) + (item.rect.centerx - item.rect.x)*0.57)#전투기의 가로 픽셀의 절반+아이템의 가로 픽셀의 절반
-        disY = int((ship.rect.centery - ship.rect.y) + (item.rect.centery - item.rect.y)*0.57)#전투기의 세로 픽셀의 절반+#아이템의 세로 픽셀의 절반
-        if item.rect.centerx -disX < ship.rect.centerx < item.rect.centerx +disX and item.rect.centery -disY < ship.rect.centery < item.rect.centery +disY:
+        disX = int((ship.rect.centerx - ship.rect.x) + (item.rect.centerx - item.rect.x)*0.63)
+        disY = int((ship.rect.centery - ship.rect.y) + (item.rect.centery - item.rect.y)*0.63)
+        if abs(item.rect.centerx - ship.rect.centerx) < disX and abs(item.rect.centery-ship.rect.centery) < disY:
             if item.type == 1:
                 if stats.shipsLeft < setting.shipLimit:
                     stats.shipsLeft += 1
