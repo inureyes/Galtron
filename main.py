@@ -90,7 +90,7 @@ def runGame():
     bgImage = pg.transform.scale(bgImage, (setting.screenWidth, setting.screenHeight))
     bgImageRect = bgImage.get_rect()
 
-    aboutImage = pg.image.load('gfx/About_modify2.png')
+    aboutImage = pg.image.load('gfx/About_modify3.png')
     aboutImage = pg.transform.scale(aboutImage, (setting.screenWidth, setting.screenHeight))
     aboutImageRect = aboutImage.get_rect()
 
