@@ -153,5 +153,5 @@ pg.mixer.pre_init(44100, 16, 2, 4096)
 pg.mixer.init(44100, -16, 2, 4096)
 # run the runGame method to run the game
 
->>>>>>> 680715a2841b571424a13107d9077d9d96c2738e
+
 runGame()
