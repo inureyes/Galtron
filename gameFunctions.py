@@ -172,8 +172,10 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
 
 def pause(stats):
     """Pause the game when the pause button is pressed"""
+    global boss
     stats.gameActive = False
     stats.paused = True
+    boss = None
 
 
 def resetGame():
