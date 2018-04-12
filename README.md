@@ -65,6 +65,7 @@
 | HoJin Seo     | Student    |     |
 | Sungho Yun    | Student    |     |
 | Keunmo Koo.   | Genius     |     |
+| Coding Fairy  | Fairy      |     |
 
 
 
