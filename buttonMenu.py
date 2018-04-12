@@ -8,6 +8,7 @@ getInvertedRGB = utilityFunctions.getInvertedRGB
 
 
 class ButtonMenu():
+
     def __init__(self, screen):
         self.buttons = {}
         self.menuButtons = []
@@ -22,9 +23,9 @@ class ButtonMenu():
         self.y = 0
 
     def addButton(self, name, msg):
-        self.buttons[name] = Button(self.screen, msg, self.btnWidth, self.btnHeight)
+        self.buttons[name] = Button(
+            self.screen, msg, self.btnWidth, self.btnHeight)
 
-    
     def removeButton(self, name):
         if name in self.buttons:
             del self.buttons[name]
@@ -63,7 +64,8 @@ class ButtonMenu():
             if name in self.buttons:
                 self.menuButtons.append(name)
 
-        rectHeight = (self.btnHeight + self.margin) * len(self.menuButtons) - self.margin
+        rectHeight = (self.btnHeight + self.margin) * \
+            len(self.menuButtons) - self.margin
         self.y = self.screenRect.centery - (rectHeight / 2)
         self.updateButtonsPos()
 
@@ -121,11 +123,11 @@ class ButtonMenu():
         for name in self.menuButtons:
             self.setButtonPos(name, self.x, btnY)
             btnY += offsetY
-    
+
     def drawButton(self, name):
         if name in self.buttons:
             self.buttons[name].drawBtn()
-    
+
     def drawMenuButtons(self):
         for name in self.menuButtons:
             self.drawButton(name)
@@ -152,6 +154,7 @@ class ButtonMenu():
 
 
 class Button():
+
     def __init__(self, screen, msg, width, height):
         self.screen = screen
         self.msg = msg
@@ -173,7 +176,8 @@ class Button():
         self.setText(self.msg)
 
     def setText(self, msg):
-        self.msgImage = self.font.render(msg, True, self.textColor, self.buttonColor)
+        self.msgImage = self.font.render(
+            msg, True, self.textColor, self.buttonColor)
         self.msgImageRect = self.msgImage.get_rect()
         self.msgImageRect.center = self.rect.center
 
@@ -191,6 +195,7 @@ class Button():
 
 
 class Selector():
+
     def __init__(self, screen):
         super(Selector, self).__init__()
         self.screen = screen

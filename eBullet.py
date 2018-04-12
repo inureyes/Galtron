@@ -5,7 +5,7 @@ from pygame.sprite import *
 class EBullet(Sprite):
     """A class to manage bullets fired from the alien"""
 
-    def __init__(self, setting, screen, alien, boss_bullet = 0):
+    def __init__(self, setting, screen, alien, boss_bullet=0):
         """Create a bullet object at the ships current position"""
         super(EBullet, self).__init__()
         self.screen = screen
@@ -31,9 +31,11 @@ class EBullet(Sprite):
         elif self.boss_bullet == 4:
             self.rect.centerx = alien.rect.centerx + setting.screenWidth // 32
         elif self.boss_bullet == 5:
-            self.rect.centerx = alien.rect.centerx - setting.screenWidth // 16 - setting.screenWidth // 32
+            self.rect.centerx = alien.rect.centerx - \
+                setting.screenWidth // 16 - setting.screenWidth // 32
         elif self.boss_bullet == 6:
-            self.rect.centerx = alien.rect.centerx + setting.screenWidth // 16 + setting.screenWidth // 32
+            self.rect.centerx = alien.rect.centerx + \
+                setting.screenWidth // 16 + setting.screenWidth // 32
         # store the bullets position as a decimal value
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)

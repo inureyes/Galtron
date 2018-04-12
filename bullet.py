@@ -22,7 +22,8 @@ class Bullet(Sprite):
         self.image = pg.transform.rotate(self.image, 180)
         self.rect = self.image.get_rect()
         if (charge != 0):
-            bulletSize = (self.rect.width * (charge + 1), self.rect.height * (charge + 1))
+            bulletSize = (self.rect.width * (charge + 1),
+                          self.rect.height * (charge + 1))
             self.image = pg.transform.scale(self.image, bulletSize)
             self.rect = self.image.get_rect()
 
@@ -92,7 +93,6 @@ class SpecialBullet(Sprite):
 
         # damage of SpecialBullet
         self.damage = damage * 10
-
 
     def update(self):
         """Move the bullet -y up the screen"""

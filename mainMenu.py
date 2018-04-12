@@ -35,7 +35,8 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                 sys.exit()
 
         elif event.type == pg.MOUSEMOTION:
-            mouseBtnName, mouseBtn = bMenu.mouseCheck(event.pos[0], event.pos[1])
+            mouseBtnName, mouseBtn = bMenu.mouseCheck(
+                event.pos[0], event.pos[1])
             if mouseBtn is not None:
                 selectedName, selectedBtn = bMenu.getSelectedButton()
                 if mouseBtn is not selectedBtn:

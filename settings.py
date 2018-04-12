@@ -53,22 +53,20 @@ class Settings():
         # Alien shoot speed
         self.shootTimer = 50
 
-        #item probability %
+        # item probability %
         self.probabilityHeal = 10
         self.probabilityTime = 20
         self.probabilityShield = 25
 
-        #invincibile time
+        # invincibile time
         self.invincibileTime = 2000
 
-        #item_time Slow time
+        # item_time Slow time
         self.slowTime = 3000
 
-        
     def invertColor(self):
         self.bgColor = getInvertedRGB(self.bgColor)
         self.bulletColor = getInvertedRGB(self.bulletColor)
-
 
     def initDynamicSettings(self):
         self.shipSpeed = 2.5
@@ -85,7 +83,6 @@ class Settings():
             self.alienSpeed *= self.speedUp
             self.fleetDropSpeed *= self.speedUp
 
-
             # self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
             # self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
 
@@ -93,7 +90,6 @@ class Settings():
         self.alienPoints = int(self.alienPoints + ((level - 1) * 10))
 
         self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
-
 
     def halfspeed(self):
         if self.Limit >= -1 and self.shipSpeed > 0 and self.bulletSpeed > 0 and self.alienSpeed > 0 and self.fleetDropSpeed > 0:
