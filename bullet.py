@@ -40,7 +40,6 @@ class Bullet(Sprite):
         # damage of basic bullet (default : 1)
         self.damage = damage
 
-
     def update(self):
         """Move the bullet -y up the screen"""
         # update the decimal position of the bullet
@@ -93,6 +92,7 @@ class SpecialBullet(Sprite):
 
         # damage of SpecialBullet
         self.damage = 10
+        
 
     def update(self):
         """Move the bullet -y up the screen"""

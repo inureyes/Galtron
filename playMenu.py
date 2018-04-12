@@ -47,9 +47,9 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 
 
 def buttonAction(stats, selectedName, ship):
-    if selectedName in ('grey', 'red', 'blue'):
+    if selectedName in ('gray', 'red', 'blue'):
         color = selectedName
-        shipImageFile = 'gfx/player_' + color + '.bmp'
+        shipImageFile = 'gfx/player_' + color + '.png'
         ship.image = pg.image.load(shipImageFile)
         stats.setGameLoop('mainGame')
     elif selectedName == 'menu':
@@ -67,7 +67,7 @@ def drawMenu(setting, screen, sb, bMenu):
 
 
 def checkColor():
-    return 'gfx/player_' + color + '.bmp'
+    return 'gfx/player_' + color + '.png'
 
 
 def drawimg():
