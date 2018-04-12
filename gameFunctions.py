@@ -333,6 +333,7 @@ def updateInvincibility(setting, screen, ship):
         text1 = pg.font.Font('Fonts/Square.ttf', 20).render("SHIELD", True, (255, 255, 255), )
         screen.blit(text1, (ship.rect.x, ship.rect.y -20))
 
+
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
     checkFleetEdges(setting, aliens)
@@ -392,6 +393,7 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
             if item.type == 1:
                 if stats.shipsLeft < setting.shipLimit:
                     stats.shipsLeft += 1
+                    sounds.heal_sound.play()
                 else:
                     stats.score += setting.alienPoints * 3
             elif item.type == 2:
@@ -399,8 +401,10 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
                 setting.alienSpeed *= 0.5
                 setting.alienbulletSpeed *= 0.5
                 setting.fleetDropSpeed *= 0.5
+                sounds.shield_sound.play()
             elif item.type == 3:
                 setting.newStartTime = pg.time.get_ticks()
+                sounds.stage_clear.play()
             items.remove(item)
 
 def updateSlowtime(setting):
