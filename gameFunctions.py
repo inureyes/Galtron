@@ -163,8 +163,10 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
 
 def pause(stats):
     """Pause the game when the pause button is pressed"""
+    global boss
     stats.gameActive = False
     stats.paused = True
+    boss = None
 
 
 def resetGame():
@@ -237,6 +239,18 @@ def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
     aliens.add(alien)
     boss = alien
 
+
+def createItem(setting, screen, stats, posx, posy, type, items):
+    """add item func"""
+    # item number is 1 per type
+    for itype in items:
+        if itype.type == type:
+            return
+    item = Item(setting, screen, stats, type, posx, posy)
+    screenRect = item.screen.get_rect()
+    items.add(item)
+
+
 def createItem(setting, screen, stats, posx, posy, type, items):
     """add item func"""
     # item number is 1 per type
@@ -260,11 +274,13 @@ def createFleet(setting, stats, screen, ship, aliens):
             createAlien(setting, stats, screen, aliens, alienNumber, rowNumber)
 
 
+
 def createFleetBoss(setting, stats, screen, ship, aliens):
     """Create a fleet of aliens"""
     alien = Alien(setting, screen, stats.level*20)
     numberAliensX = 1
     numberRows = 1
+
 
     # create the first row of aliens
     createBoss(setting, stats, screen, aliens, numberAliensX, numberRows)
@@ -389,6 +405,7 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
         if item.rect.bottom <= 0:
             items.remove(item)
     for item in items.sprites():
+
         if item.rect.centerx -30 < ship.rect.x < item.rect.x +30 and item.rect.centery -20 < ship.rect.centery < item.rect.centery +20:
             if item.type == 1:
                 if stats.shipsLeft < setting.shipLimit:
@@ -405,6 +422,7 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
             elif item.type == 3:
                 setting.newStartTime = pg.time.get_ticks()
                 sounds.stage_clear.play()
+
             items.remove(item)
 
 def updateSlowtime(setting):
@@ -414,7 +432,7 @@ def updateSlowtime(setting):
             setting.alienbulletSpeed *= 2
             setting.fleetDropSpeed *= 2
             setting.newItemSlowTime = 0
-    
+
 
 
 
