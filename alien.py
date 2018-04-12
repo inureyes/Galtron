@@ -37,10 +37,12 @@ class Alien(Sprite):
         self.timer = 0
 
         # hitpoint for a basic alien (default : 3)
-        if setting.gameLevel == 'normal':
+        if setting.gameLevel == 'normal' or self.isboss:
             self.hitPoint = hitPoint
         elif setting.gameLevel == 'hard':
             self.hitPoint = 5
+
+        self.maxHitPoint = hitPoint
 
     def checkEdges(self):
         """Returns True if alien is at the edge of screen"""
@@ -58,6 +60,7 @@ class Alien(Sprite):
 
     def update(self, setting, screen, ship, aliens, eBullets):
         """Move the alien right or left"""
+        import random
         self.ship = ship
         self.aliens = aliens
         self.eBullets = eBullets
@@ -77,6 +80,7 @@ class Alien(Sprite):
             setting.shootTimer = 10     # default = 50
 
         if self.isboss == False:
+            setting.shootTimer = 50
             if self.rect.centerx >= self.ship.rect.centerx and len(eBullets) <= 4:
                 if self.timer >= setting.shootTimer:
                     sounds.enemy_shoot_sound.play()
@@ -85,8 +89,8 @@ class Alien(Sprite):
                     eBullets.add(newBullet)
                 self.timer += 1
         else:
-            if self.rect.centerx >= self.ship.rect.centerx and len(eBullets) <= 45:
-                if self.timer >= setting.shootTimer:
+            if len(eBullets) <= 450:
+                if self.timer >= setting.shootTimer // 2:
                     sounds.enemy_shoot_sound.play()
                     self.timer = 0
                     newBullet1 = EBullet(setting, screen, self)
@@ -95,6 +99,14 @@ class Alien(Sprite):
                     eBullets.add(newBullet2)
                     newBullet3 = EBullet(setting, screen, self, 2)
                     eBullets.add(newBullet3)
+                    newBullet4 = EBullet(setting, screen, self, 3)
+                    eBullets.add(newBullet4)
+                    newBullet5 = EBullet(setting, screen, self, 4)
+                    eBullets.add(newBullet5)
+                    newBullet6 = EBullet(setting, screen, self, 5)
+                    eBullets.add(newBullet6)
+                    newBullet7 = EBullet(setting, screen, self, 6)
+                    eBullets.add(newBullet7)
                 self.timer += 1
 
     def blitme(self):
