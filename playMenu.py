@@ -47,7 +47,7 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 
 
 def buttonAction(stats, selectedName, ship):
-    if selectedName in ('gray', 'red', 'blue'):
+    if selectedName in ('grey', 'red', 'blue'):
         color = selectedName
         shipImageFile = 'gfx/player_' + color + '.png'
         ship.image = pg.image.load(shipImageFile)

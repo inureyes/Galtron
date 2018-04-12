@@ -44,15 +44,15 @@ class EBullet(Sprite):
         """Move the bullet -y up the screen"""
         # update the decimal position of the bullet
         ####################
-        bulletSpeed = self.setting.bulletSpeed
+        bulletSpeed = self.setting.alienbulletSpeed
         if self.boss_bullet == 0:
             if self.setting.gameLevel == 'normal':
                 if alien.isboss == False:
-                    bulletSpeed = self.setting.bulletSpeed / 2
+                    bulletSpeed = self.setting.alienbulletSpeed / 2
                 else:
-                    bulletSpeed = self.setting.bulletSpeed
+                    bulletSpeed = self.setting.alienbulletSpeed
             elif self.setting.gameLevel == 'hard':
-                bulletSpeed = self.setting.bulletSpeed
+                bulletSpeed = self.setting.alienbulletSpeed
             self.y += bulletSpeed
         elif self.boss_bullet == 1:
             self.x -= bulletSpeed

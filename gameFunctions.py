@@ -11,6 +11,7 @@ from item import Item
 clock = pg.time.Clock()
 FPS = 120
 reset = 0
+boss = None
 
 gameOverButtons = ["retry", "menu", "quit"]
 pauseButtons = ["play", "menu", "quit"]
@@ -98,7 +99,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, ship, aliens, bullets,
         if not stats.paused:
             if ship.checkReadyToShoot() and (len(bullets) < 10):
                 sounds.attack.play()
-                newBullet = Bullet(setting, screen, ship, ship.trajectory)
+                newBullet = Bullet(setting, screen, ship, ship.trajectory, ship.damage)
                 bullets.add(newBullet)
                 ship.setNextShootTime()
             ship.chargeGaugeStartTime = pg.time.get_ticks()
@@ -106,7 +107,7 @@ def checkKeydownEvents(event, setting, screen, stats, sb, ship, aliens, bullets,
 
     elif event.key == pg.K_x or event.key == 167:
         # Ultimate key
-        useUltimate(setting, screen, stats, bullets, stats.ultimatePattern)
+        useUltimate(setting, screen, stats, bullets, stats.ultimatePattern, ship)
         # Check for pause key
     elif event.key == pg.K_p or event.key == 181:
         sounds.paused.play()
@@ -152,20 +153,23 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
         if not stats.paused:
             if (ship.chargeGauge == 100):
                 sounds.charge_shot.play()
-                newBullet = Bullet(setting, screen, ship, ship.trajectory, 3, 5)
-                charged_bullets.add(newBullet)
+                newBullet = Bullet(setting, screen, ship, ship.trajectory, 3, ship.damage * 5)
+                bullets.add(newBullet)
+                #charged_bullets.add(newBullet)
                 ship.chargeGauge = 0
             elif (50 <= ship.chargeGauge):
                 sounds.charge_shot.play()
-                newBullet = Bullet(setting, screen, ship, ship.trajectory, 2, 3)
+                newBullet = Bullet(setting, screen, ship, ship.trajectory, 2, ship.damage * 3)
                 charged_bullets.add(newBullet)
         ship.shoot = False
 
 
 def pause(stats):
     """Pause the game when the pause button is pressed"""
+    global boss
     stats.gameActive = False
     stats.paused = True
+    boss = None
 
 
 def resetGame():
@@ -211,7 +215,6 @@ def getNumberRows(setting, shipHeight, alienHeight):
 
 
 def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
-    sounds.stage_clear.play()
     if setting.gameLevel == "normal":
         alien = Alien(setting, screen, 1 + stats.level // 4)
     else:
@@ -222,9 +225,12 @@ def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
     """ random position of enemy will be created in game window"""
     alien.rect.x = random.randrange(0, setting.screenWidth - alien.x / 2)
     alien.rect.y = (alien.rect.height + random.randrange(0, setting.screenHeight - alien.rect.height * 2)) / 1.5
+    if(stats.level % 5 == 0):
+        alien.hitPoint += stats.level / 5
     aliens.add(alien)
 
 def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
+    global boss
     sounds.stage_clear.play()
     alien = Alien(setting, screen, stats.level*30, True)
     alienWidth = alien.rect.width
@@ -232,16 +238,17 @@ def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
     alien.x = alienWidth + 2 * alienWidth * alienNumber
     """ random position of enemy will be created in game window"""
     alien.rect.x = setting.screenWidth / 2
-    alien.rect.y = 30
+    alien.rect.y = 80
     aliens.add(alien)
+    boss = alien
 
-def createItem(setting, screen, posx, posy, type, items):
+def createItem(setting, screen, stats, posx, posy, type, items):
     """add item func"""
     # item number is 1 per type
     for itype in items:
         if itype.type == type:
             return
-    item = Item(setting, screen, type, posx, posy)
+    item = Item(setting, screen, stats, type, posx, posy)
     screenRect = item.screen.get_rect()
     items.add(item)
 
@@ -386,17 +393,37 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
         if item.rect.bottom <= 0:
             items.remove(item)
     for item in items.sprites():
-        if item.rect.centerx -30 < ship.rect.x < item.rect.x +30 and item.rect.centery -20 < ship.rect.centery < item.rect.centery +20:
+        disX = int((ship.rect.centerx - ship.rect.x) + (item.rect.centerx - item.rect.x)*0.67)
+        disY = int((ship.rect.centery - ship.rect.y) + (item.rect.centery - item.rect.y)*0.67)
+        if abs(item.rect.centerx - ship.rect.centerx) < disX and abs(item.rect.centery-ship.rect.centery) < disY:
             if item.type == 1:
                 if stats.shipsLeft < setting.shipLimit:
                     stats.shipsLeft += 1
                 else:
                     stats.score += setting.alienPoints * 3
+            elif item.type == 2:
+                setting.newItemSlowTime = pg.time.get_ticks()
+                setting.alienSpeed *= 0.5
+                setting.alienbulletSpeed *= 0.5
+                setting.fleetDropSpeed *= 0.5
+            elif item.type == 3:
+                setting.newStartTime = pg.time.get_ticks()
             items.remove(item)
+
+def updateSlowtime(setting):
+    if setting.newItemSlowTime !=0:
+        if pg.time.get_ticks() - setting.newItemSlowTime > setting.slowTime:
+            setting.alienSpeed *= 2
+            setting.alienbulletSpeed *= 2
+            setting.fleetDropSpeed *= 2
+            setting.newItemSlowTime = 0
+
+
 
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items):
     """Detect collisions between alien and bullets"""
+    global boss
     collisions = pg.sprite.groupcollide(aliens, bullets, False, False)
     collisions.update(pg.sprite.groupcollide(aliens, charged_bullets, False, False))
     if collisions:
@@ -417,7 +444,11 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 #if an enemy dies, it falls down an item randomly.
                 i = random.randrange(100)
                 if i<=setting.probabilityHeal:
-                    createItem(setting, screen, alien.rect.x, alien.rect.y, 1, items)
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1, items)
+                elif i<=setting.probabilityTime:  # There is no situation that 2 items drop together
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2, items)
+                elif i<=setting.probabilityShield:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3, items)
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100
@@ -446,6 +477,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
         sb.prepLevel()
         if stats.level % 5 != 0:
             createFleet(setting, stats, screen, ship, aliens)
+            boss = None
         else:
             createFleetBoss(setting, stats, screen, ship, aliens)
         # Invincibility during 2 sec
@@ -487,18 +519,18 @@ def updateUltimateGauge(setting, screen, stats, sb):
         pg.draw.rect(screen, (0, 255, 255), (x, y, gauge, 12), 0)
 
 
-def UltimateDiamondShape(setting, screen, stats, sbullets):
+def UltimateDiamondShape(setting, screen, stats, sbullets, damage):
     xpos = 10
     yCenter = setting.screenHeight + (setting.screenWidth / 50) * 20
     yGap = 0
     # Make a diamond pattern
     while xpos <= setting.screenWidth:
         if yGap == 0:
-            sBullet = SpecialBullet(setting, screen, (xpos, yCenter))
+            sBullet = SpecialBullet(setting, screen, (xpos, yCenter), damage)
             sbullets.add(sBullet)
         else:
-            upBullet = SpecialBullet(setting, screen, (xpos, yCenter + yGap))
-            downBullet = SpecialBullet(setting, screen, (xpos, yCenter - yGap))
+            upBullet = SpecialBullet(setting, screen, (xpos, yCenter + yGap), damage)
+            downBullet = SpecialBullet(setting, screen, (xpos, yCenter - yGap), damage)
             sbullets.add(upBullet)
             sbullets.add(downBullet)
         if xpos <= setting.screenWidth / 2:
@@ -508,12 +540,12 @@ def UltimateDiamondShape(setting, screen, stats, sbullets):
         xpos += setting.screenWidth / 30
 
 
-def useUltimate(setting, screen, stats, sbullets, pattern):
+def useUltimate(setting, screen, stats, sbullets, pattern, ship):
     if stats.ultimateGauge != 100:
         return
     if pattern == 1:
         sounds.ult_attack.play()
-        UltimateDiamondShape(setting, screen, stats, sbullets)
+        UltimateDiamondShape(setting, screen, stats, sbullets, ship.damage)
     # elif pattern == 2:
     #		make other pattern
     stats.ultimateGauge = 0
@@ -541,12 +573,32 @@ def drawChargeGauge(setting, screen, ship, sb):
     pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
 
 
+
+def drawBossHP(setting, screen):
+    global boss
+    margin = 20
+    x = margin
+    y = 70
+    w = setting.screenWidth - (margin * 2)
+    h = 10
+    mul = (boss.hitPoint / boss.maxHitPoint)
+    hpBar = w * mul
+
+    if (0.6 < mul):
+        color = (0, 255, 0)
+    elif (0.3 < mul):
+        color = (255, 100, 0)
+    else:
+        color = (255, 0, 0)
+    pg.draw.rect(screen, (255, 255, 255), (x, y, w, h), 0)
+    pg.draw.rect(screen, color, (x, y, hpBar, h), 0)
+
 def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, bMenu, bgManager, items):
     """Update images on the screen and flip to the new screen"""
     # Redraw the screen during each pass through the loop
     # Fill the screen with background color
     # Readjust the quit menu btn position
-    global clock, FPS, gameOverButtons, pauseButtons
+    global clock, FPS, gameOverButtons, pauseButtons, boss
     bMenu.drawMenu()
     bgManager.update()
     bgManager.draw()
@@ -573,12 +625,18 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     #Shield if ship is invincibile
     updateInvincibility(setting, screen, ship)
 
+    # Update Item_time
+    updateSlowtime(setting)
+
     # Update Ultimate Gauge
     updateUltimateGauge(setting, screen, stats, sb)
 
     # Update and draw Charge Gauge
     updateChargeGauge(ship)
     drawChargeGauge(setting, screen, ship, sb)
+
+    if boss is not None:
+        drawBossHP(setting, screen)
 
     # Draw the scoreboard
     sb.prepScore()

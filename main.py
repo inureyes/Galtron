@@ -10,6 +10,7 @@ import levelMenu as lm  # select game level(hard/easy)
 import playMenu as pm  # choosing ship color
 import settingsMenu as sm
 import twoPlayer as tp  # two player mode
+import sounds
 from animations import Explosions
 from buttonMenu import ButtonMenu
 from background import BackgroundManager
@@ -100,6 +101,7 @@ def runGame():
 
     rungame = True
 
+    sounds.stage_clear.play()
     # Set the two while loops to start mainMenu first
     while rungame:
         # Set to true to run main game loop
