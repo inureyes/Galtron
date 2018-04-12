@@ -163,8 +163,10 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
 
 def pause(stats):
     """Pause the game when the pause button is pressed"""
+    global boss
     stats.gameActive = False
     stats.paused = True
+    boss = None
 
 
 def resetGame():
@@ -395,7 +397,7 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
                 else:
                     stats.score += setting.alienPoints * 3
             elif item.type == 2:
-                setting.newItemSlowTime = pg.time.get_ticks()                
+                setting.newItemSlowTime = pg.time.get_ticks()
                 setting.alienSpeed *= 0.5
                 setting.alienbulletSpeed *= 0.5
                 setting.fleetDropSpeed *= 0.5
@@ -410,7 +412,7 @@ def updateSlowtime(setting):
             setting.alienbulletSpeed *= 2
             setting.fleetDropSpeed *= 2
             setting.newItemSlowTime = 0
-    
+
 
 
 
