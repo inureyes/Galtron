@@ -17,20 +17,56 @@ class Ship(Sprite):
         self.setting = setting
 
         # Load the ship image and its rect.
-        self.imagesPath = (
-            'gfx/player_ship/player_ship_left4.png',
-            'gfx/player_ship/player_ship_left3.png',
-            'gfx/player_ship/player_ship_left2.png',
-            'gfx/player_ship/player_ship_left1.png',
-            'gfx/player_ship/player_ship.png',
-            'gfx/player_ship/player_ship_right1.png',
-            'gfx/player_ship/player_ship_right2.png',
-            'gfx/player_ship/player_ship_right3.png',
-            'gfx/player_ship/player_ship_right4.png')
-        self.images = []
-        for path in self.imagesPath:
+        self.imagesPath_red = (
+            'gfx/player_ship/red/player_ship_left4.png',
+            'gfx/player_ship/red/player_ship_left3.png',
+            'gfx/player_ship/red/player_ship_left2.png',
+            'gfx/player_ship/red/player_ship_left1.png',
+            'gfx/player_ship/red/player_ship.png',
+            'gfx/player_ship/red/player_ship_right1.png',
+            'gfx/player_ship/red/player_ship_right2.png',
+            'gfx/player_ship/red/player_ship_right3.png',
+            'gfx/player_ship/red/player_ship_right4.png')
+
+        self.imagesPath_blue = (
+            'gfx/player_ship/blue/player_ship_left4.png',
+            'gfx/player_ship/blue/player_ship_left3.png',
+            'gfx/player_ship/blue/player_ship_left2.png',
+            'gfx/player_ship/blue/player_ship_left1.png',
+            'gfx/player_ship/blue/player_ship.png',
+            'gfx/player_ship/blue/player_ship_right1.png',
+            'gfx/player_ship/blue/player_ship_right2.png',
+            'gfx/player_ship/blue/player_ship_right3.png',
+            'gfx/player_ship/blue/player_ship_right4.png')
+
+        self.imagesPath_gray = (
+            'gfx/player_ship/gray/player_ship_left4.png',
+            'gfx/player_ship/gray/player_ship_left3.png',
+            'gfx/player_ship/gray/player_ship_left2.png',
+            'gfx/player_ship/gray/player_ship_left1.png',
+            'gfx/player_ship/gray/player_ship.png',
+            'gfx/player_ship/gray/player_ship_right1.png',
+            'gfx/player_ship/gray/player_ship_right2.png',
+            'gfx/player_ship/gray/player_ship_right3.png',
+            'gfx/player_ship/gray/player_ship_right4.png')        
+
+        self.images_red = []
+        for path in self.imagesPath_red:
             img = pg.image.load(path)
-            self.images.append(img)
+            self.images_red.append(img)
+
+        self.images_blue = []
+        for path in self.imagesPath_blue:
+            img = pg.image.load(path)
+            self.images_blue.append(img)
+
+        self.images_gray = []
+        for path in self.imagesPath_gray:
+            img = pg.image.load(path)
+            self.images_gray.append(img)
+
+        self.images = self.images_gray
+
         self.imgCenter = 4
         self.imgMaxLR = 4
         self.inclination = 0
@@ -114,7 +150,14 @@ class Ship(Sprite):
                 bullets.add(newBullet)
                 self.chargeGauge = 0
 
-                # update rect object from self.center
+        # update rect object from self.center
+        if self.setting.playerShipColor == 'gray' :
+            self.images = self.images_gray
+        elif self.setting.playerShipColor == 'red' :
+            self.images = self.images_red
+        elif self.setting.playerShipColor == 'blue' :
+            self.images = self.images_blue
+
         self.rect.centerx = self.center
         self.rect.centery = self.centery
 
