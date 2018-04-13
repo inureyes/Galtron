@@ -65,11 +65,16 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 
 
 def buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets):
-    if selectedName in ('play', 'retry'):
+    global boss
+    if selectedName == 'play':
         checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
+    elif selectedName == 'retry':
+        checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
+        boss = None
     elif selectedName == 'menu':
         stats.setGameLoop('mainMenu')
         stats.resetStats()
+        boss = None
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
@@ -163,10 +168,8 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
 
 def pause(stats):
     """Pause the game when the pause button is pressed"""
-    global boss
     stats.gameActive = False
     stats.paused = True
-    boss = None
 
 
 def resetGame():
@@ -239,18 +242,6 @@ def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
     aliens.add(alien)
     boss = alien
 
-
-def createItem(setting, screen, stats, posx, posy, type, items):
-    """add item func"""
-    # item number is 1 per type
-    for itype in items:
-        if itype.type == type:
-            return
-    item = Item(setting, screen, stats, type, posx, posy)
-    screenRect = item.screen.get_rect()
-    items.add(item)
-
-
 def createItem(setting, screen, stats, posx, posy, type, items):
     """add item func"""
     # item number is 1 per type
@@ -274,13 +265,11 @@ def createFleet(setting, stats, screen, ship, aliens):
             createAlien(setting, stats, screen, aliens, alienNumber, rowNumber)
 
 
-
 def createFleetBoss(setting, stats, screen, ship, aliens):
     """Create a fleet of aliens"""
     alien = Alien(setting, screen, stats.level*20)
     numberAliensX = 1
     numberRows = 1
-
 
     # create the first row of aliens
     createBoss(setting, stats, screen, aliens, numberAliensX, numberRows)
@@ -349,7 +338,6 @@ def updateInvincibility(setting, screen, ship):
         text1 = pg.font.Font('Fonts/Square.ttf', 20).render("SHIELD", True, (255, 255, 255), )
         screen.blit(text1, (ship.rect.x, ship.rect.y -20))
 
-
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
     checkFleetEdges(setting, aliens)
@@ -405,8 +393,9 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
         if item.rect.bottom <= 0:
             items.remove(item)
     for item in items.sprites():
-
-        if item.rect.centerx -30 < ship.rect.x < item.rect.x +30 and item.rect.centery -20 < ship.rect.centery < item.rect.centery +20:
+        disX = int((ship.rect.centerx - ship.rect.x) + (item.rect.centerx - item.rect.x)*0.67)
+        disY = int((ship.rect.centery - ship.rect.y) + (item.rect.centery - item.rect.y)*0.67)
+        if abs(item.rect.centerx - ship.rect.centerx) < disX and abs(item.rect.centery-ship.rect.centery) < disY:
             if item.type == 1:
                 sounds.heal_sound.play()
                 if stats.shipsLeft < setting.shipLimit:
@@ -414,20 +403,17 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
                 else:
                     stats.score += setting.alienPoints * 3
             elif item.type == 2:
-                sounds.slowdown_sound.play()
-                setting.newItemSlowTime = pg.time.get_ticks()                
-                setting.alienSpeed *= 0.5
-                setting.alienbulletSpeed *= 0.5
-                setting.fleetDropSpeed *= 0.5
+                if (setting.newItemSlowTime != 0):
+                    setting.newItemSlowTime += setting.slowTime
+                else :
+                    setting.newItemSlowTime = pg.time.get_ticks()
+                    setting.alienSpeed *= 0.5
+                    setting.alienbulletSpeed *= 0.5
+                    setting.fleetDropSpeed *= 0.5
+                    sounds.slow_sound.play(-1)
             elif item.type == 3:
-                sounds.shield_sound.play()
                 setting.newStartTime = pg.time.get_ticks()
-<<<<<<< HEAD
-                sounds.stage_clear.play()
-
-=======
-               
->>>>>>> master
+                sounds.shield_sound.play()
             items.remove(item)
 
 def updateSlowtime(setting):
@@ -437,6 +423,7 @@ def updateSlowtime(setting):
             setting.alienbulletSpeed *= 2
             setting.fleetDropSpeed *= 2
             setting.newItemSlowTime = 0
+            sounds.slow_sound.stop()
 
 
 
