@@ -54,7 +54,7 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 
 def buttonAction(stats, selectedName):
     if selectedName == 'play':
-        # stats.setGameLoop('playMenu')
+        stats.setGameLoop('playMenu')
         stats.setGameLoop('levelMenu')
     elif selectedName == 'twoPlay':
         stats.setGameLoop('twoPlayer')
