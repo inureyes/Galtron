@@ -37,3 +37,10 @@ explosion_sound.set_volume(0.15)
 
 enemy_explosion_sound = pg.mixer.Sound('sound_effects/enemy_explosion.wav')
 enemy_explosion_sound.set_volume(0.4)
+
+shield_sound = pg.mixer.Sound('sound_effects/shield_sound.wav')
+shield_sound.set_volume(0.5)
+heal_sound = pg.mixer.Sound('sound_effects/heal_sound.wav')
+heal_sound.set_volume(0.2)
+slow_sound = pg.mixer.Sound('sound_effects/slow_sound.wav')
+slow_sound.set_volume(0.4)

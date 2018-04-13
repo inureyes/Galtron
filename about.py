@@ -54,7 +54,7 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 def buttonAction(stats, selectedName):
     if selectedName == 'menu':
         stats.setGameLoop('mainMenu')
-    elif selectedName == 'quit':
+    if selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
 
