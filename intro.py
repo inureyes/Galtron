@@ -9,58 +9,25 @@ screen = pg.display.set_mode((setting.screenWidth, setting.screenHeight))
 # load and change images
 def introimages():
     while (pg.time.get_ticks() < 3000):
-        image = pg.image.load("gfx/intro1.png")
-        image = pg.transform.scale(image, (setting.screenWidth, setting.screenHeight))
-        rect = image.get_rect()
-        screen.fill(setting.bgColor)
-        screen.blit(image, rect)
-        pg.display.update()
-        pg.time.wait(400)
+        introImageSrc = ("gfx/intro1.png",
+                         "gfx/intro2.png",
+                         "gfx/intro3.png",
+                         "gfx/intro4.png",
+                         "gfx/intro5.png",
+                         "gfx/intro6.png",
+                         "gfx/intro7.png")
 
-        image = pg.image.load("gfx/intro2.png")
-        image = pg.transform.scale(image, (setting.screenWidth, setting.screenHeight))
-        rect = image.get_rect()
-        screen.fill(setting.bgColor)
-        screen.blit(image, rect)
-        pg.display.update()
-        pg.time.wait(400)
+        for src in introImageSrc:
+            image = pg.image.load(src)
+            image = pg.transform.scale(
+                image, (setting.screenWidth, setting.screenHeight))
+            rect = image.get_rect()
+            screen.fill(setting.bgColor)
+            screen.blit(image, rect)
+            pg.display.update()
 
-        image = pg.image.load("gfx/intro3.png")
-        image = pg.transform.scale(image, (setting.screenWidth, setting.screenHeight))
-        rect = image.get_rect()
-        screen.fill(setting.bgColor)
-        screen.blit(image, rect)
-        pg.display.update()
-        pg.time.wait(400)
-
-        image = pg.image.load("gfx/intro4.png")
-        image = pg.transform.scale(image, (setting.screenWidth, setting.screenHeight))
-        rect = image.get_rect()
-        screen.fill(setting.bgColor)
-        screen.blit(image, rect)
-        pg.display.update()
-        pg.time.wait(400)
-
-        image = pg.image.load("gfx/intro5.png")
-        image = pg.transform.scale(image, (setting.screenWidth, setting.screenHeight))
-        rect = image.get_rect()
-        screen.fill(setting.bgColor)
-        screen.blit(image, rect)
-        pg.display.update()
-        pg.time.wait(400)
-
-        image = pg.image.load("gfx/intro6.png")
-        image = pg.transform.scale(image, (setting.screenWidth, setting.screenHeight))
-        rect = image.get_rect()
-        screen.fill(setting.bgColor)
-        screen.blit(image, rect)
-        pg.display.update()
-        pg.time.wait(400)
-
-        image = pg.image.load("gfx/intro7.png")
-        image = pg.transform.scale(image, (setting.screenWidth, setting.screenHeight))
-        rect = image.get_rect()
-        screen.fill(setting.bgColor)
-        screen.blit(image, rect)
-        pg.display.update()
-        pg.time.wait(600)
+            waitTime = 400
+            if src == introImageSrc[-1]:
+                waitTime += 200
+            pg.time.wait(waitTime)
+            print("load", src, waitTime)

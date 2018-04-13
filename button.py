@@ -25,7 +25,8 @@ class Button():
         self.rect.centerx = self.screenRect.centerx
         self.rect.y = yCord
 
-        # Set the default state color switch of the button being selected to False
+        # Set the default state color switch of the button being selected to
+        # False
         self.switched = False
 
         self.msg = msg
@@ -48,7 +49,8 @@ class Button():
 
     def prepMsg(self, msg):
         """Turn msg insto a rendered image and center text on the button"""
-        self.msgImage = self.font.render(msg, True, self.textColor, self.buttonColor)
+        self.msgImage = self.font.render(
+            msg, True, self.textColor, self.buttonColor)
         self.msgImageRect = self.msgImage.get_rect()
         self.msgImageRect.center = self.rect.center
 

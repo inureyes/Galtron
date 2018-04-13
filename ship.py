@@ -6,7 +6,6 @@ from bullet import Bullet
 from playMenu import *
 
 
-
 class Ship(Sprite):
     """Class of a player ship"""
 
@@ -45,7 +44,8 @@ class Ship(Sprite):
 
         # Start each new ship at the bottom center of the screen.
         self.rect.centerx = self.screenRect.centerx
-        self.rect.centery = self.screenRect.centery + self.screenRect.bottom / 2 - self.rect.height
+        self.rect.centery = self.screenRect.centery + \
+            self.screenRect.bottom / 2 - self.rect.height
         self.rect.bottom = self.screenRect.bottom - 10
 
         self.center = float(self.rect.centerx)
@@ -98,19 +98,24 @@ class Ship(Sprite):
             if self.checkReadyToShoot() and (len(bullets) < 10):
                 sounds.attack.play()
                 if (self.trajectory == 4):
-                    newBullet0 = Bullet(self.setting, self.screen, self, 0, self.damage)
-                    newBullet1 = Bullet(self.setting, self.screen, self, 1, self.damage)
-                    newBullet2 = Bullet(self.setting, self.screen, self, 2, self.damage)
+                    newBullet0 = Bullet(
+                        self.setting, self.screen, self, 0, self.damage)
+                    newBullet1 = Bullet(
+                        self.setting, self.screen, self, 1, self.damage)
+                    newBullet2 = Bullet(
+                        self.setting, self.screen, self, 2, self.damage)
                     bullets.add(newBullet0)
                     bullets.add(newBullet1)
                     bullets.add(newBullet2)
                 else:
-                    newBullet = Bullet(self.setting, self.screen, self, self.trajectory, self.damage)
+                    newBullet = Bullet(
+                        self.setting, self.screen, self, self.trajectory, self.damage)
                     bullets.add(newBullet)
                 self.setNextShootTime()
         else:
             if (self.chargeGauge == 100):
-                newBullet = Bullet(self.setting, self.screen, self, self.trajectory, 2)
+                newBullet = Bullet(self.setting, self.screen,
+                                   self, self.trajectory, 2)
                 bullets.add(newBullet)
                 self.chargeGauge = 0
 
@@ -128,7 +133,8 @@ class Ship(Sprite):
 
     def setNextShootTime(self):
         nowTime = pg.time.get_ticks()
-        self.nextShootTime = nowTime + (self.fireRate / self.setting.globalGameSpeed)
+        self.nextShootTime = nowTime + \
+            (self.fireRate / self.setting.globalGameSpeed)
 
     def checkReadyToShoot(self):
         nowTime = pg.time.get_ticks()
@@ -141,4 +147,5 @@ class Ship(Sprite):
     def centerShip(self):
         """Centers the ship"""
         self.center = self.screenRect.centerx
-        self.centery = self.screenRect.centery + self.screenRect.bottom / 2 - self.rect.height
+        self.centery = self.screenRect.centery + \
+            self.screenRect.bottom / 2 - self.rect.height

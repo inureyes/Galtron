@@ -2,6 +2,7 @@ import pygame as pg
 
 
 class AnimatedSprite:
+
     def __init__(self, sprite, item_width, item_height, item_count):
         self.sprite = sprite
         self.item_width = item_width
@@ -33,6 +34,7 @@ class Animation:
 
 
 class Explosions:
+
     def __init__(self):
         self.sprite = AnimatedSprite(
             pg.image.load('gfx/explosion-sheet.png').convert_alpha(),

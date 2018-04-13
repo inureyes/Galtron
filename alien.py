@@ -9,7 +9,7 @@ from eBullet import EBullet
 class Alien(Sprite):
     """A class to represent a single alien in the fleet"""
 
-    def __init__(self, setting, screen, hitPoint=3, isboss = False):
+    def __init__(self, setting, screen, hitPoint=3, isboss=False):
         """Initialize the alien and set its starting point"""
         super(Alien, self).__init__()
         self.screen = screen
@@ -23,7 +23,8 @@ class Alien(Sprite):
         self.image = self.sprite.getFrame(0)
         self.image = pg.transform.rotate(self.image, 180)
         if self.isboss == True:
-            self.image = pg.transform.scale(self.image,(setting.screenWidth // 8, setting.screenWidth // 8))
+            self.image = pg.transform.scale(
+                self.image, (setting.screenWidth // 8, setting.screenWidth // 8))
         self.rect = self.image.get_rect()
 
         # start each new alien near the top left of the screen
@@ -112,5 +113,3 @@ class Alien(Sprite):
     def blitme(self):
         """draw hte alien"""
         self.screen.blit(self.image, self.rect)
-
-

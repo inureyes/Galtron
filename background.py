@@ -2,6 +2,7 @@ import pygame as pg
 
 
 class BackgroundManager():
+
     def __init__(self, screen):
         self.backgrounds = {}
         self.screen = screen
@@ -52,6 +53,7 @@ class BackgroundManager():
 
 
 class Background():
+
     def __init__(self, screen, image, moveSpeedX, moveSpeedY):
         self.screen = screen
         self.screenRect = screen.get_rect()
