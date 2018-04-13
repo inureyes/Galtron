@@ -66,8 +66,11 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 
 def buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets):
     global boss
-    if selectedName in ('play', 'retry'):
+    if selectedName == 'play':
         checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
+    elif selectedName == 'retry':
+        checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
+        boss = None
     elif selectedName == 'menu':
         stats.setGameLoop('mainMenu')
         stats.resetStats()
