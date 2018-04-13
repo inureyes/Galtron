@@ -1,11 +1,9 @@
 import json
 import os
-import settings
 
 
 class GameStats():
     """Track stats for alien shooter"""
-    # test1 = settings.Settings()
 
     def __init__(self, setting):
         """initialize statistics"""
@@ -23,7 +21,6 @@ class GameStats():
         self.paused = False
         self.score = 0
         self.level = 1
-
         self.highScore = 0
         self.highScoreSaveFileName = 'data-files/highscore.json'
         self.resetStats()
@@ -59,7 +56,6 @@ class GameStats():
     
 
     def resetStats(self):
-        setting = settings.Settings()
         """initialize statistics that can change during the game"""
         self.shipsLeft = self.setting.shipLimit
         self.level = 1
@@ -67,7 +63,7 @@ class GameStats():
         self.counter = 3
         self.ultimateGauge = 0
         self.ultimatePattern = 1
-        setting.initDynamicSettings()
+
         self.tempScore = self.loadHighScore()
         if self.highScore >= self.tempScore:
             self.saveHighScore()
