@@ -128,12 +128,19 @@ def checkKeydownEvents(event, setting, screen, stats, sb, ship, aliens, bullets,
         # Reset Game
         sounds.button_click_sound.play()
         resetGame()
+        #silent pause and unpause
+    elif event.key == pg.K_r:
+        pg.mixer.music.pause()
+    elif event.key == pg.K_t:
+        pg.mixer.music.unpause()
+
+
+
     elif event.key == pg.K_ESCAPE:
         # Quit game
         sounds.button_click_sound.play()
         pg.time.delay(300)
         sys.exit()
-
 
 def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bullets):
     """Response to keyrealeses"""
@@ -173,6 +180,7 @@ def resetGame():
     global reset
     reset = 1
     stats.highScore = 0
+
     stats.saveHighScore()
 
 

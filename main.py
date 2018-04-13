@@ -106,6 +106,7 @@ def runGame():
     while rungame:
         # Set to true to run main game loop
         bMenu.setMenuButtons(mainMenuButtons)
+
         while stats.mainMenu:
             if not stats.gameActive and stats.paused:
                 setting.initDynamicSettings()
