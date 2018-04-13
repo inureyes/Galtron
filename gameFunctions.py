@@ -65,11 +65,16 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 
 
 def buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets):
-    if selectedName in ('play', 'retry'):
+    global boss
+    if selectedName == 'play':
         checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
+    elif selectedName == 'retry':
+        checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
+        boss = None
     elif selectedName == 'menu':
         stats.setGameLoop('mainMenu')
         stats.resetStats()
+        boss = None
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
@@ -163,10 +168,8 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
 
 def pause(stats):
     """Pause the game when the pause button is pressed"""
-    global boss
     stats.gameActive = False
     stats.paused = True
-    boss = None
 
 
 def resetGame():
