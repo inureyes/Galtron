@@ -65,11 +65,16 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 
 
 def buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets):
-    if selectedName in ('play', 'retry'):
+    global boss
+    if selectedName == 'play':
         checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
+    elif selectedName == 'retry':
+        checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
+        boss = None
     elif selectedName == 'menu':
         stats.setGameLoop('mainMenu')
         stats.resetStats()
+        boss = None
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
@@ -376,7 +381,7 @@ def updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets, c
 
 
 def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, items):
-    """update the position of the bullets"""
+    """give a effect when ship col item"""
     #check if we are colliding
     items.update()
     #if bullet goes off screen delete it
@@ -388,19 +393,30 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
         if item.rect.bottom <= 0:
             items.remove(item)
     for item in items.sprites():
-        if item.rect.centerx -30 < ship.rect.x < item.rect.x +30 and item.rect.centery -20 < ship.rect.centery < item.rect.centery +20:
+        disX = int((ship.rect.centerx - ship.rect.x) + (item.rect.centerx - item.rect.x)*0.67)
+        disY = int((ship.rect.centery - ship.rect.y) + (item.rect.centery - item.rect.y)*0.67)
+        if abs(item.rect.centerx - ship.rect.centerx) < disX and abs(item.rect.centery-ship.rect.centery) < disY:
             if item.type == 1:
+                sounds.heal_sound.play()
                 if stats.shipsLeft < setting.shipLimit:
                     stats.shipsLeft += 1
                 else:
                     stats.score += setting.alienPoints * 3
             elif item.type == 2:
-                setting.newItemSlowTime = pg.time.get_ticks()                
-                setting.alienSpeed *= 0.5
-                setting.alienbulletSpeed *= 0.5
-                setting.fleetDropSpeed *= 0.5
+                if (setting.newItemSlowTime != 0):
+                    setting.newItemSlowTime += setting.slowTime
+                else :
+                    setting.newItemSlowTime = pg.time.get_ticks()
+                    setting.alienSpeed *= 0.5
+                    setting.alienbulletSpeed *= 0.5
+                    setting.fleetDropSpeed *= 0.5
+                    sounds.slow_sound.play(-1)
             elif item.type == 3:
                 setting.newStartTime = pg.time.get_ticks()
+                sounds.shield_sound.play()
+            elif item.type == 4:
+                setting.newItemSpeedTime = pg.time.get_ticks()
+                setting.shipSpeed *= 2
             items.remove(item)
 
 def updateSlowtime(setting):
@@ -410,7 +426,13 @@ def updateSlowtime(setting):
             setting.alienbulletSpeed *= 2
             setting.fleetDropSpeed *= 2
             setting.newItemSlowTime = 0
-    
+            sounds.slow_sound.stop()
+
+def updateSpeedtime(setting):
+    if setting.newItemSpeedTime !=0:
+        if pg.time.get_ticks() - setting.newItemSpeedTime > setting.speedTime:
+            setting.shipSpeed *= 0.5
+            setting.newItemSpeedTime = 0
 
 
 
@@ -435,13 +457,17 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 setting.explosions.add(alien.rect.x, alien.rect.y)
                 sounds.enemy_explosion_sound.play()
                 #if an enemy dies, it falls down an item randomly.
+                #use cumulative probability
                 i = random.randrange(100)
                 if i<=setting.probabilityHeal:
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1, items)
-                elif i<=setting.probabilityTime:  # There is no situation that 2 items drop together
+                if setting.probabilityHeal<i<=setting.probabilityHeal+setting.probabilityTime:
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2, items)
-                elif i<=setting.probabilityShield:
+                if setting.probabilityHeal+setting.probabilityTime<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield:
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3, items)
+                if setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield+setting.probabilitySpeed:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4, items)
+
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100
@@ -482,6 +508,7 @@ def checkEBulletShipCol(setting, stats, sb, screen, ship, aliens, bullets, eBull
     for ebullet in eBullets.sprites():
         if pg.sprite.collide_mask(ship, ebullet):
             shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets)
+            setting.shipSpeed = 2.5
             #sb.prepShips()
             eBullets.remove(ebullet)
 
@@ -615,11 +642,13 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     for i in items:
         i.update()
         i.drawitem()
+
     #Shield if ship is invincibile
     updateInvincibility(setting, screen, ship)
 
     # Update Item_time
     updateSlowtime(setting)
+    updateSpeedtime(setting)
 
     # Update Ultimate Gauge
     updateUltimateGauge(setting, screen, stats, sb)

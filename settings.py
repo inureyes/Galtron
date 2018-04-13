@@ -49,6 +49,7 @@ class Settings():
         self.newStartTime = 0
         # The start time for item_time
         self.newItemSlowTime = 0
+        self.newItemSpeedTime = 0
 
         # Game Level
         self.gameLevel = 'normal'
@@ -61,14 +62,16 @@ class Settings():
         self.probabilityHeal = 10
         self.probabilityTime = 20
         self.probabilityShield = 25
+        self.probabilitySpeed = 20
 
         #invincibile time
         self.invincibileTime = 2000
 
         #item_time Slow time
         self.slowTime = 3000
+        self.speedTime = 7000
 
-        
+
     def invertColor(self):
         self.bgColor = getInvertedRGB(self.bgColor)
         self.bulletColor = getInvertedRGB(self.bulletColor)
