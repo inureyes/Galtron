@@ -391,20 +391,21 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
     for item in items.sprites():
         if item.rect.centerx -30 < ship.rect.x < item.rect.x +30 and item.rect.centery -20 < ship.rect.centery < item.rect.centery +20:
             if item.type == 1:
+                sounds.heal_sound.play()
                 if stats.shipsLeft < setting.shipLimit:
                     stats.shipsLeft += 1
-                    sounds.heal_sound.play()
                 else:
                     stats.score += setting.alienPoints * 3
             elif item.type == 2:
+                sounds.slowdown_sound.play()
                 setting.newItemSlowTime = pg.time.get_ticks()                
                 setting.alienSpeed *= 0.5
                 setting.alienbulletSpeed *= 0.5
                 setting.fleetDropSpeed *= 0.5
-                sounds.shield_sound.play()
             elif item.type == 3:
+                sounds.shield_sound.play()
                 setting.newStartTime = pg.time.get_ticks()
-                sounds.stage_clear.play()
+               
             items.remove(item)
 
 def updateSlowtime(setting):
