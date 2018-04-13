@@ -138,6 +138,11 @@ def checkKeydownEvents(event, setting, screen, stats, sb, ship, aliens, bullets,
         sounds.button_click_sound.play()
         pg.time.delay(300)
         sys.exit()
+        #silent pause and unpause
+    elif event.key == pg.K_r:
+        pg.mixer.music.pause()
+    elif event.key == pg.K_t:
+        pg.mixer.music.unpause()
 
 
 def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bullets):
