@@ -48,10 +48,11 @@ def runGame():
     bMenu.addButton("retry", "RETRY")
     bMenu.addButton("hard", "HARD")
     bMenu.addButton("normal", "NORMAL")
-
+    bMenu.addButton("back", "MENU")
+    
     mainMenuButtons = ["play", "about", "settings", "quit"] # delete "twoPlay"
     playMenuButtons = ["grey", "red", "blue", "menu", "quit"]
-    levelMenuButtons = ["hard", "normal", "quit"]
+    levelMenuButtons = ["hard", "normal", "back", "quit"]
     mainGameButtons = ["play", "menu", "quit"]
     aboutButtons = ["menu", "quit"]
     settingsMenuButtons = ["menu", "invert", "quit"]
