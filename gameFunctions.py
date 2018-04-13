@@ -8,6 +8,7 @@ from alien import Alien
 from bullet import Bullet, SpecialBullet
 from item import Item
 
+
 clock = pg.time.Clock()
 FPS = 120
 reset = 0

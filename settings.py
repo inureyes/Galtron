@@ -1,14 +1,12 @@
 import pygame as pg
-
+import gameStats
 import utilityFunctions
 
 getInvertedRGB = utilityFunctions.getInvertedRGB
 
-
 class Settings():
 
     """A class to store all settings for game"""
-
     def __init__(self):
         """Initialize the class"""
         self.windowCaption = 'Galtron'
@@ -35,7 +33,6 @@ class Settings():
         self.scoreSpeedUp = 5
 
         # GameSpeedLimit
-        self.Limit = 0
         self.globalGameSpeed = 1
 
         self.initDynamicSettings()
@@ -63,7 +60,6 @@ class Settings():
 
         #item_time Slow time
         self.slowTime = 3000
-
         
     def invertColor(self):
         self.bgColor = getInvertedRGB(self.bgColor)
@@ -78,6 +74,7 @@ class Settings():
         self.fleetDropSpeed = 5
         self.fleetDir = 1
         self.alienPoints = 10
+        self.Limit=0
 
     def increaseSpeed(self):
         """Increase the speed settings"""
@@ -96,22 +93,24 @@ class Settings():
 
 
     def halfspeed(self):
-        if self.Limit >= -1 and self.shipSpeed > 0 and self.bulletSpeed > 0 and self.alienSpeed > 0 and self.fleetDropSpeed > 0:
-            self.shipSpeed *= 0.5
-            self.bulletSpeed *= 0.5
-            self.alienSpeed *= 0.5
-            self.alienbulletSpeed *= 0.5
-            self.fleetDropSpeed *= 0.5
-            self.alienPoints *= 0.5  # nerf earning points in lower speed
-            self.globalGameSpeed *= 0.5
+        if self.Limit >= -0 and self.shipSpeed > 0 and self.bulletSpeed > 0 and self.alienSpeed > 0 and self.fleetDropSpeed > 0:
+            self.shipSpeed *= 0.7
+            self.bulletSpeed *= 0.7
+            self.alienSpeed *= 0.7
+            self.alienbulletSpeed *= 0.7
+            self.fleetDropSpeed *= 0.7
+            self.alienPoints *= 0.7  # nerf earning points in lower speed
+            self.globalGameSpeed *= 0.7
             self.Limit -= 1
 
     def doublespeed(self):
-        self.shipSpeed *= 1.3
-        self.bulletSpeed *= 1.3
-        self.alienSpeed *= 1.3
-        self.alienbulletSpeed *= 1.3
-        self.fleetDropSpeed *= 1.3
-        self.alienPoints *= 1.3
-        self.globalGameSpeed *= 1.3
-        self.Limit += 1
+        print(str(self.Limit)+"     11")
+        if self.Limit < 5:
+            self.shipSpeed *= 1.3
+            self.bulletSpeed *= 1.3
+            self.alienSpeed *= 1.3
+            self.alienbulletSpeed *= 1.3
+            self.fleetDropSpeed *= 1.3
+            self.alienPoints *= 1.3
+            self.globalGameSpeed *= 1.3
+            self.Limit += 1
