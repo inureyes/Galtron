@@ -18,7 +18,6 @@ class GameStats():
         self.settingsMenu = False
         #############
         self.levelMenu = False
-        self.speedMenu = False
         self.paused = False
         self.score = 0
         self.level = 1
@@ -38,7 +37,6 @@ class GameStats():
         self.settingsMenu = False
         ###########
         self.levelMenu = False
-        self.speedMenu = False
 
         if loop == 'mainMenu':
             self.mainMenu = True
@@ -55,8 +53,7 @@ class GameStats():
         ###################
         elif loop == 'levelMenu':
             self.levelMenu = True
-        elif loop == 'speedMenu':
-            self.speedMenu = True    
+    
 
     def resetStats(self):
         """initialize statistics that can change during the game"""
