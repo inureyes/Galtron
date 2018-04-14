@@ -3,6 +3,7 @@ import pygame as pg
 # Init and load sound effects
 pg.mixer.init(44100, -16, 2, 4096)
 
+
 control_menu = pg.mixer.Sound("sound_effects/control_menu.wav")
 control_menu.set_volume(0.22)
 
@@ -17,6 +18,18 @@ attack.set_volume(0.08)
 
 heal_sound = pg.mixer.Sound('sound_effects/heal_sound.wav')
 heal_sound.set_volume(0.4)
+
+slowdown_sound = pg.mixer.Sound('sound_effects/slowdown.wav')
+slowdown_sound.set_volume(0.4)
+
+<<<<<<< HEAD
+=======
+slow_sound = pg.mixer.Sound('sound_effects/slow_sound.wav')
+slow_sound.set_volume(0.4) 
+
+>>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
+shield_sound = pg.mixer.Sound('sound_effects/shield_sound.wav')
+shield_sound.set_volume(0.4)
 
 ult_attack = pg.mixer.Sound("sound_effects/ult_attack.wav")
 ult_attack.set_volume(0.08)
@@ -39,4 +52,12 @@ explosion_sound = pg.mixer.Sound('sound_effects/explosion.wav')
 explosion_sound.set_volume(0.15)
 
 enemy_explosion_sound = pg.mixer.Sound('sound_effects/enemy_explosion.wav')
+<<<<<<< HEAD
+enemy_explosion_sound.set_volume(0.8)
+=======
 enemy_explosion_sound.set_volume(0.4)
+>>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
+
+
+
+
