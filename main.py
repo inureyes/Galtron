@@ -93,21 +93,21 @@ def runGame():
     aboutImage = pg.image.load('gfx/About_modify2.png')
     aboutImage = pg.transform.scale(aboutImage, (setting.screenWidth, setting.screenHeight))
     aboutImageRect = aboutImage.get_rect()
-
-    # plays bgm
-    pg.mixer.music.load('sound_bgms/galtron.mp3')
-    pg.mixer.music.set_volume(0.25)
-    pg.mixer.music.play(-1)
-
     rungame = True
 
     sounds.stage_clear.play()
     # Set the two while loops to start mainMenu first
     while rungame:
+
+        pg.mixer.music.load('sound_bgms/galtron-stage.mp3')
+        pg.mixer.music.set_volume(0.25)
+        pg.mixer.music.play(-1)
+
         # Set to true to run main game loop
         bMenu.setMenuButtons(mainMenuButtons)
         while stats.mainMenu:
             if not stats.gameActive and stats.paused:
+
                 setting.initDynamicSettings()
                 stats.resetStats()
                 ##stats.gameActive = True
@@ -136,13 +136,20 @@ def runGame():
 
         bMenu.setMenuButtons(mainGameButtons)
 
+        pg.mixer.music.stop()
+        pg.mixer.music.load('sound_bgms/galtron.mp3')
+        pg.mixer.music.set_volume(0.25)
+        pg.mixer.music.play(-1)
+
         while stats.mainGame:
             # Game functions
             gf.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets, charged_bullets)  # Check for events
+
             # Reset Game
             if gf.reset == 1:
                 gf.reset = 0
                 pg.register_quit(runGame())
+
             if stats.gameActive:
                 gf.updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets)  # Update aliens
                 gf.updateBullets(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items) # Update collisions

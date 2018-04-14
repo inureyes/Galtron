@@ -53,7 +53,7 @@ class GameStats():
         ###################
         elif loop == 'levelMenu':
             self.levelMenu = True
-    
+
 
     def resetStats(self):
         """initialize statistics that can change during the game"""
