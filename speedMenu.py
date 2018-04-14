@@ -58,15 +58,9 @@ def buttonAction(stats, selectedName, setting):
     elif selectedName == 'slow':
         setting.gameSpeed = 'slow'
         stats.setGameLoop('settingsMenu')
-<<<<<<< HEAD
-    elif selectedName == 'menu':
-         stats.setGameLoop('settingsMenu')
-      
-=======
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
->>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
 
 def drawMenu(setting, screen, sb, bMenu):
     """Draw the menu and all of its elements"""
@@ -74,8 +68,4 @@ def drawMenu(setting, screen, sb, bMenu):
     screen.fill(setting.bgColor)
     screen.blit(image, rect)
     bMenu.drawMenu()
-<<<<<<< HEAD
     pg.display.flip()
-=======
-    pg.display.flip()
->>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
