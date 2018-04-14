@@ -9,7 +9,9 @@ import mainMenu as mm  # Main menu
 import levelMenu as lm  # select game level(hard/easy)
 import playMenu as pm  # choosing ship color
 import settingsMenu as sm
+import speedMenu as spm
 import twoPlayer as tp  # two player mode
+import sounds
 from animations import Explosions
 from buttonMenu import ButtonMenu
 from background import BackgroundManager
@@ -18,7 +20,6 @@ from scoreboard import Scoreboard  # Score board for points, high score, lives, 
 # import self made classes
 from settings import Settings
 from ship import Ship
-
 
 def runGame():
     # Initialize game and create a window
@@ -36,7 +37,7 @@ def runGame():
 
     bMenu = ButtonMenu(screen)
     bMenu.addButton("play", "PLAY")
-    bMenu.addButton("menu", "MENU")
+    bMenu.addButton("menu", "BACK")
     bMenu.addButton("twoPlay", "2PVS")
     bMenu.addButton("settings", "SETTINGS")
     bMenu.addButton("invert", "INVERT")
@@ -48,14 +49,34 @@ def runGame():
     bMenu.addButton("retry", "RETRY")
     bMenu.addButton("hard", "HARD")
     bMenu.addButton("normal", "NORMAL")
-
+    bMenu.addButton("back", "MENU")
+    bMenu.addButton("speed setting","SPEED")
+    bMenu.addButton("fast","FAST")
+    bMenu.addButton("middle","MIDDLE")
+    bMenu.addButton("slow","SLOW")
+<<<<<<< HEAD
+    bMenu.addButton("sound","SOUND")
+    bMenu.addButton("loud","LOUD")
+    bMenu.addButton("low","LOW")
+=======
+    
+>>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
     mainMenuButtons = ["play", "about", "settings", "quit"] # delete "twoPlay"
     playMenuButtons = ["grey", "red", "blue", "menu", "quit"]
-    levelMenuButtons = ["hard", "normal", "quit"]
+    levelMenuButtons = ["hard", "normal", "back", "quit"]
+
     mainGameButtons = ["play", "menu", "quit"]
     aboutButtons = ["menu", "quit"]
-    settingsMenuButtons = ["menu", "invert", "quit"]
-
+<<<<<<< HEAD
+    settingsMenuButtons = ["menu", "invert","speed setting","sound","quit"]
+    speedButtons = ["fast","middle","slow","menu"]
+                
+    soundButtons =["loud","low","menu"]
+=======
+    settingsMenuButtons = ["menu", "invert","speed setting","quit"]
+    speedButtons = ["fast","middle","slow"]
+>>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
+    
     bgManager = BackgroundManager(screen)
     bgManager.setFillColor((0, 0, 0))
     bgManager.addBackground("universe_1", "gfx/backgrounds/stars_back.png", 0, 1)
@@ -95,17 +116,32 @@ def runGame():
     aboutImageRect = aboutImage.get_rect()
 
     # plays bgm
-    pg.mixer.music.load("sound_bgms/galtron.mp3")
+    pg.mixer.music.load('sound_bgms/galtron.mp3')
     pg.mixer.music.set_volume(0.25)
     pg.mixer.music.play(-1)
 
     rungame = True
 
+    sounds.stage_clear.play()
     # Set the two while loops to start mainMenu first
     while rungame:
         # Set to true to run main game loop
         bMenu.setMenuButtons(mainMenuButtons)
         while stats.mainMenu:
+            if not stats.gameActive and stats.paused:
+                setting.initDynamicSettings()
+                stats.resetStats()
+                ##stats.gameActive = True
+
+                # Reset the alien and the bullets
+                aliens.empty()
+                bullets.empty()
+                eBullets.empty()
+
+                # Create a new fleet and center the ship
+                gf.createFleet(setting, stats, screen, ship, aliens)
+                ship.centerShip()
+
             mm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             mm.drawMenu(setting, screen, sb, bMenu, bgImage, bgImageRect)
 
@@ -156,6 +192,11 @@ def runGame():
         while stats.settingsMenu:
             sm.checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             sm.drawMenu(setting, screen, sb, bMenu)
+
+        bMenu.setMenuButtons(speedButtons)
+        while stats.speedMenu:
+            spm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
+            spm.drawMenu(setting, screen, sb, bMenu)
 
         while stats.mainGame:
             if rungame == True:
