@@ -5,13 +5,6 @@
 | Participant   | Role       | ETC |
 |---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> add-my-info-in-readme
-=======
-=======
 | Lee jaehee    | student    |     |
 | Minseok  Kang | Student    |     |
 | Jaehun Kim.   | student    |     |
@@ -35,7 +28,6 @@
 | Sungchan Kim  | Student    |     |
 | Wonik Jang    | Student    |     |
 | Kim tae O     | Student    |     |
->>>>>>> 95e5fd59e03ca0584c0237aafa142f7262a65685
 | Jeshin Lee    | Student    |     |
 | Hoesung  Jung | Student^^7 | Nerd|
 | Hyunjun Lee   | Student    |     |
@@ -56,7 +48,6 @@
 | Hyobin Lee    | Student    |     |
 | Hayeong Lee   | Student    |     |
 | YoungHoon Kwon| Student    |     |
->>>>>>> e99c03f09fc42075df3416d8ae03609b0d7bfca3
 | Haeun Choi    | Student    |     |
 | Moon ki hun   | Student    |     |
 | Seungchan Yu  | Student    |     |
@@ -65,14 +56,6 @@
 | Yejun Kim     | Student    |     |
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-| Minjun Kim    | Student    |     |
-| JaeHun Lee    | Student    |     |
-| Taewan Park   | Student    |     |
->>>>>>> e99c03f09fc42075df3416d8ae03609b0d7bfca3
-=======
 | Yerim Hwang	| Student    |     |
 | Kim yong jun  | Student    |     |
 | Yerim Hwang	| Student    |     |
@@ -81,20 +64,14 @@
 | Taewan Park   | Student    |     |
 | HoJin Seo     | Student    |     |
 | Sungho Yun    | Student    |     |
-<<<<<<< HEAD
-| Keunmo Koo.   | Genius     |     |
->>>>>>> 95e5fd59e03ca0584c0237aafa142f7262a65685
-=======
 | Keunmo Koo.   | Genius     |     |
 
->>>>>>> 8e2918f216ad9295edbe8e6b16efba9df5546cfc
 
->>>>>>> e99c03f09fc42075df3416d8ae03609b0d7bfca3
 
 # Galtron
 A simple 2D shooter made with pygame, written in python...
 
-Props to Python Crash Course for the awesome tut. Although i did add a little extra, was more of just a learning curve sort of thing and to learn more about python. Input welcome by anyone
+Props to Python Crash Course for the awesome tut. Although i did add a little extra, was more of just a learning curve sort of thing and to learn more about python. Input welcome by anyone.
 
 To run the game:
 	-Needs python2.7 and pygame

@@ -94,17 +94,16 @@ class Settings():
 
     def halfspeed(self):
         if self.Limit >= -0 and self.shipSpeed > 0 and self.bulletSpeed > 0 and self.alienSpeed > 0 and self.fleetDropSpeed > 0:
-            self.shipSpeed *= 0.7
-            self.bulletSpeed *= 0.7
-            self.alienSpeed *= 0.7
-            self.alienbulletSpeed *= 0.7
-            self.fleetDropSpeed *= 0.7
-            self.alienPoints *= 0.7  # nerf earning points in lower speed
-            self.globalGameSpeed *= 0.7
+            self.shipSpeed *= 0.8
+            self.bulletSpeed *= 0.8
+            self.alienSpeed *= 0.8
+            self.alienbulletSpeed *= 0.8
+            self.fleetDropSpeed *= 0.8
+            self.alienPoints *= 0.8  # nerf earning points in lower speed
+            self.globalGameSpeed *= 0.8
             self.Limit -= 1
 
     def doublespeed(self):
-        print(str(self.Limit)+"     11")
         if self.Limit < 5:
             self.shipSpeed *= 1.3
             self.bulletSpeed *= 1.3
