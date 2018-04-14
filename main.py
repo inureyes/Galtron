@@ -9,7 +9,6 @@ import mainMenu as mm  # Main menu
 import levelMenu as lm  # select game level(hard/easy)
 import playMenu as pm  # choosing ship color
 import settingsMenu as sm
-import speedMenu as spm
 import twoPlayer as tp  # two player mode
 import sounds
 from animations import Explosions
@@ -37,7 +36,7 @@ def runGame():
 
     bMenu = ButtonMenu(screen)
     bMenu.addButton("play", "PLAY")
-    bMenu.addButton("menu", "BACK")
+    bMenu.addButton("menu", "MENU")
     bMenu.addButton("twoPlay", "2PVS")
     bMenu.addButton("settings", "SETTINGS")
     bMenu.addButton("invert", "INVERT")
@@ -49,21 +48,14 @@ def runGame():
     bMenu.addButton("retry", "RETRY")
     bMenu.addButton("hard", "HARD")
     bMenu.addButton("normal", "NORMAL")
-    bMenu.addButton("back", "MENU")
-    bMenu.addButton("speed setting","SPEED")
-    bMenu.addButton("fast","FAST")
-    bMenu.addButton("middle","MIDDLE")
-    bMenu.addButton("slow","SLOW")
-    
+
     mainMenuButtons = ["play", "about", "settings", "quit"] # delete "twoPlay"
     playMenuButtons = ["grey", "red", "blue", "menu", "quit"]
-    levelMenuButtons = ["hard", "normal", "back", "quit"]
-
+    levelMenuButtons = ["hard", "normal", "quit"]
     mainGameButtons = ["play", "menu", "quit"]
     aboutButtons = ["menu", "quit"]
-    settingsMenuButtons = ["menu", "invert","speed setting","quit"]
-    speedButtons = ["fast","middle","slow"]
-    
+    settingsMenuButtons = ["menu", "invert", "quit"]
+
     bgManager = BackgroundManager(screen)
     bgManager.setFillColor((0, 0, 0))
     bgManager.addBackground("universe_1", "gfx/backgrounds/stars_back.png", 0, 1)
@@ -179,11 +171,6 @@ def runGame():
         while stats.settingsMenu:
             sm.checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             sm.drawMenu(setting, screen, sb, bMenu)
-
-        bMenu.setMenuButtons(speedButtons)
-        while stats.speedMenu:
-            spm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
-            spm.drawMenu(setting, screen, sb, bMenu)
 
         while stats.mainGame:
             if rungame == True:
