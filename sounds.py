@@ -23,11 +23,14 @@ slowdown_sound = pg.mixer.Sound('sound_effects/slowdown.wav')
 slowdown_sound.set_volume(0.4)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 slow_sound = pg.mixer.Sound('sound_effects/slow_sound.wav')
 slow_sound.set_volume(0.4) 
 
 >>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
+=======
+>>>>>>> parent of 78ecfa2... refs #402 : modify - sound modification
 shield_sound = pg.mixer.Sound('sound_effects/shield_sound.wav')
 shield_sound.set_volume(0.4)
 
