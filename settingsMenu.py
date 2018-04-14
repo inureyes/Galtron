@@ -54,7 +54,7 @@ def checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBull
 def buttonAction(stats, selectedName, bMenu, setting, sb):
     if selectedName == 'menu':
         stats.setGameLoop('mainMenu')
-    elif selectedName == 'invert':
+    if selectedName == 'invert':
         bMenu.invertColorAll()
         setting.invertColor()
         sb.invertColor()
@@ -62,13 +62,7 @@ def buttonAction(stats, selectedName, bMenu, setting, sb):
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
-    elif selectedName == 'speed setting':
-        stats.setGameLoop('speedMenu')
-<<<<<<< HEAD
-    elif selectedName == 'sound setting':
-        stats.setGameLoop('soundMenu')
-=======
->>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
+
 
 def drawMenu(setting, screen, sb, bMenu):
     """Draw the menu and all of its elements"""
