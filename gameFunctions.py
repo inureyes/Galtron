@@ -162,7 +162,7 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
             elif (50 <= ship.chargeGauge):
                 sounds.charge_shot.play()
                 newBullet = Bullet(setting, screen, ship, ship.trajectory, 2, ship.damage * 3)
-                charged_bullets.add(newBullet)
+                bullets.add(newBullet)
         ship.shoot = False
 
 
@@ -232,7 +232,7 @@ def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
 def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
     global boss
     sounds.stage_clear.play()
-    alien = Alien(setting, screen, stats.level*30, True)
+    alien = Alien(setting, screen, stats.level*10, True)
     alienWidth = alien.rect.width
     screenRect = alien.screen.get_rect()
     alien.x = alienWidth + 2 * alienWidth * alienNumber
