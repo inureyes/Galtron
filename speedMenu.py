@@ -4,16 +4,13 @@ import pygame as pg
 
 import sounds
 
-# Create a variable to change current button being selected
-
 image = pg.image.load('gfx/fixsetting4.png')
 rect = image.get_rect()
 
-
-def checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
+# Create a variable to change current button being selected
+def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
     """Respond to keypresses and mouse events."""
     for event in pg.event.get():
-        # Check for quit event
         if event.type == pg.QUIT:
             sys.exit()
             # Check for key down has been pressed
@@ -22,15 +19,15 @@ def checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBull
             if event.key == pg.K_DOWN:
                 sounds.control_menu.play()
                 bMenu.down()
-            if event.key == pg.K_UP:
+            elif event.key == pg.K_UP:
                 sounds.control_menu.play()
                 bMenu.up()
-            if event.key == pg.K_RETURN:
+            elif event.key == pg.K_RETURN:
                 sounds.select_menu.play()
                 selectedName, selectedBtn = bMenu.getSelectedButton()
                 if selectedBtn:
-                    buttonAction(stats, selectedName, bMenu, setting, sb)
-            if event.key == pg.K_ESCAPE:
+                    buttonAction(stats, selectedName, setting)
+            elif event.key == pg.K_ESCAPE:
                 sys.exit()
 
         elif event.type == pg.MOUSEMOTION:
@@ -48,22 +45,22 @@ def checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBull
                 mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
                 if mouseBtn is not None:
                     sounds.select_menu.play()
-                    buttonAction(stats, mouseBtnName, bMenu, setting, sb)
+                    buttonAction(stats, mouseBtnName, setting)
 
 
-def buttonAction(stats, selectedName, bMenu, setting, sb):
-    if selectedName == 'menu':
-        stats.setGameLoop('mainMenu')
-    elif selectedName == 'invert':
-        bMenu.invertColorAll()
-        setting.invertColor()
-        sb.invertColor()
-        stats.setGameLoop('mainMenu')
+def buttonAction(stats, selectedName, setting):
+    if selectedName == 'fast':
+        setting.gameSpeed = 'fast'
+        stats.setGameLoop('settingsMenu')
+    elif selectedName == 'middle':
+        setting.gameSpeed = 'middle'
+        stats.setGameLoop('settingsMenu')
+    elif selectedName == 'slow':
+        setting.gameSpeed = 'slow'
+        stats.setGameLoop('settingsMenu')
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
-    elif selectedName == 'speed setting':
-        stats.setGameLoop('speedMenu')
 
 def drawMenu(setting, screen, sb, bMenu):
     """Draw the menu and all of its elements"""
