@@ -408,15 +408,13 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
                 setting.newStartTime = pg.time.get_ticks()
             items.remove(item)
 
+
+
 def updateSlowtime(setting):
     if setting.newItemSlowTime !=0:
         if pg.time.get_ticks() - setting.newItemSlowTime > setting.slowTime:
-            setting.alienSpeed *= 2
-            setting.alienbulletSpeed *= 2
-            setting.fleetDropSpeed *= 2
-            setting.newItemSlowTime = 0
-
-
+            setting.DynamicSettings()
+            
 
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items):
