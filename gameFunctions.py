@@ -343,11 +343,14 @@ def updateInvincibility(setting, screen, ship):
             isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width,ship.images[ship.imgCenter].get_rect().height))
             isurf.set_alpha(200)
             screen.blit(isurf, (ship.rect.x, ship.rect.y))
+<<<<<<< HEAD
 
 def updateInvineffect(setting,screen,ship):
     if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
         image = pg.image.load('gfx/image_shield.png')
         screen.blit(image, (ship.rect.x -7 , ship.rect.y ))            
+=======
+>>>>>>> master
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
@@ -421,10 +424,18 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
                     setting.alienSpeed *= 0.5
                     setting.alienbulletSpeed *= 0.5
                     setting.fleetDropSpeed *= 0.5
+<<<<<<< HEAD
 
 
                     sounds.slow_sound.play(-1)
 
+=======
+<<<<<<< HEAD
+                    sounds.slowdown_sound.play()
+=======
+                    sounds.slow_sound.play(-1)
+>>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
+>>>>>>> master
             elif item.type == 3:
                 setting.newStartTime = pg.time.get_ticks()
                 sounds.shield_sound.play()
@@ -440,9 +451,17 @@ def updateSlowtime(setting):
             setting.alienbulletSpeed *= 2
             setting.fleetDropSpeed *= 2
             setting.newItemSlowTime = 0
+<<<<<<< HEAD
 
             sounds.slow_sound.stop()
 
+=======
+<<<<<<< HEAD
+            sounds.slowdown_sound.stop()
+=======
+            sounds.slow_sound.stop()
+>>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
+>>>>>>> master
 
 def updateSpeedtime(setting):
     if setting.newItemSpeedTime !=0:
