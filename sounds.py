@@ -23,18 +23,11 @@ slowdown_sound = pg.mixer.Sound('sound_effects/slowdown.wav')
 slowdown_sound.set_volume(0.4)
 
 <<<<<<< HEAD
-
-slow_sound = pg.mixer.Sound('sound_effects/slow_sound.wav')
-slow_sound.set_volume(0.4) 
-
-=======
-<<<<<<< HEAD
 =======
 slow_sound = pg.mixer.Sound('sound_effects/slow_sound.wav')
 slow_sound.set_volume(0.4) 
 
 >>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
->>>>>>> master
 shield_sound = pg.mixer.Sound('sound_effects/shield_sound.wav')
 shield_sound.set_volume(0.4)
 
@@ -64,10 +57,6 @@ enemy_explosion_sound.set_volume(0.8)
 =======
 enemy_explosion_sound.set_volume(0.4)
 >>>>>>> 78ecfa2143bfd3ecfc66c1265fc3edf149138738
-
-
-
-
 
 
 
