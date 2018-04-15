@@ -470,15 +470,18 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 sounds.enemy_explosion_sound.play()
                 #if an enemy dies, it falls down an item randomly.
                 #use cumulative probability
-                i = random.randrange(100)
-                if i<=setting.probabilityHeal:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1, items)
-                if setting.probabilityHeal<i<=setting.probabilityHeal+setting.probabilityTime:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2, items)
-                if setting.probabilityHeal+setting.probabilityTime<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3, items)
-                if setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield+setting.probabilitySpeed:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4, items)
+                i = random.randrange(1,101)
+                if(i <= setting.probability):
+                	createItem(setting, screen, stats, alien.rect.x, alien.rect.y, random.
+                		randrange(1,5), items)
+                #if i<=setting.probabilityHeal:
+                #    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1, items)
+                #if setting.probabilityHeal<i<=setting.probabilityHeal+setting.probabilityTime:
+                #    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2, items)
+                #if setting.probabilityHeal+setting.probabilityTime<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield:
+                #    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3, items)
+                #if setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield+setting.probabilitySpeed:
+                #    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4, items)
                 aliens.remove(alien)
                
 

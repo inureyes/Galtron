@@ -58,10 +58,11 @@ class Settings():
         self.shootTimer = 50
 
         #item probability %
-        self.probabilityHeal = 10
-        self.probabilityTime = 20
-        self.probabilityShield = 25
-        self.probabilitySpeed = 20
+        self.probability = 20
+        #self.probabilityHeal = 10
+        #self.probabilityTime = 20
+        #self.probabilityShield = 25
+        #self.probabilitySpeed = 20
 
         #invincibile time
         self.invincibileTime = 2000

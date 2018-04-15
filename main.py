@@ -136,6 +136,8 @@ def runGame():
 
                 # Create a new fleet and center the ship
                 gf.createFleet(setting, stats, screen, ship, aliens)
+                if(setting.gameLevel == "hard"):
+                    setting.probability = 10
                 ship.centerShip()
 
             mm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
