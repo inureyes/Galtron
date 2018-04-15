@@ -674,7 +674,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
 
     # Draw the play button if the game is inActive
     if not stats.gameActive:
-        if (stats.shipsLeft < 1):
+        if (stats.shipsLeft < 1) and not stats.paused:
             bMenu.setMenuButtons(gameOverButtons)
             scoreImg = pg.font.Font('Fonts/Square.ttf', 50).render("Score: " + str(stats.score), True, (0, 0, 0),
                                                                    (255, 255, 255))
