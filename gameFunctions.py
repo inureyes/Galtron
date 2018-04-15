@@ -431,11 +431,7 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
 def updateSlowtime(setting):
     if setting.newItemSlowTime !=0:
         if pg.time.get_ticks() - setting.newItemSlowTime > setting.slowTime:
-            setting.alienSpeed *= 2
-            setting.alienbulletSpeed *= 2
-            setting.fleetDropSpeed *= 2
-            setting.newItemSlowTime = 0
-            sounds.slow_sound.stop()
+            setting.DynamicSettings()
 
 def updateSpeedtime(setting):
     if setting.newItemSpeedTime !=0:

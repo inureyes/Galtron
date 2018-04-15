@@ -104,6 +104,19 @@ class Settings():
         self.alienPoints = 10* self.speedVariable()
 
 
+        
+    def DynamicSettings(self):
+        if self.Limit>0:
+            self.alienSpeed = 1 * 1.3 * (self.Limit)
+            self.alienbulletSpeed = 4 * 1.3 * (self.Limit)
+            self.fleetDropSpeed = 5 * 1.3 * (self.Limit)
+        else:
+            self.alienSpeed = 1 * 0.8 * (self.Limit)
+            self.alienbulletSpeed = 4 * 0.8 * (self.Limit)
+            self.fleetDropSpeed = 5 * 0.8 * (self.Limit)
+
+
+
     def increaseSpeed(self):
         """Increase the speed settings"""
         if self.alienSpeed <= 1.5:
