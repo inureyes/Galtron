@@ -115,8 +115,9 @@ def checkKeydownEvents(event, setting, screen, stats, sb, ship, aliens, bullets,
         useUltimate(setting, screen, stats, bullets, stats.ultimatePattern, ship)
         # Check for pause key
     elif event.key == pg.K_p or event.key == 181:
-        sounds.paused.play()
-        pause(stats)
+        if not stats.paused and stats.gameActive:
+            sounds.paused.play()
+            pause(stats)
         # Add speed control key
     elif event.key == pg.K_q or event.key == 172:
         setting.halfspeed()
