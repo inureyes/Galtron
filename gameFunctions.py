@@ -301,11 +301,6 @@ def changeFleetDir(setting, aliens):
                 alien.rect.y += setting.fleetDropSpeed
             elif setting.gameLevel == 'hard':
                 alien.rect.y += (setting.fleetDropSpeed + 3)
-        else:
-            if alien.rect.y < int(setting.screenHeight * 0.8):
-                alien.rect.y += 50
-            else:
-                alien.rect.y -= 50
     setting.fleetDir *= -1
 
 
