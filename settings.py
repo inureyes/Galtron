@@ -60,7 +60,9 @@ class Settings():
         #item probability %
         self.probabilityHeal = 10
         self.probabilityTime = 20
-        self.probabilityShield = 25
+        self.probabilityShield1 = 15
+        self.probabilityShield2 = 7.5
+        self.probabilityShield3 = 2.5
         self.probabilitySpeed = 20
 
         #invincibile time
