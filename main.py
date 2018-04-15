@@ -54,7 +54,7 @@ def runGame():
     bMenu.addButton("fast","FAST")
     bMenu.addButton("middle","MIDDLE")
     bMenu.addButton("slow","SLOW")
-    
+
     mainMenuButtons = ["play", "about", "settings", "quit"] # delete "twoPlay"
     playMenuButtons = ["grey", "red", "blue", "menu", "quit"]
     levelMenuButtons = ["hard", "normal", "back", "quit"]
@@ -63,7 +63,7 @@ def runGame():
     aboutButtons = ["menu", "quit"]
     settingsMenuButtons = ["menu", "invert","speed setting","quit"]
     speedButtons = ["fast","middle","slow"]
-    
+
     bgManager = BackgroundManager(screen)
     bgManager.setFillColor((0, 0, 0))
     bgManager.addBackground("universe_1", "gfx/backgrounds/stars_back.png", 0, 1)
@@ -102,16 +102,16 @@ def runGame():
     aboutImage = pg.transform.scale(aboutImage, (setting.screenWidth, setting.screenHeight))
     aboutImageRect = aboutImage.get_rect()
 
-    # plays bgm
-    pg.mixer.music.load('sound_bgms/galtron.mp3')
-    pg.mixer.music.set_volume(0.25)
-    pg.mixer.music.play(-1)
-
     rungame = True
 
     sounds.stage_clear.play()
     # Set the two while loops to start mainMenu first
     while rungame:
+        # Play mainMenu BGM
+        pg.mixer.music.load('sound_bgms/galtron-stage.mp3')
+        pg.mixer.music.set_volume(0.25)
+        pg.mixer.music.play(-1)
+
         # Set to true to run main game loop
         bMenu.setMenuButtons(mainMenuButtons)
         while stats.mainMenu:
@@ -143,6 +143,12 @@ def runGame():
             pm.drawMenu(setting, screen, sb, bMenu)
 
         bMenu.setMenuButtons(mainGameButtons)
+
+        # Play stage BGM
+        pg.mixer.music.stop()
+        pg.mixer.music.load('sound_bgms/galtron.mp3')
+        pg.mixer.music.set_volume(0.25)
+        pg.mixer.music.play(-1)
 
         while stats.mainGame:
             # Game functions
