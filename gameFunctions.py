@@ -427,6 +427,12 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
                 setting.newStartTime = pg.time.get_ticks()
                 sounds.shield_sound.play()
             elif item.type == 4:
+                setting.newStartTime = pg.time.get_ticks()*1.05
+                sounds.shield_sound.play()
+            elif item.type == 5:
+                setting.newStartTime = pg.time.get_ticks()*1.1
+                sounds.shield_sound.play()
+            elif item.type == 6:
                 setting.newItemSpeedTime = pg.time.get_ticks()
                 setting.shipSpeed *= 2
             items.remove(item)
@@ -475,9 +481,9 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1, items)
                 if setting.probabilityHeal<i<=setting.probabilityHeal+setting.probabilityTime:
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2, items)
-                if setting.probabilityHeal+setting.probabilityTime<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield:
+                if setting.probabilityHeal+setting.probabilityTime<i<=setting.probabilityHeal+setting.probabilityTime+(setting.probabilityShield1 or setting.probabilityShield2 or setting.probabilityShield3):
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3, items)
-                if setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield+setting.probabilitySpeed:
+                if setting.probabilityHeal+setting.probabilityTime+(setting.probabilityShield1 or setting.probabilityShield2 or setting.probabilityShield3)<i<=setting.probabilityHeal+setting.probabilityTime+(setting.probabilityShield1 or setting.probabilityShield2 or setting.probabilityShield3)+setting.probabilitySpeed:
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4, items)
                 aliens.remove(alien)
                

@@ -59,6 +59,7 @@
 | Yejun Kim     | Student    |     |
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
+| Kim yong jun  | Student    |     |
 | Yerim Hwang	| Student    |     |
 | Kim yong jun  | Student    |     |
 | Yerim Hwang	| Student    |     |

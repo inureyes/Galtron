@@ -16,8 +16,12 @@ class Item(Sprite):
         elif(type==2):
             self.image = pg.image.load('gfx/item_time.png')
         elif(type==3):
-            self.image = pg.image.load('gfx/item_shield.png')
+            self.image = pg.image.load('gfx/item_shield1.png')
         elif(type==4):
+            self.image = pg.image.load('gfx/item_shield2.png')
+        elif(type==5):
+            self.image = pg.image.load('gfx/item_shield3.png')
+        elif(type==6):
             self.image = pg.image.load('gfx/item_speed.png')
 
         self.type = type
