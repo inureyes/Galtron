@@ -22,7 +22,7 @@ class Scoreboard():
         self.textColor = (255, 255, 255)
         self.font = pygame.font.Font('Fonts/Square.ttf', 20)
 
-        self.lifeImage = pg.image.load('gfx/player_ship/player_ship.png')
+        self.lifeImage = pg.image.load('gfx/player_ship/red/player_ship.png')
         self.lifeImage = pg.transform.scale(self.lifeImage,(30,30))
         self.lifeImageRect = self.lifeImage.get_rect()
 
@@ -72,6 +72,9 @@ class Scoreboard():
 
     def drawLife(self):
         """Show how many lives are left/ships"""
+        self.lifeImage = pg.image.load('gfx/player_ship/'+self.setting.playerShipColor+'/player_ship.png')
+        self.lifeImage = pg.transform.scale(self.lifeImage,(30,30))
+        self.lifeImageRect = self.lifeImage.get_rect()
         self.lifeImageRect.x = 10
         self.lifeImageRect.y = self.scoreRect.bottom + 2
         for i in range(self.stats.shipsLeft):
