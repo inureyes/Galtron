@@ -58,6 +58,8 @@ def buttonAction(stats, selectedName, setting):
     elif selectedName == 'slow':
         setting.gameSpeed = 'slow'
         stats.setGameLoop('settingsMenu')
+    elif selectedName == 'menu':
+        stats.setGameLoop('settingsMenu')
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()

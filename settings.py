@@ -70,6 +70,8 @@ class Settings():
         self.slowTime = 3000
         self.speedTime = 7000
 
+        #Player ship
+        self.playerShipColor = 'gray'
 
     def invertColor(self):
         self.bgColor = getInvertedRGB(self.bgColor)
