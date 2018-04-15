@@ -15,12 +15,49 @@ class GameStats():
         self.mainAbout = False
         self.playMenu = False
         self.twoPlayer = False
+        self.settingsMenu = False
+        #############
+        self.levelMenu = False
+        self.speedMenu = False
         self.paused = False
         self.score = 0
         self.level = 1
         self.highScore = 0
-        # self.counter = 3
+        self.highScoreSaveFileName = 'data-files/highscore.json'
         self.resetStats()
+        self.exiton = 0
+
+        #########
+        # self.gameLevel = 0
+
+    def setGameLoop(self, loop):
+        self.mainMenu = False
+        self.mainGame = False
+        self.mainAbout = False
+        self.playMenu = False
+        self.twoPlayer = False
+        self.settingsMenu = False
+        ###########
+        self.levelMenu = False
+        self.speedMenu = False
+
+        if loop == 'mainMenu':
+            self.mainMenu = True
+        elif loop == 'mainGame':
+            self.mainGame = True
+        elif loop == 'mainAbout':
+            self.mainAbout = True
+        elif loop == 'playMenu':
+            self.playMenu = True
+        elif loop == 'twoPlayer':
+            self.twoPlayer = True
+        elif loop == 'settingsMenu':
+            self.settingsMenu = True
+        ###################
+        elif loop == 'levelMenu':
+            self.levelMenu = True
+        elif loop == 'speedMenu':
+            self.speedMenu = True    
 
     def resetStats(self):
         """initialize statistics that can change during the game"""
@@ -30,15 +67,22 @@ class GameStats():
         self.counter = 3
         self.ultimateGauge = 0
         self.ultimatePattern = 1
-        filename = 'data-files/highscore.json'
-        if not os.path.isfile(filename):
-            with open(filename, 'w') as f_obj:
-                f_obj.write('0')
 
-        with open(filename, 'r') as f_obj:
-            self.tempScore = json.load(f_obj)
+        self.tempScore = self.loadHighScore()
         if self.highScore >= self.tempScore:
-            with open(filename, 'w') as f_obj:
-                json.dump(self.highScore, f_obj)
+            self.saveHighScore()
         else:
             self.highScore = self.tempScore
+
+    def loadHighScore(self):
+        score = 0
+        if not os.path.isfile(self.highScoreSaveFileName):
+            with open(self.highScoreSaveFileName, 'w') as f_obj:
+                f_obj.write('0')
+        with open(self.highScoreSaveFileName, 'r') as f_obj:
+            score = json.load(f_obj)
+        return score
+
+    def saveHighScore(self):
+        with open(self.highScoreSaveFileName, 'w') as f_obj:
+            json.dump(self.highScore, f_obj)

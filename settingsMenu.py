@@ -2,21 +2,17 @@ import sys
 
 import pygame as pg
 
-from animations import Explosions
-import mainMenu
-from button import Button  # A button class that can be called for every new button
-from scoreboard import Scoreboard  # Score board for points, high score, lives, level ect.
-from settings import Settings
+import sounds
+
 
 # Create a variable to change current button being selected
-SmBtn = 1
-back = False
+
+image = pg.image.load('gfx/fixsetting4.png')
+rect = image.get_rect()
 
 
-def checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, ship, aliens, bullets, eBullets):
+def checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets):
     """Respond to keypresses and mouse events."""
-    global SmBtn
-
     for event in pg.event.get():
         # Check for quit event
         if event.type == pg.QUIT:
@@ -25,78 +21,59 @@ def checkEvents1(setting, screen, stats, sb, playBtn, quitBtn, menuBtn, sel, shi
         elif event.type == pg.KEYDOWN:
             # Check if down, up, enter, esc is pressed
             if event.key == pg.K_DOWN:
-                if SmBtn < 4:
-                    SmBtn += 1
-                    sel.rect.y += 50
+                sounds.control_menu.play()
+                bMenu.down()
             if event.key == pg.K_UP:
-                if SmBtn > 1:
-                    SmBtn -= 1
-                    sel.rect.y -= 50
+                sounds.control_menu.play()
+                bMenu.up()
             if event.key == pg.K_RETURN:
-                if SmBtn == 1:
-                    stats.mainMenu = True
-                    stats.mainGame = False
-                    stats.twoPlayer = False
-                    stats.mainAbout = False
-                    stats.settingsMenu = False
-                    SmBtn = 1
-                    sel.rect.centery = playBtn.rect.centery
-                elif SmBtn == 2:
-                    sys.exit()
-                elif SmBtn == 3:
-                    Button.reverseCol()
-                    Settings.reverseCol()
-                    Scoreboard.reverseCol()
-                    mainMenu.reverseCol()
-                    Explosions.reverseCol()
-                    stats.mainMenu = True
-                    stats.mainGame = False
-                    stats.twoPlayer = False
-                    stats.mainAbout = False
-                    stats.settingsMenu = False
-                    SmBtn = 1
-                    sel.rect.centery = playBtn.rect.centery
-                elif SmBtn == 4:
-                    setting.checkBtnPressed += 1
-                    if setting.checkBtnPressed % 2 != 0:
-                        setting.interception = True
-                    else:
-                        setting.interception = False
-                    stats.mainMenu = True
-                    stats.mainGame = False
-                    stats.twoPlayer = False
-                    stats.mainAbout = False
-                    stats.settingsMenu = False
-                    SmBtn = 1
-                    sel.rect.centery = playBtn.rect.centery
+                sounds.select_menu.play()
+                selectedName, selectedBtn = bMenu.getSelectedButton()
+                if selectedBtn:
+                    buttonAction(stats, selectedName, bMenu, setting, sb)
             if event.key == pg.K_ESCAPE:
                 sys.exit()
-    prepSm(setting, screen)
+
+        elif event.type == pg.MOUSEMOTION:
+            mouseBtnName, mouseBtn = bMenu.mouseCheck(event.pos[0], event.pos[1])
+            if mouseBtn is not None:
+                selectedName, selectedBtn = bMenu.getSelectedButton()
+                if mouseBtn is not selectedBtn:
+                    sounds.control_menu.play()
+                    bMenu.selectByName(mouseBtnName)
+
+        elif event.type == pg.MOUSEBUTTONDOWN:
+            pressed = pg.mouse.get_pressed()
+            if (pressed[0]):
+                pos = pg.mouse.get_pos()
+                mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
+                if mouseBtn is not None:
+                    sounds.select_menu.play()
+                    buttonAction(stats, mouseBtnName, bMenu, setting, sb)
 
 
-def prepSm(setting, screen):
-    # Font settings for scoring information
-    global image, rect
-    image = pg.image.load('gfx/fixsettings.png')
-    rect = image.get_rect()
-
-
-def drawMenu(setting, screen, sb, menuBtn, quitBtn, bgcrbtn, boonBtn, sel):
+def buttonAction(stats, selectedName, bMenu, setting, sb):
+    if selectedName == 'menu':
+        stats.setGameLoop('mainMenu')
+    elif selectedName == 'invert':
+        bMenu.invertColorAll()
+        setting.invertColor()
+        sb.invertColor()
+        stats.setGameLoop('mainMenu')
+    elif selectedName == 'quit':
+        pg.time.delay(300)
+        sys.exit()
+    elif selectedName == 'speed setting':
+        stats.setGameLoop('speedMenu')
+    elif selectedName == 'interception':
+        setting.checkBtnPressed += 1
+        if setting.checkBtnPressed % 2 != 0:
+            setting.interception = True
+        stats.setGameLoop('mainMenu')
+def drawMenu(setting, screen, sb, bMenu):
     """Draw the menu and all of its elements"""
     global image, rect
-    quitBtn.rect.y = 450
-    quitBtn.msgImageRect.y = 450
-    menuBtn.rect.y = 400
-    menuBtn.msgImageRect.y = 400
-    bgcrbtn.rect.y = 500
-    bgcrbtn.msgImageRect.y = 500
-    boonBtn.rect.y = 550
-    boonBtn.msgImageRect.y = 550
     screen.fill(setting.bgColor)
-    menuBtn.drawBtn()
-    quitBtn.drawBtn()
-    bgcrbtn.drawBtn()
-    boonBtn.drawBtn()
     screen.blit(image, rect)
-    sel.blitme()
+    bMenu.drawMenu()
     pg.display.flip()

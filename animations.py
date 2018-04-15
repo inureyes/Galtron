@@ -33,20 +33,12 @@ class Animation:
 
 
 class Explosions:
-    es = 'gfx/explosion-sheet.png'
-    esrev = 'gfx/explosion-sheet.png'
-    esemp = ''
     def __init__(self):
         self.sprite = AnimatedSprite(
-            pg.image.load(Explosions.es).convert_alpha(),
+            pg.image.load('gfx/explosion-sheet.png').convert_alpha(),
             100, 100, 34)
         self.instances = dict()
         self.explosion_id = 0
-
-    def reverseCol():
-        Explosions.esemp = Explosions.es
-        Explosions.es = Explosions.esrev
-        Explosions.rev = Explosions.esemp
 
     def add(self, x, y):
         ani = Animation(x - self.sprite.item_width // 2,
