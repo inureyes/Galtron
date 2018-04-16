@@ -162,8 +162,7 @@ def checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bulle
             if (ship.chargeGauge == 100):
                 sounds.charge_shot.play()
                 newBullet = Bullet(setting, screen, ship, ship.trajectory, 3, ship.damage * 5)
-                bullets.add(newBullet)
-                #charged_bullets.add(newBullet)
+                charged_bullets.add(newBullet)
                 ship.chargeGauge = 0
             elif (50 <= ship.chargeGauge):
                 sounds.charge_shot.play()
@@ -348,7 +347,7 @@ def updateInvincibility(setting, screen, ship):
 def updateInvineffect(setting,screen,ship):
 	if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
 		image = pg.image.load('gfx/image_shield.png')
-		screen.blit(image, (ship.rect.x -7 , ship.rect.y ))            
+		screen.blit(image, (ship.rect.x -7 , ship.rect.y ))
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
@@ -480,7 +479,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 if setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield+setting.probabilitySpeed:
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4, items)
                 aliens.remove(alien)
-               
+
 
         # Increase the ultimate gauge, upto 100
         if not collisions[alien][0].isUltimate:
