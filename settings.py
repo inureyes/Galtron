@@ -38,6 +38,8 @@ class Settings():
         self.Limit = 0
         self.globalGameSpeed = 1
 
+        # Game Speed
+        self.gameSpeed = 'middle'
         self.initDynamicSettings()
         # Interception settings
         self.checkBtnPressed = 0
@@ -46,9 +48,11 @@ class Settings():
         self.newStartTime = 0
         # The start time for item_time
         self.newItemSlowTime = 0
+        self.newItemSpeedTime = 0
 
         # Game Level
         self.gameLevel = 'normal'
+
 
         # Alien shoot speed
         self.shootTimer = 50
@@ -57,27 +61,38 @@ class Settings():
         self.probabilityHeal = 10
         self.probabilityTime = 20
         self.probabilityShield = 25
+        self.probabilitySpeed = 20
 
         #invincibile time
         self.invincibileTime = 2000
 
         #item_time Slow time
         self.slowTime = 3000
+        self.speedTime = 7000
 
-        
+        #Player ship
+        self.playerShipColor = 'gray'
+
     def invertColor(self):
         self.bgColor = getInvertedRGB(self.bgColor)
         self.bulletColor = getInvertedRGB(self.bulletColor)
 
+    def speedVariable(self):
+        if self.gameSpeed == 'fast':
+            return 2
+        elif self.gameSpeed == 'middle':
+            return 1
+        elif self.gameSpeed == 'slow':
+            return 0.5
 
     def initDynamicSettings(self):
-        self.shipSpeed = 2.5
-        self.bulletSpeed = 4
-        self.alienSpeed = 1
-        self.alienbulletSpeed = 4
-        self.fleetDropSpeed = 5
-        self.fleetDir = 1
-        self.alienPoints = 10
+        self.shipSpeed = 2.5 * self.speedVariable()
+        self.bulletSpeed = 4* self.speedVariable()
+        self.alienSpeed = 1* self.speedVariable()
+        self.alienbulletSpeed = 4* self.speedVariable()
+        self.fleetDropSpeed = 5* self.speedVariable()
+        self.fleetDir = 1* self.speedVariable()
+        self.alienPoints = 10* self.speedVariable()
 
     def increaseSpeed(self):
         """Increase the speed settings"""
