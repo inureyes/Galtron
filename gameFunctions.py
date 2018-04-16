@@ -348,7 +348,7 @@ def updateInvincibility(setting, screen, ship):
 def updateInvineffect(setting,screen,ship):
 	if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
 		image = pg.image.load('gfx/image_shield.png')
-		screen.blit(image, (ship.rect.x -7 , ship.rect.y ))            
+		screen.blit(image, (ship.rect.x -7 , ship.rect.y ))
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
@@ -427,12 +427,20 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
                 setting.newStartTime = pg.time.get_ticks()
                 sounds.shield_sound.play()
             elif item.type == 4:
-                setting.newItemSpeedTime = pg.time.get_ticks()
-                setting.shipSpeed *= 2
+                if setting.newItemSpeedTime != 0:
+                    if setting.speedTimeOverLap < 4:
+                        setting.shipSpeed *= 1.3
+                        setting.speedTimeOverLap += 1
+                    setting.newItemSpeedTime += setting.speedTime
+                else:
+                    setting.newItemSpeedTime = pg.time.get_ticks()
+                    setting.speedStore = setting.shipSpeed
+                    setting.shipSpeed *= 1.3
+                    setting.speedTimeOverLap += 1
             items.remove(item)
 
 def updateSlowtime(setting):
-    if setting.newItemSlowTime !=0:
+    if setting.newItemSlowTime != 0:
         if pg.time.get_ticks() - setting.newItemSlowTime > setting.slowTime:
             setting.alienSpeed *= 2
             setting.alienbulletSpeed *= 2
@@ -443,9 +451,9 @@ def updateSlowtime(setting):
 def updateSpeedtime(setting):
     if setting.newItemSpeedTime !=0:
         if pg.time.get_ticks() - setting.newItemSpeedTime > setting.speedTime:
-            setting.shipSpeed *= 0.5
+            setting.shipSpeed = setting.speedStore
+            setting.speedTimeOverLap = 0
             setting.newItemSpeedTime = 0
-
 
 
 def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, items):
@@ -480,7 +488,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 if setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield+setting.probabilitySpeed:
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4, items)
                 aliens.remove(alien)
-               
+
 
         # Increase the ultimate gauge, upto 100
         if not collisions[alien][0].isUltimate:
