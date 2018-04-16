@@ -45,7 +45,7 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                 selectedName, selectedBtn = bMenu.getSelectedButton()
                 if selectedBtn:
                     #######################
-                    buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets)
+                    buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets, charged_bullets)
         elif event.type == pg.KEYUP:
             checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bullets)
 
@@ -69,12 +69,14 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                         buttonAction(stats, mouseBtnName, setting, screen, ship, aliens, bullets, eBullets)
 
 
-def buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets):
+def buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets, charged_bullets):
     global boss
     if selectedName == 'play':
         checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
     elif selectedName == 'retry':
         checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
+        for charged_bullet in charged_bullets:
+            charged_bullets.remove(charged_bullet)
         boss = None
     elif selectedName == 'menu':
         stats.setGameLoop('mainMenu')

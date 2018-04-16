@@ -112,5 +112,3 @@ class Alien(Sprite):
     def blitme(self):
         """draw hte alien"""
         self.screen.blit(self.image, self.rect)
-
-
