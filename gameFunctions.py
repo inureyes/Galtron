@@ -239,7 +239,7 @@ def createAlien(setting, stats, screen, aliens, alienNumber, rowNumber):
 def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
     global boss
     sounds.stage_clear.play()
-    alien = Alien(setting, screen, stats.level*10, True)
+    alien = Alien(setting, screen, stats.level*30, True)
     alienWidth = alien.rect.width
     screenRect = alien.screen.get_rect()
     alien.x = alienWidth + 2 * alienWidth * alienNumber
