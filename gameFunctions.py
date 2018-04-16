@@ -337,18 +337,18 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 def updateInvincibility(setting, screen, ship):
     if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
         if pg.time.get_ticks()%2 == 1:
-            isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width,ship.images[ship.imgCenter].get_rect().height))
+            isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width, ship.images[ship.imgCenter].get_rect().height))
             isurf.set_alpha(150)
             screen.blit(isurf, (ship.rect.x, ship.rect.y))
         else:
-            isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width,ship.images[ship.imgCenter].get_rect().height))
+            isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width, ship.images[ship.imgCenter].get_rect().height))
             isurf.set_alpha(200)
             screen.blit(isurf, (ship.rect.x, ship.rect.y))
 
-def updateInvineffect(setting,screen,ship):
-	if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
-		image = pg.image.load('gfx/image_shield.png')
-		screen.blit(image, (ship.rect.x -7 , ship.rect.y ))            
+def updateInvineffect(setting, screen, ship):
+    if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
+        image = pg.image.load('gfx/image_shield.png')
+        screen.blit(image, (ship.rect.x -7 , ship.rect.y ))            
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
@@ -579,7 +579,7 @@ def useUltimate(setting, screen, stats, sbullets, pattern, ship):
         sounds.ult_attack.play()
         UltimateDiamondShape(setting, screen, stats, sbullets, ship.damage)
     # elif pattern == 2:
-    #		make other pattern
+    # make other pattern
     stats.ultimateGauge = 0
 
 
@@ -658,8 +658,8 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     #Shield if ship is invincibile
     updateInvincibility(setting, screen, ship)
 
-	#shield effect of the ship
-    updateInvineffect(setting,screen,ship)
+    #shield effect of the ship
+    updateInvineffect(setting, screen, ship)
 
     # Update Item_time
     updateSlowtime(setting)
