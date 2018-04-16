@@ -74,8 +74,7 @@ def buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eB
         checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
     elif selectedName == 'retry':
         checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
-        for charged_bullet in charged_bullets:
-            charged_bullets.remove(charged_bullet)
+        charged_bullets.empty()
         boss = None
     elif selectedName == 'menu':
         stats.setGameLoop('mainMenu')
@@ -196,6 +195,7 @@ def checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets):
         aliens.empty()
         bullets.empty()
         eBullets.empty()
+        charged_bullets.empty()
 
         # Create a new fleet and center the ship
         createFleet(setting, stats, screen, ship, aliens)
