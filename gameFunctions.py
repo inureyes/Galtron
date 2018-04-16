@@ -44,7 +44,6 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                 sounds.select_menu.play()
                 selectedName, selectedBtn = bMenu.getSelectedButton()
                 if selectedBtn:
-                    #######################
                     buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets, charged_bullets)
         elif event.type == pg.KEYUP:
             checkKeyupEvents(event, setting, screen, stats, ship, bullets, charged_bullets)
