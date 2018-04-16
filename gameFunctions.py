@@ -408,32 +408,59 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
         disX = int((ship.rect.centerx - ship.rect.x) + (item.rect.centerx - item.rect.x)*0.67)
         disY = int((ship.rect.centery - ship.rect.y) + (item.rect.centery - item.rect.y)*0.67)
         if abs(item.rect.centerx - ship.rect.centerx) < disX and abs(item.rect.centery-ship.rect.centery) < disY:
-            if item.type == 1:
+            if 1 < item.type < 2:
                 sounds.heal_sound.play()
                 if stats.shipsLeft < setting.shipLimit:
-                    stats.shipsLeft += 1
+                    if item.type == 1.1:
+                        stats.shipsLeft += 1
+                    elif item.type == 1.2:
+                        stats.shipsLeft += 2
+                    elif item.type == 1.3:
+                        stats.shipsLeft += 3
                 else:
-                    stats.score += setting.alienPoints * 3
-            elif item.type == 2:
-                if (setting.newItemSlowTime != 0):
-                    setting.newItemSlowTime += setting.slowTime
-                else :
+                    stats.score += int(setting.alienPoints * 3 * (item.type - 1) * 10)
+            elif 2 < item.type < 3:
+                sounds.slow_sound.play()
+                if setting.newItemSlowTime != 0:
+                    if item.type == 2.1:
+                        setting.newItemSlowTime += setting.slowTime * 0.5
+                    elif item.type == 2.2:
+                        setting.newItemSlowTime += setting.slowTime
+                    elif item.type == 2.3:
+                        setting.newItemSlowTime += setting.slowTime * 1.5
+                else:
                     setting.newItemSlowTime = pg.time.get_ticks()
+                    if item.type == 2.1:
+                        setting.newItemSlowTime -= setting.slowTime * 0.5
+                    elif item.type == 2.3:
+                        setting.newItemSlowTime += setting.slowTime * 0.5
                     setting.alienSpeed *= 0.5
                     setting.alienbulletSpeed *= 0.5
                     setting.fleetDropSpeed *= 0.5
-                    sounds.slow_sound.play(-1)
-            elif item.type == 3:
+            elif 3 < item.type < 4:
                 setting.newStartTime = pg.time.get_ticks()
+                if item.type == 3.1:
+                    setting.newStartTime -= setting.invincibileTime * 0.5
+                elif item.type == 3.3:
+                    setting.newStartTime += setting.invincibileTime * 0.5
                 sounds.shield_sound.play()
-            elif item.type == 4:
+            elif 4 < item.type:
                 if setting.newItemSpeedTime != 0:
                     if setting.speedTimeOverLap < 4:
                         setting.shipSpeed *= 1.3
                         setting.speedTimeOverLap += 1
-                    setting.newItemSpeedTime += setting.speedTime
+                    if item.type == 4.1:
+                        setting.newItemSpeedTime += setting.speedTime * 0.5
+                    elif item.type == 4.2:
+                        setting.newItemSpeedTime += setting.speedTime
+                    elif item.type == 4.3:
+                        setting.newItemSpeedTime += setting.speedTime * 1.5
                 else:
                     setting.newItemSpeedTime = pg.time.get_ticks()
+                    if item.type == 4.1:
+                        setting.newItemSpeedTime -= setting.speedTime * 0.5
+                    elif item.type == 4.3:
+                        setting.newItemSpeedTime += setting.speedTime * 0.5
                     setting.speedStore = setting.shipSpeed
                     setting.shipSpeed *= 1.3
                     setting.speedTimeOverLap += 1
@@ -449,7 +476,7 @@ def updateSlowtime(setting):
             sounds.slow_sound.stop()
 
 def updateSpeedtime(setting):
-    if setting.newItemSpeedTime !=0:
+    if setting.newItemSpeedTime != 0:
         if pg.time.get_ticks() - setting.newItemSpeedTime > setting.speedTime:
             setting.shipSpeed = setting.speedStore
             setting.speedTimeOverLap = 0
@@ -476,17 +503,33 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
             if alien.hitPoint <= 0 :
                 setting.explosions.add(alien.rect.x, alien.rect.y)
                 sounds.enemy_explosion_sound.play()
-                #if an enemy dies, it falls down an item randomly.
-                #use cumulative probability
-                i = random.randrange(100)
-                if i<=setting.probabilityHeal:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1, items)
-                if setting.probabilityHeal<i<=setting.probabilityHeal+setting.probabilityTime:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2, items)
-                if setting.probabilityHeal+setting.probabilityTime<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3, items)
-                if setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield<i<=setting.probabilityHeal+setting.probabilityTime+setting.probabilityShield+setting.probabilitySpeed:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4, items)
+                # if an enemy dies, it falls down an item randomly.
+                # use cumulative probability
+                i = random.randrange(1000)
+                if i <= setting.probabilityHealB:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1.1, items)
+                if setting.probabilityHealB < i <= setting.probabilityHealI:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1.2, items)
+                if setting.probabilityHealI < i <= setting.probabilityHealS:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1.3, items)
+                if setting.probabilityHealS < i <= setting.probabilityTimeB:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2.1, items)
+                if setting.probabilityTimeB < i <= setting.probabilityTimeI:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2.2, items)
+                if setting.probabilityTimeI < i <= setting.probabilityTimeS:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2.3, items)
+                if setting.probabilityTimeS < i <= setting.probabilityShieldB:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3.1, items)
+                if setting.probabilityShieldB < i <= setting.probabilityShieldI:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3.2, items)
+                if setting.probabilityShieldI < i <= setting.probabilityShieldS:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3.3, items)
+                if setting.probabilityShieldS < i <= setting.probabilitySpeedB:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4.1, items)
+                if setting.probabilitySpeedB < i <= setting.probabilitySpeedI:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4.2, items)
+                if setting.probabilitySpeedI < i <= setting.probabilitySpeedS:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4.3, items)
                 aliens.remove(alien)
 
 

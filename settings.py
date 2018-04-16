@@ -58,17 +58,25 @@ class Settings():
         self.shootTimer = 50
 
         #item probability %
-        self.probabilityHeal = 10
-        self.probabilityTime = 20
-        self.probabilityShield = 25
-        self.probabilitySpeed = 20
+        self.probabilityHealB = 50
+        self.probabilityHealI = 75
+        self.probabilityHealS = 85
+        self.probabilityTimeB = 185
+        self.probabilityTimeI = 235
+        self.probabilityTimeS = 255
+        self.probabilityShieldB = 405
+        self.probabilityShieldI = 480
+        self.probabilityShieldS = 505
+        self.probabilitySpeedB = 605
+        self.probabilitySpeedI = 655
+        self.probabilitySpeedS = 675
 
         #invincibile time
-        self.invincibileTime = 2000
+        self.invincibileTime = 3000
 
         #item_time Slow&Speed time
-        self.slowTime = 3000
-        self.speedTime = 8000
+        self.slowTime = 4500
+        self.speedTime = 9000
         self.speedTimeOverLap = 0
         self.speedStore = 0
 
