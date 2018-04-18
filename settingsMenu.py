@@ -4,6 +4,7 @@ import pygame as pg
 
 import sounds
 
+
 # Create a variable to change current button being selected
 
 image = pg.image.load('gfx/fixsetting4.png')
@@ -64,6 +65,11 @@ def buttonAction(stats, selectedName, bMenu, setting, sb):
         sys.exit()
     elif selectedName == 'speed setting':
         stats.setGameLoop('speedMenu')
+    elif selectedName == 'interception':
+        setting.checkBtnPressed += 1
+        if setting.checkBtnPressed % 2 != 0:
+            setting.interception = True
+        stats.setGameLoop('mainMenu')
 
 def drawMenu(setting, screen, sb, bMenu):
     """Draw the menu and all of its elements"""
