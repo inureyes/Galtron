@@ -371,7 +371,7 @@ def updateInvincibility(setting, screen, ship):
 def updateInvineffect(setting,screen,ship):
 	if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
 		image = pg.image.load('gfx/image_shield.png')
-		screen.blit(image, (ship.rect.x -7 , ship.rect.y ))            
+		screen.blit(image, (ship.rect.x -7 , ship.rect.y ))
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
@@ -573,6 +573,10 @@ def updateUltimateGauge(setting, screen, stats, sb):
     else:
         pg.draw.rect(screen, (255, 255, 255), (x, y, 100, 12), 0)
         pg.draw.rect(screen, (0, 255, 255), (x, y, gauge, 12), 0)
+    ultimatefont = pg.font.Font('Fonts/Square.ttf', 20)
+    ultimateStr = ultimatefont.render("Ultimate",True, (255,255,255), setting.bgColor)
+    ultimateStrpos = (x, y+12)
+    screen.blit(ultimateStr,ultimateStrpos)
 
 
 def UltimateDiamondShape(setting, screen, stats, sbullets, damage):
@@ -628,6 +632,10 @@ def drawChargeGauge(setting, screen, ship, sb):
     pg.draw.rect(screen, (255, 255, 255), (x, y, 100, 10), 0)
     pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
 
+    chargefont = pg.font.Font('Fonts/Square.ttf', 20)
+    chargeStr = chargefont.render("Charge",True, (255,255,255), setting.bgColor)
+    chargeStrpos = (x, y+10)
+    screen.blit(chargeStr,chargeStrpos)
 
 
 def drawBossHP(setting, screen):
