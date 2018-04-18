@@ -1,15 +1,15 @@
 import pygame as pg
 from pygame.sprite import Sprite
-from animations import AnimatedSprite
 
 import sounds
+from animations import AnimatedSprite
 from eBullet import EBullet
 
 
 class Alien(Sprite):
     """A class to represent a single alien in the fleet"""
 
-    def __init__(self, setting, screen, hitPoint=3, isboss = False):
+    def __init__(self, setting, screen, hitPoint=3, isboss=False):
         """Initialize the alien and set its starting point"""
         super(Alien, self).__init__()
         self.screen = screen
@@ -23,7 +23,7 @@ class Alien(Sprite):
         self.image = self.sprite.getFrame(0)
         self.image = pg.transform.rotate(self.image, 180)
         if self.isboss == True:
-            self.image = pg.transform.scale(self.image,(setting.screenWidth // 8, setting.screenWidth // 8))
+            self.image = pg.transform.scale(self.image, (setting.screenWidth // 8, setting.screenWidth // 8))
         self.rect = self.image.get_rect()
 
         # start each new alien near the top left of the screen
@@ -60,7 +60,6 @@ class Alien(Sprite):
 
     def update(self, setting, screen, ship, aliens, eBullets):
         """Move the alien right or left"""
-        import random
         self.ship = ship
         self.aliens = aliens
         self.eBullets = eBullets
@@ -77,7 +76,7 @@ class Alien(Sprite):
 
     def shoot(self, setting, screen, ship, aliens, eBullets):
         if setting.gameLevel == 'hard':
-            setting.shootTimer = 10     # default = 50
+            setting.shootTimer = 10  # default = 50
 
         if self.isboss == False:
             setting.shootTimer = 50
@@ -112,5 +111,3 @@ class Alien(Sprite):
     def blitme(self):
         """draw hte alien"""
         self.screen.blit(self.image, self.rect)
-
-

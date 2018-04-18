@@ -49,11 +49,11 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 def buttonAction(stats, selectedName, ship):
     if selectedName in ('grey', 'red', 'blue'):
         color = selectedName
-        if color == 'grey' :
+        if color == 'grey':
             stats.setting.playerShipColor = 'gray'
-        elif color == 'red' :
+        elif color == 'red':
             stats.setting.playerShipColor = 'red'
-        elif color == 'blue' :
+        elif color == 'blue':
             stats.setting.playerShipColor = 'blue'
         stats.setGameLoop('mainGame')
     elif selectedName == 'menu':

@@ -1,10 +1,9 @@
-﻿# Learning OSS development through GitHub
+# Learning OSS development through GitHub
 
 
 
 | Participant   | Role       | ETC |
-|===============|============|=====|
-| Jeongkyu Shin | Instructor |     |
+|---------------|------------|-----|
 | Jeongkyu Shin | Instructor |     |
 | Lee jaehee    | student    |     |
 | Minseok  Kang | Student    |     |
@@ -13,12 +12,16 @@
 | Jaewoo Yang   | Student    |     |
 | Cho young il  | Student    |     |
 | Jinsung An    | Student    |     |
-| Minwoo Son	  | Student    |     |
+| Minwoo Son	| Student    |     |
 | Kim Dain      | Student    |     |
 | Jeongin Lee   | Student    |     |
 | Minwoo Son	  | Student    |     |
 | Jeongin Lee   | Student.   |     |
 | Minwoo Son.   | Student    |     |
+| Jeongin Lee   | Student.   |     |
+| Minwoo Son.   | Student    |     |
+| Jeongin Lee   | Student.   |     |
+| Minwoo Son.   | Student    |     |
 | Kim Dain      | Student    |     |
 | Jeongin Lee   | Student    |     |
 | YK            | Student    |     |
@@ -35,10 +38,10 @@
 | Hoesung  Jung | Student^^7 | Nerd|
 | Hyunjun Lee   | Student    |     |
 | Minseok  Kang | Student    |     |
-| Jaehun Kim.   | student.   |     |
+| Jaehun Kim    | student    |     |
 | Hansae Ju     | Student    |     |
 | ChaeHyun Baek | Student    |     |
-| Kim Tae Yoon           | Student    |     |
+| Kim Tae Yoon  | Student    |     |
 | KeonWoong Noh | Student    |     |
 | Onyu Park     | Student    |     |
 | TaeWoong Kong | Student    |     |
@@ -59,15 +62,15 @@
 | Yejun Kim     | Student    |     |
 | Yunjea Nam    | Student    |     |
 | Cho young il  | Student    |     |
-| Yerim Hwang	| Student    |     |
+| Yerim Hwang   | Student    |     |
 | Kim yong jun  | Student    |     |
-| Yerim Hwang	| Student    |     |
+| Yerim Hwang   | Student    |     |
 | Minjun Kim    | Student    |     |
 | JaeHun Lee    | Student    |     |
 | Taewan Park   | Student    |     |
 | HoJin Seo     | Student    |     |
 | Sungho Yun    | Student    |     |
-| Keunmo Koo.   | Genius     |     |
+| Keunmo Koo    | Genius     |     |
 
 
 
