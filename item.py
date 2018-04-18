@@ -11,14 +11,30 @@ class Item(Sprite):
         self.stats = stats
 
         #add item types if you want
-        if(type==1):
-            self.image = pg.image.load('gfx/item_heal2.png')
-        elif(type==2):
-            self.image = pg.image.load('gfx/item_time.png')
-        elif(type==3):
-            self.image = pg.image.load('gfx/item_shield.png')
-        elif(type==4):
-            self.image = pg.image.load('gfx/item_speed.png')
+        if type == 1.1:
+            self.image = pg.image.load('gfx/item_heal2_B.png')
+        elif type == 1.2:
+            self.image = pg.image.load('gfx/item_heal2_I.png')
+        elif type == 1.3:
+            self.image = pg.image.load('gfx/item_heal2_S.png')
+        elif type == 2.1:
+            self.image = pg.image.load('gfx/item_time_B.png')
+        elif type == 2.2:
+            self.image = pg.image.load('gfx/item_time_I.png')
+        elif type == 2.3:
+            self.image = pg.image.load('gfx/item_time_S.png')
+        elif type == 3.1:
+            self.image = pg.image.load('gfx/item_shield_B.png')
+        elif type == 3.2:
+            self.image = pg.image.load('gfx/item_shield_I.png')
+        elif type == 3.3:
+            self.image = pg.image.load('gfx/item_shield_S.png')
+        elif type == 4.1:
+            self.image = pg.image.load('gfx/item_speed_B.png')
+        elif type == 4.2:
+            self.image = pg.image.load('gfx/item_speed_I.png')
+        elif type == 4.3:
+            self.image = pg.image.load('gfx/item_speed_S.png')
 
         self.type = type
 

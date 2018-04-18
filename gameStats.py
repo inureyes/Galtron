@@ -26,6 +26,7 @@ class GameStats():
         self.highScore = 0
         self.highScoreSaveFileName = 'data-files/highscore.json'
         self.resetStats()
+        self.exiton = 0
 
         #########
         # self.gameLevel = 0
