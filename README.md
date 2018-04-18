@@ -1,4 +1,4 @@
-﻿# Learning OSS development through GitHub
+# Learning OSS development through GitHub
 
 
 
@@ -14,6 +14,12 @@
 | Jinsung An    | Student    |     |
 | Minwoo Son	| Student    |     |
 | Kim Dain      | Student    |     |
+| Jeongin Lee   | Student    |     |
+| Minwoo Son	  | Student    |     |
+| Jeongin Lee   | Student.   |     |
+| Minwoo Son.   | Student    |     |
+| Jeongin Lee   | Student.   |     |
+| Minwoo Son.   | Student    |     |
 | Jeongin Lee   | Student.   |     |
 | Minwoo Son.   | Student    |     |
 | Kim Dain      | Student    |     |
