@@ -12,11 +12,9 @@
 | Jaewoo Yang   | Student    |     |
 | Cho young il  | Student    |     |
 | Jinsung An    | Student    |     |
-| Minwoo Son    | Student    |     |
+| Minwoo Son	| Student    |     |
 | Kim Dain      | Student    |     |
-| Jeongin Lee   | Student    |     |
-| Minwoo Son    | Student    |     |
-| Jeongin Lee   | Student    |     |
+| Jeongin Lee   | Student.   |     |
 | Minwoo Son.   | Student    |     |
 | Kim Dain      | Student    |     |
 | Jeongin Lee   | Student    |     |
