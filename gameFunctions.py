@@ -650,15 +650,9 @@ def updateUltimateGauge(setting, screen, stats, sb):
         pg.draw.rect(screen, (255, 255, 255), (x, y, 100, 12), 0)
         pg.draw.rect(screen, (0, 255, 255), (x, y, gauge, 12), 0)
     ultimatefont = pg.font.Font('Fonts/Square.ttf', 20)
-<<<<<<< HEAD
-    ultimateStr = ultimatefont.render("Ultimate",True, (255,255,255), setting.bgColor)
-    ultimateStrpos = (x, y+12)
-    screen.blit(ultimateStr,ultimateStrpos)
-=======
     ultimateStr = ultimatefont.render("Ultimate", True, (255, 255, 255), setting.bgColor)
     ultimateStrpos = (x, y + 12)
     screen.blit(ultimateStr, ultimateStrpos)
->>>>>>> 23d39c5cce5e8ed43c7a7b9b2607b84c39de53a7
 
 
 def UltimateDiamondShape(setting, screen, stats, sbullets, damage):
@@ -715,15 +709,9 @@ def drawChargeGauge(setting, screen, ship, sb):
     pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
 
     chargefont = pg.font.Font('Fonts/Square.ttf', 20)
-<<<<<<< HEAD
-    chargeStr = chargefont.render("Charge",True, (255,255,255), setting.bgColor)
-    chargeStrpos = (x, y+10)
-    screen.blit(chargeStr,chargeStrpos)
-=======
     chargeStr = chargefont.render("Charge", True, (255, 255, 255), setting.bgColor)
     chargeStrpos = (x, y + 10)
     screen.blit(chargeStr, chargeStrpos)
->>>>>>> 23d39c5cce5e8ed43c7a7b9b2607b84c39de53a7
 
 
 def drawBossHP(setting, screen):

@@ -78,15 +78,9 @@ class Scoreboard():
             self.screen.blit(self.lifeImage, self.lifeImageRect)
             self.lifeImageRect.x += self.lifeImageRect.width + 10
         lifefont = pg.font.Font('Fonts/Square.ttf', 20)
-<<<<<<< HEAD
-        lifeStr = lifefont.render("Life",True, (255,255,255), self.setting.bgColor)
-        lifeStrpos = (self.lifeImageRect.x -35, self.lifeImageRect.y+40)
-        self.screen.blit(lifeStr,lifeStrpos)
-=======
         lifeStr = lifefont.render("Life", True, (255, 255, 255), self.setting.bgColor)
         lifeStrpos = (self.lifeImageRect.x - 35, self.lifeImageRect.y + 40)
         self.screen.blit(lifeStr, lifeStrpos)
->>>>>>> 23d39c5cce5e8ed43c7a7b9b2607b84c39de53a7
 
     def prepCounter(self, active):
         self.counterImg = self.font.render(str(self.stats.counter), True, self.textColor,

@@ -4,15 +4,7 @@ from pygame.sprite import Group
 
 import about as About
 import gameFunctions as gf  # Event checker and update screen
-<<<<<<< HEAD
 import intro  # intro video making
-<<<<<<< HEAD
-=======
-import intro #intro video making
->>>>>>> 9a7759e9e5e0855c3f80663620dad6184d35898f
-import mainMenu as mm  # Main menu
-=======
->>>>>>> 23d39c5cce5e8ed43c7a7b9b2607b84c39de53a7
 import levelMenu as lm  # select game level(hard/easy)
 import mainMenu as mm  # Main menu
 import playMenu as pm  # choosing ship color
@@ -25,10 +17,6 @@ from background import BackgroundManager
 from buttonMenu import ButtonMenu
 from gameStats import GameStats  # Game stats that are changed during the duration of the game
 from scoreboard import Scoreboard  # Score board for points, high score, lives, level ect.
-<<<<<<< HEAD
-=======
-from selector import Selector  # Import the main menu selector
->>>>>>> 9a7759e9e5e0855c3f80663620dad6184d35898f
 # import self made classes
 from settings import Settings
 from ship import Ship
@@ -42,17 +30,12 @@ def runGame():
     # creaete a new object from pygame display
     screen = pg.display.set_mode((setting.screenWidth, setting.screenHeight))
 
-<<<<<<< HEAD
     # intro
-=======
-    #intro
->>>>>>> 9a7759e9e5e0855c3f80663620dad6184d35898f
     intro.introimages()
 
     # set window caption using settings obj
     pg.display.set_caption(setting.windowCaption)
 
-<<<<<<< HEAD
     bMenu = ButtonMenu(screen)
     bMenu.addButton("play", "PLAY")
     bMenu.addButton("menu", "BACK")
@@ -109,22 +92,6 @@ def runGame():
     bgManager.addBackground("universe_1", "gfx/backgrounds/stars_back.png", 0, 1)
     bgManager.addBackground("universe_1", "gfx/backgrounds/stars_front.png", 0, 1.5)
     bgManager.selectBackground("universe_1")
-=======
-    playBtn = Button(setting, screen, "PLAY", 200)
-    menuBtn = Button(setting, screen, "MENU", 250)
-    twoPlayBtn = Button(setting, screen, "2PVS", 250)
-    setBtnbtn = Button(setting, screen, "SETTING", 400)
-    bgcrbtn = Button(setting, screen, "CL REV", 500)
-    aboutBtn = Button(setting, screen, "ABOUT", 300)
-    quitBtn = Button(setting, screen, "QUIT", 400)
-    greyBtn = Button(setting, screen, "GREY", 200)
-    redBtn = Button(setting, screen, "RED", 250)
-    blueBtn = Button(setting, screen, "BLUE", 300)
-    # make slector for buttons
-    sel = Selector(setting, screen)
-    sel.rect.x = playBtn.rect.x + playBtn.width + 10
-    sel.rect.centery = playBtn.rect.centery
->>>>>>> 9a7759e9e5e0855c3f80663620dad6184d35898f
 
     # Create an instance to stor game stats
     stats = GameStats(setting)
@@ -147,11 +114,7 @@ def runGame():
 
     # Make an alien
     aliens = Group()
-<<<<<<< HEAD
     gf.createFleet(setting, stats, screen, ship, aliens)
-=======
-    gf.createFleet(setting, screen, ship, aliens)
->>>>>>> 9a7759e9e5e0855c3f80663620dad6184d35898f
     pg.display.set_icon(pg.transform.scale(ship.image, (32, 32)))
 
     bgImage = pg.image.load('gfx/title_c.png')
@@ -202,11 +165,8 @@ def runGame():
             pm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             pm.drawMenu(setting, screen, sb, bMenu)
 
-<<<<<<< HEAD
         bMenu.setMenuButtons(mainGameButtons)
 
-=======
->>>>>>> 9a7759e9e5e0855c3f80663620dad6184d35898f
         while stats.mainGame:
             # Game functions
             gf.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets,
@@ -222,20 +182,12 @@ def runGame():
                 gf.updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, items)
                 ship.update(bullets, aliens)  # update the ship
                 # Update the screen
-<<<<<<< HEAD
-<<<<<<< HEAD
-            gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, bMenu, bgManager, items)
-=======
             gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, charged_bullets, bMenu,
                             bgManager, items)
->>>>>>> 23d39c5cce5e8ed43c7a7b9b2607b84c39de53a7
 
         bMenu.setMenuButtons(aboutButtons)
         bMenu.setPos(None, 500)
 
-=======
-            gf.updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, playBtn, menuBtn, quitBtn, sel)
->>>>>>> 9a7759e9e5e0855c3f80663620dad6184d35898f
         while stats.mainAbout:
             About.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             About.drawMenu(setting, screen, sb, bMenu, aboutImage, aboutImageRect)
@@ -245,22 +197,11 @@ def runGame():
             if stats.gameActive:
                 ship1.update(bullets, aliens)
                 ship2.update(bullets, aliens)
-<<<<<<< HEAD
                 tp.updateBullets(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, items)
             tp.updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, bMenu, items)
 
         bMenu.setMenuButtons(settingsMenuButtons)
 
-=======
-                tp.updateBullets(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets)
-            tp.updateScreen(setting, screen, stats, sb, ship1, ship2, aliens, bullets, eBullets, playBtn, menuBtn,
-                            quitBtn, sel)
-
-        #				ship1.update(bullets)
-        #				ship2.update(bullets)
-        #				tp.updateBullets(setting, screen, stats, ship1, ship2, bullets, eBullets)
-        #			tp.updateScreen(setting, screen, stats, bullets, eBullets, playBtn, menuBtn, quitBtn, sel, ship1, ship2)
->>>>>>> 9a7759e9e5e0855c3f80663620dad6184d35898f
         while stats.settingsMenu:
             sm.checkEvents1(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             sm.drawMenu(setting, screen, sb, bMenu)
