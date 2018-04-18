@@ -20,6 +20,7 @@ boss = None
 
 gameOverButtons = ["retry", "menu", "quit"]
 pauseButtons = ["play", "menu", "quit"]
+exitButtons = ["yes", "no"]
 
 
 def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets, charged_bullets):
@@ -83,6 +84,13 @@ def buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eB
     elif selectedName == 'quit':
         pg.time.delay(300)
         sys.exit()
+    elif selectedName == 'yes':
+        sounds.button_click_sound.play()
+        pg.time.delay(300)
+        sys.exit()
+    elif selectedName == 'no':
+        stats.exiton = 0
+        checkPlayBtn(setting, screen, stats, ship, aliens, bullets, eBullets)
 
 
 def checkKeydownEvents(event, setting, screen, stats, sb, ship, aliens, bullets, eBullets):
@@ -120,6 +128,8 @@ def checkKeydownEvents(event, setting, screen, stats, sb, ship, aliens, bullets,
         useUltimate(setting, screen, stats, bullets, stats.ultimatePattern, ship)
         # Check for pause key
     elif event.key == pg.K_p or event.key == 181:
+        sounds.paused.play()
+        pause(stats)
         if not stats.paused and stats.gameActive:
             sounds.paused.play()
             pause(stats)
@@ -141,6 +151,9 @@ def checkKeydownEvents(event, setting, screen, stats, sb, ship, aliens, bullets,
         resetGame()
     elif event.key == pg.K_ESCAPE:
         # Quit game
+        sounds.paused.play()
+        stats.exiton +=1
+        exitm(stats)
         sounds.button_click_sound.play()
         pg.time.delay(300)
         sys.exit()
@@ -176,6 +189,11 @@ def pause(stats):
     """Pause the game when the pause button is pressed"""
     stats.gameActive = False
     stats.paused = True
+
+def exitm(stats):
+    """Pause the game when the pause button is pressed"""
+    stats.gameActive = False
+
 
 
 def resetGame():
@@ -307,6 +325,11 @@ def changeFleetDir(setting, aliens):
                 alien.rect.y += setting.fleetDropSpeed
             elif setting.gameLevel == 'hard':
                 alien.rect.y += (setting.fleetDropSpeed + 3)
+        else:
+            if alien.rect.y < int(setting.screenHeight * 0.8):
+                alien.rect.y += 50
+            else:
+                alien.rect.y -= 50
     setting.fleetDir *= -1
 
 
@@ -337,18 +360,19 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 def updateInvincibility(setting, screen, ship):
     if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
         if pg.time.get_ticks()%2 == 1:
-            isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width,ship.images[ship.imgCenter].get_rect().height))
+            isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width, ship.images[ship.imgCenter].get_rect().height))
             isurf.set_alpha(150)
             screen.blit(isurf, (ship.rect.x, ship.rect.y))
         else:
-            isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width,ship.images[ship.imgCenter].get_rect().height))
+            isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width, ship.images[ship.imgCenter].get_rect().height))
             isurf.set_alpha(200)
             screen.blit(isurf, (ship.rect.x, ship.rect.y))
 
-def updateInvineffect(setting,screen,ship):
-	if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
-		image = pg.image.load('gfx/image_shield.png')
-		screen.blit(image, (ship.rect.x -7 , ship.rect.y ))
+def updateInvineffect(setting, screen, ship):
+    if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
+        image = pg.image.load('gfx/image_shield.png')
+        screen.blit(image, (ship.rect.x -7 , ship.rect.y ))            
+
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
@@ -489,6 +513,7 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
     collisions = pg.sprite.groupcollide(aliens, bullets, False, False)
     collisions.update(pg.sprite.groupcollide(aliens, charged_bullets, False, False))
     if collisions:
+        sounds.enemy_explosion_sound.play()
         sounds.enemy_damaged_sound.play()
 
         for alien in collisions :
@@ -531,7 +556,6 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 if setting.probabilitySpeedI < i <= setting.probabilitySpeedS:
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4.3, items)
                 aliens.remove(alien)
-
 
         # Increase the ultimate gauge, upto 100
         if not collisions[alien][0].isUltimate:
@@ -600,6 +624,10 @@ def updateUltimateGauge(setting, screen, stats, sb):
     else:
         pg.draw.rect(screen, (255, 255, 255), (x, y, 100, 12), 0)
         pg.draw.rect(screen, (0, 255, 255), (x, y, gauge, 12), 0)
+    ultimatefont = pg.font.Font('Fonts/Square.ttf', 20)
+    ultimateStr = ultimatefont.render("Ultimate",True, (255,255,255), setting.bgColor)
+    ultimateStrpos = (x, y+12)
+    screen.blit(ultimateStr,ultimateStrpos)
 
 
 def UltimateDiamondShape(setting, screen, stats, sbullets, damage):
@@ -630,7 +658,7 @@ def useUltimate(setting, screen, stats, sbullets, pattern, ship):
         sounds.ult_attack.play()
         UltimateDiamondShape(setting, screen, stats, sbullets, ship.damage)
     # elif pattern == 2:
-    #		make other pattern
+    # make other pattern
     stats.ultimateGauge = 0
 
 
@@ -655,6 +683,10 @@ def drawChargeGauge(setting, screen, ship, sb):
     pg.draw.rect(screen, (255, 255, 255), (x, y, 100, 10), 0)
     pg.draw.rect(screen, color, (x, y, ship.chargeGauge, 10), 0)
 
+    chargefont = pg.font.Font('Fonts/Square.ttf', 20)
+    chargeStr = chargefont.render("Charge",True, (255,255,255), setting.bgColor)
+    chargeStrpos = (x, y+10)
+    screen.blit(chargeStr,chargeStrpos)
 
 
 def drawBossHP(setting, screen):
@@ -681,7 +713,7 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     # Redraw the screen during each pass through the loop
     # Fill the screen with background color
     # Readjust the quit menu btn position
-    global clock, FPS, gameOverButtons, pauseButtons, boss
+    global clock, FPS, gameOverButtons, exitButtons, pauseButtons, boss
     bMenu.drawMenu()
     bgManager.update()
     bgManager.draw()
@@ -709,8 +741,8 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
     #Shield if ship is invincibile
     updateInvincibility(setting, screen, ship)
 
-	#shield effect of the ship
-    updateInvineffect(setting,screen,ship)
+    #shield effect of the ship
+    updateInvineffect(setting, screen, ship)
 
     # Update Item_time
     updateSlowtime(setting)
@@ -742,6 +774,13 @@ def updateScreen(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ch
             screen.blit(scoreImg, ((setting.screenWidth - scoreImg.get_width()) / 2, 120))
             screen.blit(setting.gameOverImage, (20, 30))
         else:
+            if (stats.exiton > 0):
+                exitImg = pg.font.Font('Fonts/Square.ttf', 35).render("ARE YOU SURE YOU EXIT GAME?", True, (0, 0, 0),
+                                                                   (255, 255, 255))
+                screen.blit(exitImg, ((setting.screenWidth - exitImg.get_width()) / 2, 120))
+                bMenu.setMenuButtons(exitButtons)
+            else:
+                bMenu.setMenuButtons(pauseButtons)
             bMenu.setMenuButtons(pauseButtons)
         bMenu.drawMenu()
     setting.explosions.draw(screen)
