@@ -68,16 +68,11 @@ def runGame():
 
     mainGameButtons = ["play", "menu", "quit"]
     aboutButtons = ["menu", "quit"]
-    settingsMenuButtons = ["menu", "invert","speed setting","interception","quit"]
-    speedButtons = ["fast","middle","slow"]
-    settingsMenuButtons = ["menu", "invert","speed setting","sound","quit"]
-    speedButtons = ["fast","middle","slow","menu"]
 
     soundButtons =["loud","low","menu"]
-    settingsMenuButtons = ["menu", "invert","speed setting","quit"]
-    speedButtons = ["fast","middle","slow"]
-    settingsMenuButtons = ["menu", "invert","speed setting","quit"]
-    speedButtons = ["fast","middle","slow","menu"]
+
+    settingsMenuButtons = ["menu", "invert","speed setting","interception","quit"]
+    speedButtons = ["menu","fast","middle","slow"]
     
     bgManager = BackgroundManager(screen)
     bgManager.setFillColor((0, 0, 0))
