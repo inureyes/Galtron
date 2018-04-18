@@ -66,9 +66,11 @@ class Settings():
         #invincibile time
         self.invincibileTime = 2000
 
-        #item_time Slow time
+        #item_time Slow&Speed time
         self.slowTime = 3000
-        self.speedTime = 7000
+        self.speedTime = 8000
+        self.speedTimeOverLap = 0
+        self.speedStore = 0
 
         #Player ship
         self.playerShipColor = 'gray'
