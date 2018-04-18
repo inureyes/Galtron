@@ -123,6 +123,11 @@ def runGame():
     sounds.stage_clear.play()
     # Set the two while loops to start mainMenu first
     while rungame:
+        # mainmenu BGM ON
+        pg.mixer.music.load('sound_bgms/galtron-stage.mp3')
+        pg.mixer.music.set_volume(0.25)
+        pg.mixer.music.play(-1)
+
         # Set to true to run main game loop
         bMenu.setMenuButtons(mainMenuButtons)
         while stats.mainMenu:
@@ -152,6 +157,12 @@ def runGame():
         while stats.playMenu:
             pm.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets)
             pm.drawMenu(setting, screen, sb, bMenu)
+
+        # stage BGM ON
+        pg.mixer.music.stop()
+        pg.mixer.music.load('sound_bgms/galtron.mp3')
+        pg.mixer.music.set_volume(0.3)
+        pg.mixer.music.play(-1)
 
         bMenu.setMenuButtons(mainGameButtons)
 
