@@ -1,10 +1,10 @@
+import math
+
 import pygame as pg
 from pygame.sprite import *
 
-import math
 from bullet import Bullet
 from playMenu import *
-
 
 
 class Ship(Sprite):
@@ -48,7 +48,7 @@ class Ship(Sprite):
             'gfx/player_ship/gray/player_ship_right1.png',
             'gfx/player_ship/gray/player_ship_right2.png',
             'gfx/player_ship/gray/player_ship_right3.png',
-            'gfx/player_ship/gray/player_ship_right4.png')        
+            'gfx/player_ship/gray/player_ship_right4.png')
 
         self.images_red = []
         for path in self.imagesPath_red:
@@ -151,11 +151,11 @@ class Ship(Sprite):
                 self.chargeGauge = 0
 
         # update rect object from self.center
-        if self.setting.playerShipColor == 'gray' :
+        if self.setting.playerShipColor == 'gray':
             self.images = self.images_gray
-        elif self.setting.playerShipColor == 'red' :
+        elif self.setting.playerShipColor == 'red':
             self.images = self.images_red
-        elif self.setting.playerShipColor == 'blue' :
+        elif self.setting.playerShipColor == 'blue':
             self.images = self.images_blue
 
         self.rect.centerx = self.center

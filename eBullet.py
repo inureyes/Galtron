@@ -5,13 +5,13 @@ from pygame.sprite import *
 class EBullet(Sprite):
     """A class to manage bullets fired from the alien"""
 
-    def __init__(self, setting, screen, alien, boss_bullet = 0):
+    def __init__(self, setting, screen, alien, boss_bullet=0):
         """Create a bullet object at the ships current position"""
         super(EBullet, self).__init__()
         self.screen = screen
 
         # load the bullet image and set its rect attribute
-        self.image = pg.image.load('gfx/ebullet.bmp')
+        self.image = pg.image.load('gfx/eBullet.png')
         self.rect = self.image.get_rect()
         self.boss_bullet = boss_bullet
         # Create a collision mask
@@ -37,7 +37,6 @@ class EBullet(Sprite):
         # store the bullets position as a decimal value
         self.y = float(self.rect.y)
         self.x = float(self.rect.x)
-        self.color = setting.bulletColor
         self.setting = setting
 
     def update(self, alien):

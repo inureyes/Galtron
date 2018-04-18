@@ -1,9 +1,7 @@
 import pygame as pg
 import pygame.font
-from pygame.sprite import Group
 
 import utilityFunctions
-from ship import Ship
 
 getInvertedRGB = utilityFunctions.getInvertedRGB
 
@@ -23,7 +21,7 @@ class Scoreboard():
         self.font = pygame.font.Font('Fonts/Square.ttf', 20)
 
         self.lifeImage = pg.image.load('gfx/player_ship/red/player_ship.png')
-        self.lifeImage = pg.transform.scale(self.lifeImage,(30,30))
+        self.lifeImage = pg.transform.scale(self.lifeImage, (30, 30))
         self.lifeImageRect = self.lifeImage.get_rect()
 
         # Prepare the initial score image
@@ -41,7 +39,6 @@ class Scoreboard():
         scoreStr += "{:,}".format(roundedScore)
         self.scoreImg = self.font.render(scoreStr, True, self.textColor,
                                          self.setting.bgColor)
-
 
         # Display the score at the top left corner
         self.scoreRect = self.scoreImg.get_rect()
@@ -72,14 +69,18 @@ class Scoreboard():
 
     def drawLife(self):
         """Show how many lives are left/ships"""
-        self.lifeImage = pg.image.load('gfx/player_ship/'+self.setting.playerShipColor+'/player_ship.png')
-        self.lifeImage = pg.transform.scale(self.lifeImage,(30,30))
+        self.lifeImage = pg.image.load('gfx/player_ship/' + self.setting.playerShipColor + '/player_ship.png')
+        self.lifeImage = pg.transform.scale(self.lifeImage, (30, 30))
         self.lifeImageRect = self.lifeImage.get_rect()
         self.lifeImageRect.x = 10
         self.lifeImageRect.y = self.scoreRect.bottom + 2
         for i in range(self.stats.shipsLeft):
             self.screen.blit(self.lifeImage, self.lifeImageRect)
             self.lifeImageRect.x += self.lifeImageRect.width + 10
+        lifefont = pg.font.Font('Fonts/Square.ttf', 20)
+        lifeStr = lifefont.render("Life", True, (255, 255, 255), self.setting.bgColor)
+        lifeStrpos = (self.lifeImageRect.x - 35, self.lifeImageRect.y + 40)
+        self.screen.blit(lifeStr, lifeStrpos)
 
     def prepCounter(self, active):
         self.counterImg = self.font.render(str(self.stats.counter), True, self.textColor,

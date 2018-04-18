@@ -24,7 +24,6 @@ class ButtonMenu():
     def addButton(self, name, msg):
         self.buttons[name] = Button(self.screen, msg, self.btnWidth, self.btnHeight)
 
-    
     def removeButton(self, name):
         if name in self.buttons:
             del self.buttons[name]
@@ -121,11 +120,11 @@ class ButtonMenu():
         for name in self.menuButtons:
             self.setButtonPos(name, self.x, btnY)
             btnY += offsetY
-    
+
     def drawButton(self, name):
         if name in self.buttons:
             self.buttons[name].drawBtn()
-    
+
     def drawMenuButtons(self):
         for name in self.menuButtons:
             self.drawButton(name)
@@ -205,13 +204,13 @@ class Selector():
     def draw(self):
         self.screen.blit(self.image, self.rect)
 
+
 class CurrentState():
-    def __init__(self,screen,current):
+    def __init__(self, screen, current):
         self.screen = screen
         self.image = pg.image.load('gfx/ebullet.bmp')
-        self.image = pg.transform.scale(self.image,(10,10))
+        self.image = pg.transform.scale(self.image, (10, 10))
         self.current = current
 
     def draw(self):
         self.screen.blit(self.image, self.current)
-
