@@ -26,7 +26,6 @@ class GameStats():
         self.highScoreSaveFileName = 'data-files/highscore.json'
         self.resetStats()
         self.exiton = 0
-
         #########
         # self.gameLevel = 0
 
@@ -57,7 +56,7 @@ class GameStats():
         elif loop == 'levelMenu':
             self.levelMenu = True
         elif loop == 'speedMenu':
-            self.speedMenu = True    
+            self.speedMenu = True
 
     def resetStats(self):
         """initialize statistics that can change during the game"""
