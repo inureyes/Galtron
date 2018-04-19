@@ -157,6 +157,8 @@ def runGame():
 
         while stats.mainGame:
             # Game functions
+            if(setting.gameLevel == 'hard'):
+                setting.probability = 10
             gf.checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBullets,
                            charged_bullets)  # Check for events
             # Reset Game

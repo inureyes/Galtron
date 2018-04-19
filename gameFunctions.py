@@ -64,7 +64,7 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                     mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
                     if mouseBtn is not None:
                         sounds.select_menu.play()
-                        buttonAction(stats, mouseBtnName, setting, screen, ship, aliens, bullets, eBullets)
+                        buttonAction(stats, mouseBtnName, setting, screen, ship, aliens, bullets, eBullets, charged_bullets)
 
 
 def buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets, charged_bullets):
@@ -539,31 +539,10 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                 sounds.enemy_explosion_sound.play()
                 # if an enemy dies, it falls down an item randomly.
                 # use cumulative probability
-                i = random.randrange(1000)
-                if i <= setting.probabilityHealB:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1.1, items)
-                if setting.probabilityHealB < i <= setting.probabilityHealI:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1.2, items)
-                if setting.probabilityHealI < i <= setting.probabilityHealS:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 1.3, items)
-                if setting.probabilityHealS < i <= setting.probabilityTimeB:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2.1, items)
-                if setting.probabilityTimeB < i <= setting.probabilityTimeI:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2.2, items)
-                if setting.probabilityTimeI < i <= setting.probabilityTimeS:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 2.3, items)
-                if setting.probabilityTimeS < i <= setting.probabilityShieldB:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3.1, items)
-                if setting.probabilityShieldB < i <= setting.probabilityShieldI:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3.2, items)
-                if setting.probabilityShieldI < i <= setting.probabilityShieldS:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 3.3, items)
-                if setting.probabilityShieldS < i <= setting.probabilitySpeedB:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4.1, items)
-                if setting.probabilitySpeedB < i <= setting.probabilitySpeedI:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4.2, items)
-                if setting.probabilitySpeedI < i <= setting.probabilitySpeedS:
-                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4.3, items)
+                i = random.randrange(1,101)
+                if(setting.probability >= i):
+                    itemType = float("{0:.1f}".format(random.randrange(1,5)+random.uniform(0.1,0.3)))
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, itemType, items)
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100
