@@ -5,6 +5,9 @@ import pygame as pg
 import sounds
 from time import sleep
 from alien import Alien
+
+pauseBtnState = 1
+back = False
 from bullet import Bullet, SpecialBullet
 from item import Item
 
@@ -337,14 +340,22 @@ def shipHit(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
 
 def updateInvincibility(setting, screen, ship):
     if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
-        if pg.time.get_ticks()%2 == 1:
-            isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width,ship.images[ship.imgCenter].get_rect().height))
+        if pg.time.get_ticks() % 2 == 1:
+            isurf = pg.Surface(
+                (ship.images[ship.imgCenter].get_rect().width, ship.images[ship.imgCenter].get_rect().height))
             isurf.set_alpha(150)
             screen.blit(isurf, (ship.rect.x, ship.rect.y))
         else:
-            isurf = pg.Surface((ship.images[ship.imgCenter].get_rect().width,ship.images[ship.imgCenter].get_rect().height))
+            isurf = pg.Surface(
+                (ship.images[ship.imgCenter].get_rect().width, ship.images[ship.imgCenter].get_rect().height))
             isurf.set_alpha(200)
             screen.blit(isurf, (ship.rect.x, ship.rect.y))
+
+
+def updateShieldEffect(setting, screen, ship):
+    if pg.time.get_ticks() - setting.newStartTime < setting.invincibileTime:
+        image = pg.image.load('gfx/image_shield.png')
+        screen.blit(image, (ship.rect.x - 7, ship.rect.y))
 
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
