@@ -64,7 +64,7 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
                     mouseBtnName, mouseBtn = bMenu.mouseCheck(pos[0], pos[1])
                     if mouseBtn is not None:
                         sounds.select_menu.play()
-                        buttonAction(stats, mouseBtnName, setting, screen, ship, aliens, bullets, eBullets)
+                        buttonAction(stats, mouseBtnName, setting, screen, ship, aliens, bullets, eBullets, charged_bullets)
 
 
 def buttonAction(stats, selectedName, setting, screen, ship, aliens, bullets, eBullets, charged_bullets):
