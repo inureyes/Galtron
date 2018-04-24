@@ -118,14 +118,8 @@ class Settings():
             self.alienSpeed *= self.speedUp
             self.fleetDropSpeed *= self.speedUp
 
-
-            # self.alienPoints = int(self.alienPoints * self.scoreSpeedUp)
-            # self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
-
     def setIncreaseScoreSpeed(self, level):
-        self.alienPoints = int(self.alienPoints + ((level - 1) * 10))
-
-        self.alienPoints = int(self.alienPoints + self.scoreSpeedUp)
+        self.alienPoints = int(self.alienPoints + self.scoreSpeedUp + ((level - 1) * 10))
 
     def halfspeed(self):
         if self.Limit >= -1 and self.shipSpeed > 0 and self.bulletSpeed > 0 and self.alienSpeed > 0 and self.fleetDropSpeed > 0:
@@ -134,9 +128,9 @@ class Settings():
             self.alienSpeed *= 0.8
             self.alienbulletSpeed *= 0.8
             self.fleetDropSpeed *= 0.8
-            self.alienPoints *= 0.8  # nerf earning points in lower speed
             self.globalGameSpeed *= 0.8
             self.Limit -= 1
+            self.alienPoints = int(self.alienPoints * 0.8)  # nerf earning points in lower speed
 
     def doublespeed(self):
         if self.Limit < 5:
@@ -148,3 +142,4 @@ class Settings():
             self.alienPoints *= 1.3
             self.globalGameSpeed *= 1.3
             self.Limit += 1
+            self.alienPoints = int(self.alienPoints * 1.3)
