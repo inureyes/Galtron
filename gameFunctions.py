@@ -269,6 +269,8 @@ def createBoss(setting, stats, screen, aliens, alienNumber, rowNumber):
     alien.rect.x = setting.screenWidth / 2
     alien.rect.y = 80
     aliens.add(alien)
+    #boss easter egg
+    alien.image = pg.image.load('gfx/boss.png')
     boss = alien
 
 
