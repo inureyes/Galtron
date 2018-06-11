@@ -634,7 +634,9 @@ def updateUltimateGauge(setting, screen, stats, sb):
         pg.draw.rect(screen, (0, 255, 255), (x, y, gauge, 12), 0)
     ultimatefont = pg.font.Font('Fonts/Square.ttf', 20)
     ultimateStr = ultimatefont.render("Ultimate", True, (255, 255, 255), setting.bgColor)
+
     ultimateStrpos = (x, y - 25)
+
     screen.blit(ultimateStr, ultimateStrpos)
 
 
@@ -693,7 +695,9 @@ def drawChargeGauge(setting, screen, ship, sb):
 
     chargefont = pg.font.Font('Fonts/Square.ttf', 20)
     chargeStr = chargefont.render("Charge", True, (255, 255, 255), setting.bgColor)
-    chargeStrpos = (x, y + -25)
+
+    chargeStrpos = (x, y + 10)
+
     screen.blit(chargeStr, chargeStrpos)
 
 

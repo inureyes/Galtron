@@ -9,8 +9,8 @@ control_menu.set_volume(0.22)
 select_menu = pg.mixer.Sound("sound_effects/select_menu.wav")
 select_menu.set_volume(0.18)
 
-start_game = pg.mixer.Sound("sound_effects/start_game.wav")
-start_game.set_volume(0.3)
+start_game = pg.mixer.Sound("sound_effects/start_games.wav")
+start_game.set_volume(1.0)
 
 attack = pg.mixer.Sound("sound_effects/attack.wav")
 attack.set_volume(0.08)
@@ -37,7 +37,7 @@ enemy_shoot_sound = pg.mixer.Sound('sound_effects/enemy_shot.wav')
 enemy_shoot_sound.set_volume(0.15)
 
 charge_shot = pg.mixer.Sound("sound_effects/charge_shot.wav")
-charge_shot.set_volume(0.4)
+charge_shot.set_volume(0.25)
 
 stage_clear = pg.mixer.Sound("sound_effects/stage_clear.wav")
 stage_clear.set_volume(0.7)
