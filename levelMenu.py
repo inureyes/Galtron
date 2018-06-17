@@ -47,7 +47,7 @@ def checkEvents(setting, screen, stats, sb, bMenu, ship, aliens, bullets, eBulle
 
 
 def buttonAction(stats, selectedName, setting):
-    if selectedName == 'hard': 
+    if selectedName == 'hard':
         setting.gameLevel = 'hard'
         stats.setGameLoop('playMenu')
     elif selectedName == 'normal':
