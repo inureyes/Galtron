@@ -1,5 +1,6 @@
 ﻿# Learning OSS development through GitHub
 
+ * Preparing for first version tagging.
 
 
 | Participant   | Role       | ETC |
