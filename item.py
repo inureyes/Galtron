@@ -36,7 +36,8 @@ class Item(Sprite):
             self.image = pg.image.load('gfx/speed 2.png')
         elif type == 4.3:
             self.image = pg.image.load('gfx/speed 3.png')
-
+        elif type == 5.1:
+            self.image = pg.image.load('gfx/gauge.png')
         self.type = type
 
         self.rect = self.image.get_rect()

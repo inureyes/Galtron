@@ -67,6 +67,7 @@ class Settings():
         self.probabilitySpeedB = 605
         self.probabilitySpeedI = 655
         self.probabilitySpeedS = 675
+        self.probabilityGauge = 710
 
         # invincibile time
         self.invincibileTime = 3000

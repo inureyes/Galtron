@@ -385,6 +385,7 @@ def updateShieldEffect(setting, screen, ship):
         screen.blit(image, (ship.rect.x - 7, ship.rect.y))
 
 
+
 def updateAliens(setting, stats, sb, screen, ship, aliens, bullets, eBullets):
     """Update the aliens"""
     checkFleetEdges(setting, aliens)
@@ -499,6 +500,10 @@ def updateItems(setting, screen, stats, sb, ship, aliens, bullets, eBullets, ite
                     setting.speedStore = setting.shipSpeed
                     setting.shipSpeed *= 1.3
                     setting.speedTimeOverLap += 1
+            elif 5 < item.type:
+                stats.ultimateGauge += 20
+                if stats.ultimateGauge > 100:
+                    stats.ultimateGauge = 100
             items.remove(item)
 
 
@@ -564,6 +569,8 @@ def checkBulletAlienCol(setting, screen, stats, sb, ship, aliens, bullets, eBull
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4.2, items)
                 if setting.probabilitySpeedI < i <= setting.probabilitySpeedS:
                     createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 4.3, items)
+                if setting.probabilitySpeedS < i <= setting.probabilityGauge:
+                    createItem(setting, screen, stats, alien.rect.x, alien.rect.y, 5.1, items)
                 aliens.remove(alien)
 
         # Increase the ultimate gauge, upto 100
