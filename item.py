@@ -27,7 +27,7 @@ class Item(Sprite):
         elif type == 3.1:
             self.image = pg.image.load('gfx/shield 1.png')
         elif type == 3.2:
-            self.image = pg.image.load('gfx/shield2.png')
+            self.image = pg.image.load('gfx/shield 2.png')
         elif type == 3.3:
             self.image = pg.image.load('gfx/shield 3.png')
         elif type == 4.1:
